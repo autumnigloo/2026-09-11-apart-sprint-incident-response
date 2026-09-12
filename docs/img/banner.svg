@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320">
+<defs>
+ <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B1E3A"/><stop offset="1" stop-color="#122B52"/></linearGradient>
+ <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#FFFFFF" stroke-opacity="0.06"/></pattern>
+</defs>
+<rect width="1200" height="320" rx="18" fill="url(#g)"/>
+<rect width="1200" height="320" rx="18" fill="url(#grid)"/>
+<g transform="translate(60,54)">
+ <text font-family="SF Mono,Menlo,Consolas,Liberation Mono,monospace" font-size="15" fill="#3DF2C3" letter-spacing="3">CROSS-RUN LEAK DETECTION</text>
+ <text font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="54" font-weight="800" fill="#FFFFFF" y="70">Who leaked to whom,</text>
+ <text font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="54" font-weight="800" fill="#FFFFFF" y="130">from the transcripts alone.</text>
+ <text font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="20" fill="#8FA3BF" y="178">Content hashing with first-author attribution for agent evaluation sandboxes.</text>
+ <text font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="20" fill="#8FA3BF" y="204">No model access. No keys. No cooperation from the agent.</text>
+</g>
+<g transform="translate(60,244)" font-family="SF Mono,Menlo,Consolas,Liberation Mono,monospace" font-size="14">
+ <rect width="176" height="34" rx="17" fill="#3DF2C3"/><text x="88" y="22" text-anchor="middle" fill="#0B1E3A" font-weight="700">93% recall</text>
+ <rect x="192" width="196" height="34" rx="17" fill="#FF5E5B"/><text x="290" y="22" text-anchor="middle" fill="#FFFFFF" font-weight="700">0 false alarms</text>
+ <rect x="404" width="256" height="34" rx="17" fill="#FFC857"/><text x="532" y="22" text-anchor="middle" fill="#0B1E3A" font-weight="700">40/40 swarm edges explained</text>
+</g>
+<g transform="translate(840,40)">
+ <circle cx="60" cy="60" r="26" fill="none" stroke="#3DF2C3" stroke-width="3"/><text x="60" y="66" text-anchor="middle" font-family="SF Mono,Menlo,Consolas,Liberation Mono,monospace" font-size="18" fill="#3DF2C3">0</text>
+ <circle cx="260" cy="60" r="26" fill="none" stroke="#3DF2C3" stroke-width="3"/><text x="260" y="66" text-anchor="middle" font-family="SF Mono,Menlo,Consolas,Liberation Mono,monospace" font-size="18" fill="#3DF2C3">1</text>
+ <circle cx="160" cy="190" r="26" fill="none" stroke="#3DF2C3" stroke-width="3"/><text x="160" y="196" text-anchor="middle" font-family="SF Mono,Menlo,Consolas,Liberation Mono,monospace" font-size="18" fill="#3DF2C3">2</text>
+ <line x1="88" y1="60" x2="228" y2="60" stroke="#FF5E5B" stroke-width="4"/><polygon points="228,52 244,60 228,68" fill="#FF5E5B"/>
+ <line x1="240" y1="86" x2="182" y2="166" stroke="#FF5E5B" stroke-width="4"/><polygon points="170,168 186,176 190,160" fill="#FF5E5B"/>
+ <path d="M76 84 C40 150, 90 205, 126 195" fill="none" stroke="#FFC857" stroke-width="3" stroke-dasharray="7 6"/><polygon points="126,186 140,194 124,204" fill="#FFC857"/>
+ <text x="20" y="250" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="13" fill="#8FA3BF">dashed: two-hop leak, credited to its first author</text>
+</g>
+</svg>
