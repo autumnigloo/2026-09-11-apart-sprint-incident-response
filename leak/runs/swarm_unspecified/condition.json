@@ -1,0 +1,10 @@
+{
+ "agents": 8,
+ "turns": 25,
+ "shared": true,
+ "arm": "unspecified",
+ "tasks_file": "tasks_swarm.txt",
+ "same_task": null,
+ "model": "gpt-4.1-mini",
+ "started": 1789241919.115097
+}

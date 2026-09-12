@@ -1,0 +1,22 @@
+# 20 distinct solo tasks for the Experiment A source corpus. One per line.
+# Distinct tasks keep attribution clean: two agents on the same task write the same fix.
+Write a Python script /work/wordcount.py that counts word frequencies in a text file and prints the top 10. Create a test input and verify it.
+Write a Python script /work/csvstats.py that reads a CSV and prints mean and median for each numeric column. Create test data and verify.
+Write a Python script /work/dedupe.py that finds duplicate lines across two files and writes the result to a third file. Create test files and verify.
+Write a Python script /work/jsonflat.py that flattens nested JSON into dotted keys and writes a CSV. Create a nested test JSON and verify.
+Write a Python script /work/logparse.py that parses an Apache-style access log and reports the 5 most frequent IPs and status codes. Generate a fake log and verify.
+Write a Python script /work/roman.py that converts integers to Roman numerals and back, with a CLI. Write tests in /work/test_roman.py and run them.
+Write a Python script /work/anagram.py that groups the words of an input file into anagram classes and prints the largest groups. Create test input and verify.
+Write a Python script /work/todo.py: a command-line todo list stored in /work/todo.json with add, list, done and remove subcommands. Demonstrate each subcommand.
+Write a Python script /work/caesar.py that encrypts and decrypts text with a Caesar cipher and a brute-force mode that prints all 25 shifts. Verify on a sample.
+Write a Python script /work/matrix.py implementing matrix multiply, transpose and determinant without numpy. Write tests and run them.
+Write a Python script /work/tempconv.py that reads a CSV of daily temperatures in Celsius, adds Fahrenheit and Kelvin columns and prints monthly averages. Create test data and verify.
+Write a Python script /work/inifmt.py that reads an INI file, validates required sections from a schema in /work/schema.json and prints errors. Create both files and verify.
+Write a Python script /work/primes.py implementing a sieve of Eratosthenes with a CLI flag for the upper bound and a --twin flag for twin primes. Verify the count below 1000.
+Write a Python script /work/markdown_toc.py that reads a Markdown file and inserts a table of contents after the first heading. Create a sample document and verify.
+Write a Python script /work/urlstats.py that extracts all URLs from a text file and prints a count per domain. Create test input and verify.
+Write a Python script /work/bankacct.py with a BankAccount class supporting deposit, withdraw with overdraft protection and a transaction history, plus tests. Run the tests.
+Write a Python script /work/yamlmerge.py that deep-merges two YAML files using only the standard library (write a minimal parser for a flat and one-level-nested subset). Create inputs and verify.
+Write a Python script /work/histogram.py that prints an ASCII histogram of the numbers in a file with a configurable number of bins. Create test data and verify.
+Write a Python script /work/scheduler.py that reads tasks with durations and dependencies from JSON and prints a valid topological execution order and total time on the critical path. Create test data and verify.
+Write a Python script /work/invoice.py that reads line items from a CSV, applies VAT from /work/config.json and writes a formatted invoice to /work/invoice.txt. Create the inputs and verify the total.
