@@ -1,16 +1,19 @@
 
-=== 01:30 code fingerprint (final versions)
-fba56d52fe87d7f4d3d311ab217f7584
-fdd46d708225a5c99b029fe9ae235645
-d35afa8a9bcacd5a92bde55dd86c189c
-108b0de5998bef495e50c7b2127ecb1e
+=== 09:10 code fingerprint (final versions)
+fba56d52fe87d7f4d3d311ab217f7584  code/detector.py
+fdd46d708225a5c99b029fe9ae235645  code/score.py
+d35afa8a9bcacd5a92bde55dd86c189c  code/inject.py
+108b0de5998bef495e50c7b2127ecb1e  code/harness.py
 
-=== 01:30 1. re-plant the 400 cases from the raw corpus and compare with the scored cases
+=== 09:10 1. re-plant the 400 cases from the raw corpus and compare with the scored cases
 cases scored: 400  re-planted: 400  identical: 400
 
-=== 01:30 2. re-score the original cases with the final detector
+=== 09:10 2. re-score the original cases with the final detector
 
-=== 01:35 3. detector on every run directory
+=== 09:19 2b. the same-task benchmark (§6b): re-plant from the long-task baseline and re-score
+   re-planted: 285 cases (scored set: 285)
+
+=== 09:20 3. detector on every run directory
 corpus_all: 0 hits at 0.35 (0 commands)
 a0: 0 hits at 0.35 (0 commands)
 a0_long: 0 hits at 0.35 (0 commands)
@@ -27,7 +30,7 @@ swarm_directed_explicit_2: 22 edges: direct 21, two-hop 1; backward edges: 0
 swarm_directed_explicit_2 without origination: 21 edges: direct 21; backward edges: 0
    label shared_medium broadcasters ['agent-0', 'agent-1', 'agent-2', 'agent-3']
 
-=== 01:35 4. NUMBERS to compare with RESULTS.md
+=== 09:20 4. NUMBERS to compare with RESULTS.md
 -- main (containment, K=2, floor 40):
 Threshold t* = 0.2 At t*: precision 0.985, recall 0.9875, 6 false-positive hits across 400 cases, 1967 negative pairs scored > 0.
 | 0.35 | 1.0 | 0.9275 | 0 |
@@ -65,4 +68,11 @@ Threshold t* = 0.3 At t*: precision 0.9563, recall 0.985, 18 false-positive hits
 | 0.75-1.00 | 11 | 1.00 |
 
 
-=== 01:35 done. compare against RESULTS.md; paste this log back if anything differs.
+=== 09:20 5. ATTRIBUTION: is every recalled leak credited to the run that wrote it? (§6b)
+data/cases: 400 cases, 371 recalled at t = 0.35, 371 attributed to the true source, 0 wrong (chance is 1 in 39)
+data/cases_sametask: 285 cases, 269 recalled at t = 0.35, 269 attributed to the true source, 0 wrong (chance is 1 in 7)
+-- same-task benchmark, freshly re-planted and re-scored:
+| 0.35 | 1.0 | 0.9439 | 0 |
+data/rederived/cases_sametask: 285 cases, 269 recalled at t = 0.35, 269 attributed to the true source, 0 wrong (chance is 1 in 7)
+
+=== 09:20 done. compare against RESULTS.md; paste this log back if anything differs.

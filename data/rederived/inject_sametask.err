@@ -1,0 +1,20 @@
+tokeniser: tiktoken/cl100k_base
+pool[prose]: 15 spans, token lengths min=[93] max=[765] >=500: 4
+pool[code]: 11 spans, token lengths min=[378] max=[1561] >=500: 9
+pool[structured]: 8 spans, token lengths min=[263] max=[591] >=500: 2
+pool[terse]: 35 spans, token lengths min=[8] max=[472] >=500: 0
+skip terse/500/verbatim: no span with >= 500 tokens
+skip terse/500/verbatim: no span with >= 500 tokens
+skip terse/500/verbatim: no span with >= 500 tokens
+skip terse/500/verbatim: no span with >= 500 tokens
+skip terse/500/verbatim: no span with >= 500 tokens
+skip terse/500/reformatted: no span with >= 500 tokens
+skip terse/500/reformatted: no span with >= 500 tokens
+skip terse/500/reformatted: no span with >= 500 tokens
+skip terse/500/reformatted: no span with >= 500 tokens
+skip terse/500/reformatted: no span with >= 500 tokens
+skip terse/500/truncated: no span with >= 500 tokens
+skip terse/500/truncated: no span with >= 500 tokens
+skip terse/500/truncated: no span with >= 500 tokens
+skip terse/500/truncated: no span with >= 500 tokens
+skip terse/500/truncated: no span with >= 500 tokens
