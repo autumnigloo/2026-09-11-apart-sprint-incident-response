@@ -31,7 +31,7 @@ Forty solo agents ran with no shared folder, so their transcripts contain no lea
 | **0.35** | **1.000** | **0.928** | **0** |
 | 0.70 | 1.000 | 0.710 | 0 |
 
-Every leak of 100 tokens or more that was not paraphrased was found, for every type, and every one of the 371 recalled leaks was attributed to the correct source run out of 39 candidates. The 29 misses at 0.35: 21 are 25-token leaks, 6 paraphrases, 2 short prose. The convergence rule and the evidence floor are each a measured dial; see the K sweep and floor ablation in [`RESULTS.md`](RESULTS.md).
+Every leak of 100 tokens or more that was not paraphrased was found, for every type, and every recalled leak was attributed to the correct source run: 371 of 371 among 39 unrelated candidates, and 269 of 269 among 7 agents that had all written the same module, README and config. The 29 misses at 0.35: 21 are 25-token leaks, 6 paraphrases, 2 short prose. The convergence rule and the evidence floor are each a measured dial; see the K sweep and floor ablation in [`RESULTS.md`](RESULTS.md).
 </details>
 
 <details open>
