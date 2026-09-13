@@ -616,7 +616,7 @@ detector is only legitimate on transcripts the operator is entitled to read in f
 and it emits pair-level evidence (offsets, previews) precisely so a hit gets checked by
 hand rather than acted on blind.
 
-The hash feed itself. The cross-organisational exchange in §6c ships originated hash
+The hash feed itself. The cross-organisational exchange in §6b ships originated hash
 sets instead of transcripts, and that feed is an exfiltration surface of its own: anyone
 who can query membership learns which candidate strings a lab's runs produced, one guess
 at a time. The feed therefore needs the same access control as the transcripts it stands
