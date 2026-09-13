@@ -1,0 +1,87 @@
+=== 14:28:00 cell k2_tgtoff
+--- benchmark @0.35:   | 0.35 | 1.0 | 0.9275 | 0 |
+--- sametask  @0.35:   | 0.35 | 1.0 | 0.9439 | 0 |
+--- negative-set scan (t=0.5/0.7/0.9):
+| data/runs/corpus_all | 40 | 0 | 0 | 0 |
+| data/runs/a0 | 8 | 0 | 0 | 0 |
+| data/runs/a0_long | 8 | 0 | 0 | 0 |
+--- attribution:
+data/cases: 400 cases, 371 recalled at t = 0.35, 371 attributed to the true source, 0 wrong (chance is 1 in 39)
+data/rederived/cases_sametask: 285 cases, 269 recalled at t = 0.35, 269 attributed to the true source, 0 wrong (chance is 1 in 7)
+
+=== 14:30:21 cell k2_tgton
+--- benchmark @0.35:   | 0.35 | 1.0 | 0.9275 | 0 |
+--- sametask  @0.35:   | 0.35 | 1.0 | 0.9439 | 0 |
+--- negative-set scan (t=0.5/0.7/0.9):
+| data/runs/corpus_all | 40 | 0 | 0 | 0 |
+| data/runs/a0 | 8 | 0 | 0 | 0 |
+| data/runs/a0_long | 8 | 0 | 0 | 0 |
+--- attribution:
+data/cases: 400 cases, 371 recalled at t = 0.35, 371 attributed to the true source, 0 wrong (chance is 1 in 39)
+data/rederived/cases_sametask: 285 cases, 269 recalled at t = 0.35, 269 attributed to the true source, 0 wrong (chance is 1 in 7)
+
+=== 14:32:44 cell k5_tgtoff
+--- benchmark @0.35:   | 0.35 | 0.9898 | 0.9675 | 4 |
+--- sametask  @0.35:   | 0.35 | 0.3611 | 0.9719 | 490 |
+--- negative-set scan (t=0.5/0.7/0.9):
+| data/runs/corpus_all | 40 | 4 | 1 | 0 |
+| data/runs/a0 | 8 | 0 | 0 | 0 |
+| data/runs/a0_long | 8 | 15 | 3 | 1 |
+--- attribution:
+data/cases: 400 cases, 387 recalled at t = 0.35, 387 attributed to the true source, 0 wrong (chance is 1 in 39)
+data/rederived/cases_sametask: 285 cases, 277 recalled at t = 0.35, 277 attributed to the true source, 0 wrong (chance is 1 in 7)
+
+=== 14:35:18 cell k5_tgton
+--- benchmark @0.35:   | 0.35 | 1.0 | 0.9675 | 0 |
+--- sametask  @0.35:   | 0.35 | 1.0 | 0.9684 | 0 |
+--- negative-set scan (t=0.5/0.7/0.9):
+| data/runs/corpus_all | 40 | 0 | 0 | 0 |
+| data/runs/a0 | 8 | 0 | 0 | 0 |
+| data/runs/a0_long | 8 | 0 | 0 | 0 |
+--- attribution:
+data/cases: 400 cases, 387 recalled at t = 0.35, 387 attributed to the true source, 0 wrong (chance is 1 in 39)
+data/rederived/cases_sametask: 285 cases, 276 recalled at t = 0.35, 276 attributed to the true source, 0 wrong (chance is 1 in 7)
+
+=== 14:37:52 cell k0_tgtoff
+--- benchmark @0.35:   | 0.35 | 0.9749 | 0.97 | 10 |
+--- sametask  @0.35:   | 0.35 | 0.93 | 0.9789 | 21 |
+--- negative-set scan (t=0.5/0.7/0.9):
+| data/runs/corpus_all | 40 | 164 | 21 | 0 |
+| data/runs/a0 | 8 | 11 | 8 | 0 |
+| data/runs/a0_long | 8 | 112 | 79 | 37 |
+--- attribution:
+data/cases: 400 cases, 388 recalled at t = 0.35, 388 attributed to the true source, 0 wrong (chance is 1 in 39)
+data/rederived/cases_sametask: 285 cases, 279 recalled at t = 0.35, 279 attributed to the true source, 0 wrong (chance is 1 in 7)
+
+=== 14:40:28 cell k0_tgton
+--- benchmark @0.35:   | 0.35 | 1.0 | 0.97 | 0 |
+--- sametask  @0.35:   | 0.35 | 1.0 | 0.9789 | 0 |
+--- negative-set scan (t=0.5/0.7/0.9):
+| data/runs/corpus_all | 40 | 0 | 0 | 0 |
+| data/runs/a0 | 8 | 0 | 0 | 0 |
+| data/runs/a0_long | 8 | 0 | 0 | 0 |
+--- attribution:
+data/cases: 400 cases, 388 recalled at t = 0.35, 388 attributed to the true source, 0 wrong (chance is 1 in 39)
+data/rederived/cases_sametask: 285 cases, 279 recalled at t = 0.35, 279 attributed to the true source, 0 wrong (chance is 1 in 7)
+
+=== 14:43:01 live swarms: the test the benchmark cannot run
+    (agents start 45s apart, so a backward edge is physically impossible)
+--- swarm_directed_explicit
+    K=2  tgt=off  18 edges: direct 17, two-hop 1; backward edges: 0
+    K=2  tgt=on   18 edges: direct 17, two-hop 1; backward edges: 0
+    K=3  tgt=off  23 edges: direct 17, two-hop 2, wildcard 3, unknown 1; backward edges: 2
+    K=3  tgt=on   22 edges: direct 17, two-hop 2, wildcard 3; backward edges: 1
+    K=5  tgt=off  33 edges: direct 17, two-hop 5, wildcard 8, unknown 3; backward edges: 9
+    K=5  tgt=on   30 edges: direct 17, two-hop 5, wildcard 8; backward edges: 6
+    K=0  tgt=off  35 edges: direct 17, two-hop 9, wildcard 8, unknown 1; backward edges: 10
+    K=0  tgt=on   34 edges: direct 17, two-hop 9, wildcard 8; backward edges: 9
+--- swarm_directed_explicit_2
+    K=2  tgt=off  22 edges: direct 21, two-hop 1; backward edges: 0
+    K=2  tgt=on   22 edges: direct 21, two-hop 1; backward edges: 0
+    K=3  tgt=off  28 edges: direct 21, two-hop 6, wildcard 1; backward edges: 4
+    K=3  tgt=on   28 edges: direct 21, two-hop 6, wildcard 1; backward edges: 4
+    K=5  tgt=off  36 edges: direct 21, two-hop 13, unknown 1, wildcard 1; backward edges: 12
+    K=5  tgt=on   35 edges: direct 21, two-hop 13, wildcard 1; backward edges: 11
+    K=0  tgt=off  41 edges: direct 21, two-hop 12, wildcard 4, unknown 4; backward edges: 17
+    K=0  tgt=on   37 edges: direct 21, two-hop 12, wildcard 4; backward edges: 13
+=== 14:43:48 grid done
