@@ -6,8 +6,17 @@
   Template rules, to delete along with all guidance before submitting:
     - Replace the italicized guidance under each heading with your content.
       The structure is strong guidance, not rigid; adapt it if the project needs to.
-    - Recommended length: 4 pages excluding references and appendix.
-      Rough guide: Intro + Related Work 1p, Methods + Results 2.5p, Discussion 0.5p.
+    - LENGTH: the sprint's own requirements (collaborator status report, 13 Sep)
+      override the generic template here. Submission is a PDF, <= 8 pages excluding
+      references and appendices, and the abstract is <= 150 words (the template says
+      150-250 -- use 150). Section 4 is budgeted at two pages.
+    - REQUIRED: a Limitations and Dual-Use appendix. This is a sprint requirement,
+      not optional, and is why Dual-Use has its own heading below rather than being
+      folded into the discussion.
+    - The report must be the team's own writing; generated-sounding reports are not
+      scored. This file is a scaffold for that writing, not a draft to submit.
+    - Every incident claim needs a primary source; the prior-art assessment lists
+      them. TODO: that document is not in this repository -- get it from Hana.
     - Judged on the written report. Rubric:
       https://apartresearch.notion.site/sprint-evaluation-rubric
     - Figures: number everything (Figure 1, Table 1...), captions that stand alone,
@@ -20,19 +29,21 @@
 
 # Who Leaked to Whom: Recovering Cross-Run Contamination from Agent Transcripts Alone
 
-| TODO: your name |
-|---|
-| Independent |
+| TODO: your name | Hana Ibrahim |
+|---|---|
+| TODO: affiliation | TODO: affiliation |
 
-**With Apart Research.** Incident Response Research Sprint, 11–13 September 2026.
+**With Apart Research / CeSIA.** Incident Response Sprint, Track 1,
+11–13 September 2026.
 
-<!-- TODO: confirm sprint title/URL. Add co-authors and affiliations if any. -->
+<!-- TODO: confirm the public sprint URL. -->
 
 ## Abstract
 
 <!--
-  150-250 words. Cover: the problem, the approach, key results, the main takeaway.
-  Polish it last — it should reflect final results, not the initial plan.
+  <= 150 words (sprint requirement, tighter than the template's 150-250).
+  Cover: the problem, the approach, key results, the main takeaway.
+  Polish it last. Owner per the agreed split: you.
 -->
 
 - Problem: eval harnesses run many agents in parallel against a shared cache,
@@ -248,8 +259,8 @@
 - Safety framing: isolation failures silently corrupt eval results that feed
   deployment decisions. A cheap audit is worth more than a perfect one nobody
   can run.
-- (+) Dual use: the same machinery fingerprints an agent's output. The asymmetry
-  that limits misuse is that it needs transcripts the auditor already holds.
+- Dual use has its own required appendix section below; keep the discussion here
+  to the safety implications of the detection result itself.
 
 ### Limitations
 
@@ -278,6 +289,21 @@
   does not estimate how often agents leak unprompted.
 - Experiment C ran on a different, smaller model than the agents, on prompted
   artifacts rather than harness transcripts, with one scheme at one setting.
+
+### Dual-Use
+
+<!--
+  REQUIRED by the sprint, paired with Limitations. Owner per the agreed split: you.
+  Two angles named in the 13 Sep status report:
+-->
+
+- The detector as a **finder of other runs' output**: the same machinery that audits
+  isolation also locates what a concurrent agent produced.
+- A hash feed as an **exfiltration surface**: §6b proposes labs exchange originated
+  hash sets instead of transcripts. That feed is itself a channel — an adversary who
+  can query it learns which of their candidate strings a lab's runs produced.
+  Mitigations to discuss: batching, thresholds on query volume, salting per pair.
+- The asymmetry that limits misuse: it needs transcripts the auditor already holds.
 
 ### Future Work
 
@@ -315,7 +341,13 @@
 
 ## Author Contributions
 
-<!-- Optional in the template. TODO or delete. -->
+<!--
+  Agreed split, 13 Sep status report. Reconcile against the final section numbering
+  before submitting — the split below uses the handover's outline, not this file's.
+    You:  §1 problem, §2 approach, §6 cross-organisational attribution,
+          §7 follow-up, abstract, dual-use half of the appendix.
+    Hana: §3 method, §4 results, §5 watermarking, limitations half.
+-->
 
 ## References
 
