@@ -16,7 +16,8 @@ and a local model: `python code/experiment_c.py --n 10`, log in `logs/experiment
 | The a-priori Jaccard threshold was wrong, not Jaccard itself | Jaccard ≥ 0.7, the configuration first proposed, recalls 23.5%; calibrated to 0.15 it recalls 95.75% at precision 1.0, slightly above containment at 0.35 | `data/cases/results_jaccard/` |
 | Source attribution is exact | All 371 recalled planted leaks attributed to the true source out of 39 unrelated candidates; all 269 recalled leaks attributed correctly out of 7 same-task candidates (0 misattributions in either) | `data/cases/results_t035/raw_hits.jsonl`, `data/cases_sametask/`, §6b |
 | Watermarking, measured on matched artifacts (Experiment C) | On a local 0.5B model with full logit access: 20 to 40% detection at 50 tokens for code, JSON and shell; 70 to 100% from 100 tokens; false alarms rise from 1% to 15.6% when one text is scanned against 32 run-keys; JSON tokens are near-forced 66% of the time | `data/results_c/summary.md` |
-| Where it fails, and the two dials | 21 of 29 misses are 25-token leaks; 6 are paraphrases. The convergence rule K and the evidence floor are each a measured precision/recall trade: K=5 recovers all short prose at 4 false-alarm pairs; the floor removes 13 false-alarm pairs at a cost of 8 leaks | Table 1, §7 |
+| Where it fails, and the two dials | 21 of 29 misses are 25-token leaks; 6 are paraphrases. The convergence rule K and the evidence floor are each a measured precision/recall trade: K=5 recovers all short prose at 4 false-alarm pairs; the floor removes 13 false-alarm pairs at a cost of 8 leaks. K must still be 2: on the live swarms K=5 produces 9 and 12 backward edges | Table 1, §7, §9 |
+| A planted benchmark cannot measure the filters | Both filters look redundant on 400 planted cases and 285 same-task cases, and both are load-bearing on the live swarms: without convergence, 10 and 17 backward edges | §9, Tables 7 to 9 |
 
 ## 1 What was measured
 
@@ -360,11 +361,21 @@ sweep (`results_k3`, `results_k5`, `results_k10`) makes K a measured dial:
 | off | 0.970 | 10 | 0.975 | | 12,081 |
 
 K = 5 recovers every short prose leak for four false-alarm pairs in about 400 hits;
-K = 10 gains nothing further and costs fifty. K = 2 is reported as the operating point
-because it is the only zero-false-alarm setting; a harness that prefers recall should
-run K = 5. The earlier draft's suggestion that K should scale with corpus size is wrong:
-larger K loses precision quickly. Weighting shingles by document frequency instead of
-removing them remains the untested alternative.
+K = 10 gains nothing further and costs fifty. K = 2 is the operating point because it is
+the only zero-false-alarm setting. The earlier draft's suggestion that K should scale
+with corpus size is wrong: larger K loses precision quickly. Weighting shingles by
+document frequency instead of removing them remains the untested alternative.
+
+An earlier draft of this section advised that "a harness that prefers recall should run
+K = 5". That advice was wrong, and the benchmark is the reason it looked right. On the
+live swarms, where agents start 45 seconds apart and a backward edge is therefore
+physically impossible, K = 5 produces 9 and 12 backward edges on the two runs and K = 3
+produces 2 and 4; only K = 2 produces none. The benchmark cannot see this: every planted
+case is a pair of solo runs with one injected entry, so no amount of convergent
+boilerplate can invent an edge between third parties. Section 5 notes that the benchmark
+cannot measure what the origination filter is for; the same holds for the convergence
+filter, and for the same reason. Both filters earn their place in live runs, and the
+operating point must be chosen there. See §9.
 
 Paraphrase. At t = 0.7 paraphrased prose of 100 tokens or less is mostly missed. At 0.35
 paraphrased leaks of 200 tokens or more are always found and shorter ones mostly,
@@ -393,6 +404,150 @@ is for unintended leaks.
   artifacts rather than harness transcripts, with one scheme (KGW) at one setting. It
   needs logit access, which is why it could not be run on the agents, and why an outside
   evaluator could never watermark a lab's model.
+
+## 9 The target-side filter, and what the benchmark cannot see
+
+The origination filter ran on the source side only: a target's ingress entry was compared
+raw, including text the receiving run wrote itself and was reading back. The mirror rule
+subtracts from each ingress entry the shingles that run emitted earlier (`--target-origination`
+on `detector.py` and `score.py`). It is monotone by construction: containment divides by the
+*source* window, so filtering the target set can only shrink an intersection, never create or
+inflate a hit. A genuine transmission still fires on the entry where it first arrives, because
+the receiver had not yet emitted that text. Re-derive with
+`bash scripts/ablate_target_origination.sh`.
+
+Table 7. The 400-case benchmark at t = 0.35. Attribution is the count of recalled cases whose
+best-scoring hit names the true source, out of 39 candidates.
+
+| K | target filter | precision | recall | false-alarm pairs | attribution |
+|---|---|---|---|---|---|
+| 2 | off (shipped) | 1.000 | 0.9275 | 0 | 371 / 371 |
+| 2 | on | 1.000 | 0.9275 | 0 | 371 / 371 |
+| 5 | off | 0.990 | 0.9675 | 4 | 387 / 387 |
+| 5 | on | 1.000 | 0.9675 | 0 | 387 / 387 |
+| off | off | 0.975 | 0.9700 | 10 | 388 / 388 |
+| off | on | 1.000 | 0.9700 | 0 | 388 / 388 |
+
+Table 8. The same-task benchmark (285 cases, 7 candidates) and the negative-set scans, which
+contain no leak by construction. Scan columns are false positives at t = 0.5 / 0.7 / 0.9.
+
+| K | target filter | precision | recall | attribution | corpus_all | a0 | a0_long |
+|---|---|---|---|---|---|---|---|
+| 2 | off (shipped) | 1.000 | 0.9439 | 269 / 269 | 0/0/0 | 0/0/0 | 0/0/0 |
+| 2 | on | 1.000 | 0.9439 | 269 / 269 | 0/0/0 | 0/0/0 | 0/0/0 |
+| 5 | off | 0.361 | 0.9719 | 277 / 277 | 4/1/0 | 0/0/0 | 15/3/1 |
+| 5 | on | 1.000 | 0.9684 | 276 / 276 | 0/0/0 | 0/0/0 | 0/0/0 |
+| off | off | 0.930 | 0.9789 | 279 / 279 | 164/21/0 | 11/8/0 | 112/79/37 |
+| off | on | 1.000 | 0.9789 | 279 / 279 | 0/0/0 | 0/0/0 | 0/0/0 |
+
+On these two benchmarks the target filter dominates: it takes every false alarm to zero in
+every setting of K, costs at most one recalled case, and never misattributes. Read alone,
+Tables 7 and 8 say the convergence filter is redundant — drop it, keep the target filter, and
+recall rises from 0.9275 to 0.9700 at precision 1.000 with attribution intact.
+
+That conclusion is wrong, and the live swarms are where it fails. Agents start 45 seconds
+apart, so an edge from a later-started agent to an earlier one cannot be a transmission; the
+count of backward edges is a ground-truth error rate that needs no labelling.
+
+Table 9. Backward edges (impossible by construction), total edges in brackets. Two runs.
+
+| K | target filter | swarm 1 | swarm 2 |
+|---|---|---|---|
+| 2 | off (shipped) | 0 (18) | 0 (22) |
+| 2 | on | 0 (18) | 0 (22) |
+| 3 | off | 2 (23) | 4 (28) |
+| 3 | on | 1 (22) | 4 (28) |
+| 5 | off | 9 (33) | 12 (36) |
+| 5 | on | 6 (30) | 11 (35) |
+| off | off | 10 (35) | 17 (41) |
+| off | on | 9 (34) | 13 (37) |
+
+Only K = 2 recovers a sound map, with or without the target filter, and the target filter
+barely dents the damage at higher K. The benchmark cannot see any of this: every planted case
+is a pair of solo runs with one injected entry, so convergent boilerplate has no opportunity
+to invent an edge between third parties. Section 5 makes the same point about the origination
+filter — "the filter's value is attribution in live runs, which the benchmark cannot test" —
+and it holds for convergence too. A precision/recall benchmark built from planted leaks
+measures the score, not the filters.
+
+Where that leaves the target filter: at K = 2 it changes nothing measurable. The benchmark
+numbers, the same-task numbers, the attribution counts, the negative scans and both swarm maps
+are identical with it on and off. It is defence in depth, not a correction — insurance against
+read-back false alarms that convergence at K = 2 already absorbs. It is kept off by default for
+that reason. Its one clear use is a deployment too small for convergence to have any statistical
+power: K = 2 needs a corpus of runs to estimate convergent text from, and with two or three runs
+there is almost none. That case is untested here.
+
+### 9a What the convergence filter costs, and why the trade is the right way round
+
+The filter does lose real leaks, and the benchmark measures how many: recall is 0.9275 with
+it and 0.9700 without (Table 7), so 17 of 400 deliberately planted leaks are missed because
+of it. That is a genuine cost and not a rounding error.
+
+What makes it the right trade is the shape of the loss, not its size. The filter deletes only
+shingles that two or more runs *originated* independently — after the origination filter, so
+a receiver's copy of a leak never counts toward that tally. A deleted shingle is therefore,
+by construction, text that two agents produced with no contact between them, and text two
+agents wrote without meeting cannot be evidence that they met.
+
+A leak dies when its content coincides with something another run happened to write, which is
+exactly when the content is unremarkable. So the misses concentrate in one corner: 21 of the
+29 at t = 0.35 are 25-token leaks, a single 100-char window with too little unique material
+left after filtering to clear the evidence floor, and verbatim prose at 25 tokens moves from
+0.40 to 1.00 as K is relaxed (§7). Every non-paraphrased leak of 100 tokens or more is
+recalled at every setting of K, including K = 2.
+
+The leaks convergence gives up are therefore the ones that transmit least. If a run "received"
+`import json` from another, it learned nothing it could not write itself; the transmission
+carries close to zero information about its source, and a detector that reports it cannot say
+which of forty candidates sent it. For an audit of eval integrity the distinction is decisive:
+a 25-token boilerplate leak cannot change a benchmark result, and a 500-token leak of a
+solution can. Those are never lost.
+
+### 9b Why timestamps do not substitute for the filter
+
+Backward edges are impossible because of the 45-second stagger, so an obvious alternative is
+to drop them with a causality rule instead of filtering shingles: entries already carry `ts`,
+the containers share a host clock, and text cannot be received before it was written. The rule
+is sound. It is also the wrong instrument, and the first swarm shows why.
+
+With convergence off the run reports 35 edges against a ground truth of 18 (17 direct and the
+a0 → a2 two-hop). Dropping all 10 backward edges leaves 25. Seven of them are spurious, and
+every one points forward in time:
+
+| edge | max score | classification |
+|---|---|---|
+| a2 → a4 | 0.51 | wildcard |
+| a2 → a5 | 0.50 | two-hop via 0, 3, 4 |
+| a2 → a6 | 0.51 | wildcard |
+| a3 → a4 | 0.52 | wildcard |
+| a5 → a6 | 0.35 | wildcard |
+| a5 → a7 | 0.38 | two-hop via 0, 3 |
+| a6 → a7 | 0.35 | two-hop via 1 |
+
+A timestamp rule moves the run from 17 wrong edges out of 35 to 7 out of 25. The map is better
+and the remaining errors are worse, because they are the ones nothing flags. "Wildcard" means
+the target really did run `cat /shared/*`, so there is a read behind each of these edges — just
+not of the named source's file. They are convergence noise wearing the shape of a real
+transmission, and they survive every causality check that can be written.
+
+That is the argument against the substitution. The backward edges were never the failure; they
+are the instrument that makes the failure visible without labelling anything. Suppress them and
+the error rate looks repaired while the map stays wrong.
+
+Three further reasons the rule does not generalise. It biases toward whoever started first:
+timestamps prune only candidates that began later, so a0 remains a valid source for everything
+and collects the generic text, which is a systematic misattribution rather than a fix. The
+stagger itself is an artifact of this experiment, introduced to create ground truth — real
+swarms start together and interleave, and "later emission versus earlier ingestion" then
+resolves to sub-second comparisons where most pairs are ambiguous. And it breaks the
+cross-organisational use in §6b, where two labs exchange originated hash sets precisely so they
+need not exchange transcripts; a causality rule would require exchanging and trusting each
+other's clocks as well.
+
+Time is already used where it is reliable: the origination filter is a causal ordering rule
+*within* one transcript (§3, `detector.py`). Extending it across runs is where the assumptions
+stop holding.
 
 ## Appendix: reproduce
 

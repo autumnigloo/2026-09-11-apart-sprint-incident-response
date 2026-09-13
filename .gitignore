@@ -8,3 +8,11 @@ data/runs/smoke/
 data/rederived/cases/
 .DS_Store
 data/rederived/cases_sametask/
+
+# Ablation outputs regenerable by scripts/ablate_target_origination.sh.
+# The summary tables (headline/pr_curve/cells) are kept; the per-cell raw hits
+# and swarm hit dumps are ~25 MB and add nothing RESULTS.md section 9 lacks.
+data/rederived/ablate_target/**/raw_hits.jsonl
+data/rederived/ablate_target/sw_*.json
+data/rederived/ablate_target/*.log
+data/rederived/ablate_target/*.err
