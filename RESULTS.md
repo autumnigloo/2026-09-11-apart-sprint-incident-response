@@ -478,6 +478,77 @@ that reason. Its one clear use is a deployment too small for convergence to have
 power: K = 2 needs a corpus of runs to estimate convergent text from, and with two or three runs
 there is almost none. That case is untested here.
 
+### 9a What the convergence filter costs, and why the trade is the right way round
+
+The filter does lose real leaks, and the benchmark measures how many: recall is 0.9275 with
+it and 0.9700 without (Table 7), so 17 of 400 deliberately planted leaks are missed because
+of it. That is a genuine cost and not a rounding error.
+
+What makes it the right trade is the shape of the loss, not its size. The filter deletes only
+shingles that two or more runs *originated* independently — after the origination filter, so
+a receiver's copy of a leak never counts toward that tally. A deleted shingle is therefore,
+by construction, text that two agents produced with no contact between them, and text two
+agents wrote without meeting cannot be evidence that they met.
+
+A leak dies when its content coincides with something another run happened to write, which is
+exactly when the content is unremarkable. So the misses concentrate in one corner: 21 of the
+29 at t = 0.35 are 25-token leaks, a single 100-char window with too little unique material
+left after filtering to clear the evidence floor, and verbatim prose at 25 tokens moves from
+0.40 to 1.00 as K is relaxed (§7). Every non-paraphrased leak of 100 tokens or more is
+recalled at every setting of K, including K = 2.
+
+The leaks convergence gives up are therefore the ones that transmit least. If a run "received"
+`import json` from another, it learned nothing it could not write itself; the transmission
+carries close to zero information about its source, and a detector that reports it cannot say
+which of forty candidates sent it. For an audit of eval integrity the distinction is decisive:
+a 25-token boilerplate leak cannot change a benchmark result, and a 500-token leak of a
+solution can. Those are never lost.
+
+### 9b Why timestamps do not substitute for the filter
+
+Backward edges are impossible because of the 45-second stagger, so an obvious alternative is
+to drop them with a causality rule instead of filtering shingles: entries already carry `ts`,
+the containers share a host clock, and text cannot be received before it was written. The rule
+is sound. It is also the wrong instrument, and the first swarm shows why.
+
+With convergence off the run reports 35 edges against a ground truth of 18 (17 direct and the
+a0 → a2 two-hop). Dropping all 10 backward edges leaves 25. Seven of them are spurious, and
+every one points forward in time:
+
+| edge | max score | classification |
+|---|---|---|
+| a2 → a4 | 0.51 | wildcard |
+| a2 → a5 | 0.50 | two-hop via 0, 3, 4 |
+| a2 → a6 | 0.51 | wildcard |
+| a3 → a4 | 0.52 | wildcard |
+| a5 → a6 | 0.35 | wildcard |
+| a5 → a7 | 0.38 | two-hop via 0, 3 |
+| a6 → a7 | 0.35 | two-hop via 1 |
+
+A timestamp rule moves the run from 17 wrong edges out of 35 to 7 out of 25. The map is better
+and the remaining errors are worse, because they are the ones nothing flags. "Wildcard" means
+the target really did run `cat /shared/*`, so there is a read behind each of these edges — just
+not of the named source's file. They are convergence noise wearing the shape of a real
+transmission, and they survive every causality check that can be written.
+
+That is the argument against the substitution. The backward edges were never the failure; they
+are the instrument that makes the failure visible without labelling anything. Suppress them and
+the error rate looks repaired while the map stays wrong.
+
+Three further reasons the rule does not generalise. It biases toward whoever started first:
+timestamps prune only candidates that began later, so a0 remains a valid source for everything
+and collects the generic text, which is a systematic misattribution rather than a fix. The
+stagger itself is an artifact of this experiment, introduced to create ground truth — real
+swarms start together and interleave, and "later emission versus earlier ingestion" then
+resolves to sub-second comparisons where most pairs are ambiguous. And it breaks the
+cross-organisational use in §6b, where two labs exchange originated hash sets precisely so they
+need not exchange transcripts; a causality rule would require exchanging and trusting each
+other's clocks as well.
+
+Time is already used where it is reliable: the origination filter is a causal ordering rule
+*within* one transcript (§3, `detector.py`). Extending it across runs is where the assumptions
+stop holding.
+
 ## Appendix: reproduce
 
 ```

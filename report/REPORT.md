@@ -227,6 +227,15 @@
   runs against a structural ground truth.
 - This also corrects our own earlier advice that a recall-hungry harness should
   run K=5.
+- The filter's cost is real and shaped: it loses [17/400] planted leaks, all
+  short and generic, because it deletes only text two runs originated with no
+  contact — which cannot be evidence of contact. Every non-paraphrased leak
+  ≥100 tokens survives at every K (§9a).
+- Anticipated objection: could timestamps kill backward edges instead? They
+  can, and it hides the problem. Dropping all [10] backward edges leaves [25]
+  against a ground truth of [18] — [7] spurious edges all pointing forward,
+  each with a real `cat /shared/*` behind it. The backward edges are the
+  instrument, not the failure (§9b).
 
 ## 5. Discussion and Limitations
 
