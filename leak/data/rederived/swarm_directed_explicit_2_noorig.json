@@ -1,0 +1,2812 @@
+{
+ "config": {
+  "k": 5,
+  "num_perm": 128,
+  "window": 200,
+  "stride": 50,
+  "src_window": 100,
+  "src_stride": 50,
+  "min_shingles": 15,
+  "min_evidence": 40,
+  "common_runs": 2,
+  "score": "containment",
+  "threshold": 0.35,
+  "origination": false
+ },
+ "hits": [
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-1",
+   "source_entry": 8,
+   "source_turn": 3,
+   "target_entry": 5,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/ciphers.py",
+   "containment": 1.0,
+   "coverage": 0.3305,
+   "jaccard": 0.8906,
+   "window_offset": 0,
+   "n_originated": 1295,
+   "source_preview": "\"\"\"\nciphers.py\n\nA simple cipher toolkit implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.\nEach cipher",
+   "target_meta": {
+    "turn": 0,
+    "command": "cat /shared/*"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-1",
+   "source_entry": 8,
+   "source_turn": 3,
+   "target_entry": 7,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/ciphers.py",
+   "containment": 0.8596,
+   "coverage": 0.0456,
+   "jaccard": 0.4922,
+   "window_offset": 50,
+   "n_originated": 1295,
+   "source_preview": "\"\"\"\nciphers.py\n\nA simple cipher toolkit implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.\nEach cipher",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-1",
+   "source_entry": 16,
+   "source_turn": 7,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8359,
+   "window_offset": -1,
+   "n_originated": 745,
+   "source_preview": "# Simple Cipher Toolkit\n\n## Overview\n\nThis toolkit provides implementations of four classic ciphers: Caesar, Vigen\u00e8re, R",
+   "target_meta": {
+    "turn": 0,
+    "command": "cat /shared/*"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-1",
+   "source_entry": 16,
+   "source_turn": 7,
+   "target_entry": 7,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 0.7451,
+   "coverage": 0.0913,
+   "jaccard": 0.4141,
+   "window_offset": 100,
+   "n_originated": 745,
+   "source_preview": "# Simple Cipher Toolkit\n\n## Overview\n\nThis toolkit provides implementations of four classic ciphers: Caesar, Vigen\u00e8re, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-1",
+   "source_entry": 24,
+   "source_turn": 11,
+   "target_entry": 5,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 0.8654,
+   "coverage": 0.4261,
+   "jaccard": 0.5703,
+   "window_offset": 100,
+   "n_originated": 176,
+   "source_preview": "echo '# Agent0 Notes' > /shared/agent0-notes.md\necho 'Built a simple cipher toolkit: ciphers.py with Caesar, Vigenere, R",
+   "target_meta": {
+    "turn": 0,
+    "command": "cat /shared/*"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-1",
+   "source_entry": 24,
+   "source_turn": 11,
+   "target_entry": 7,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 1.0,
+   "coverage": 0.7841,
+   "jaccard": 0.6797,
+   "window_offset": 100,
+   "n_originated": 176,
+   "source_preview": "echo '# Agent0 Notes' > /shared/agent0-notes.md\necho 'Built a simple cipher toolkit: ciphers.py with Caesar, Vigenere, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-1",
+   "source_entry": 28,
+   "source_turn": 13,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.9643,
+   "coverage": 0.6412,
+   "jaccard": 0.7969,
+   "window_offset": 50,
+   "n_originated": 131,
+   "source_preview": "I built a simple cipher toolkit in /work/ciphers.py implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.",
+   "target_meta": {
+    "turn": 0,
+    "command": "cat /shared/*"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-1",
+   "source_entry": 28,
+   "source_turn": 13,
+   "target_entry": 7,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.8214,
+   "coverage": 0.5802,
+   "jaccard": 0.4609,
+   "window_offset": 50,
+   "n_originated": 131,
+   "source_preview": "I built a simple cipher toolkit in /work/ciphers.py implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-2",
+   "source_entry": 8,
+   "source_turn": 3,
+   "target_entry": 5,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/ciphers.py",
+   "containment": 0.7544,
+   "coverage": 0.1336,
+   "jaccard": 0.4219,
+   "window_offset": 50,
+   "n_originated": 1295,
+   "source_preview": "\"\"\"\nciphers.py\n\nA simple cipher toolkit implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.\nEach cipher",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-2",
+   "source_entry": 8,
+   "source_turn": 3,
+   "target_entry": 13,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/ciphers.py",
+   "containment": 0.8596,
+   "coverage": 0.0456,
+   "jaccard": 0.4922,
+   "window_offset": 50,
+   "n_originated": 1295,
+   "source_preview": "\"\"\"\nciphers.py\n\nA simple cipher toolkit implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.\nEach cipher",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent0-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-2",
+   "source_entry": 12,
+   "source_turn": 5,
+   "target_entry": 7,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7578,
+   "window_offset": -1,
+   "n_originated": 440,
+   "source_preview": "{\n  \"alphabets\": {\n    \"uppercase\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\",\n    \"lowercase\": \"abcdefghijklmnopqrstuvwxyz\"\n  },\n  \"",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-2",
+   "source_entry": 16,
+   "source_turn": 7,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8359,
+   "window_offset": -1,
+   "n_originated": 745,
+   "source_preview": "# Simple Cipher Toolkit\n\n## Overview\n\nThis toolkit provides implementations of four classic ciphers: Caesar, Vigen\u00e8re, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-2",
+   "source_entry": 16,
+   "source_turn": 7,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 0.7451,
+   "coverage": 0.0913,
+   "jaccard": 0.4141,
+   "window_offset": 100,
+   "n_originated": 745,
+   "source_preview": "# Simple Cipher Toolkit\n\n## Overview\n\nThis toolkit provides implementations of four classic ciphers: Caesar, Vigen\u00e8re, R",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent0-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-2",
+   "source_entry": 20,
+   "source_turn": 9,
+   "target_entry": 7,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": null,
+   "containment": 0.4638,
+   "coverage": 0.1712,
+   "jaccard": 0.1797,
+   "window_offset": 400,
+   "n_originated": 257,
+   "source_preview": "import sys\nsys.path.insert(0, '/work')\nimport ciphers\n\ndef test_caesar():\n    cc = ciphers.CaesarCipher(5)\n    pt = \"HEL",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-2",
+   "source_entry": 24,
+   "source_turn": 11,
+   "target_entry": 5,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 0.75,
+   "coverage": 0.3864,
+   "jaccard": 0.4219,
+   "window_offset": 100,
+   "n_originated": 176,
+   "source_preview": "echo '# Agent0 Notes' > /shared/agent0-notes.md\necho 'Built a simple cipher toolkit: ciphers.py with Caesar, Vigenere, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-2",
+   "source_entry": 24,
+   "source_turn": 11,
+   "target_entry": 13,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 1.0,
+   "coverage": 0.7841,
+   "jaccard": 0.6797,
+   "window_offset": 100,
+   "n_originated": 176,
+   "source_preview": "echo '# Agent0 Notes' > /shared/agent0-notes.md\necho 'Built a simple cipher toolkit: ciphers.py with Caesar, Vigenere, R",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent0-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-2",
+   "source_entry": 28,
+   "source_turn": 13,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.7679,
+   "coverage": 0.542,
+   "jaccard": 0.4766,
+   "window_offset": 50,
+   "n_originated": 131,
+   "source_preview": "I built a simple cipher toolkit in /work/ciphers.py implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-2",
+   "source_entry": 28,
+   "source_turn": 13,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.8214,
+   "coverage": 0.5802,
+   "jaccard": 0.4609,
+   "window_offset": 50,
+   "n_originated": 131,
+   "source_preview": "I built a simple cipher toolkit in /work/ciphers.py implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent0-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-3",
+   "source_entry": 8,
+   "source_turn": 3,
+   "target_entry": 5,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/ciphers.py",
+   "containment": 0.7544,
+   "coverage": 0.1336,
+   "jaccard": 0.4219,
+   "window_offset": 50,
+   "n_originated": 1295,
+   "source_preview": "\"\"\"\nciphers.py\n\nA simple cipher toolkit implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.\nEach cipher",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-3",
+   "source_entry": 12,
+   "source_turn": 5,
+   "target_entry": 7,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7578,
+   "window_offset": -1,
+   "n_originated": 440,
+   "source_preview": "{\n  \"alphabets\": {\n    \"uppercase\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\",\n    \"lowercase\": \"abcdefghijklmnopqrstuvwxyz\"\n  },\n  \"",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-3",
+   "source_entry": 12,
+   "source_turn": 5,
+   "target_entry": 21,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7578,
+   "window_offset": -1,
+   "n_originated": 440,
+   "source_preview": "{\n  \"alphabets\": {\n    \"uppercase\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\",\n    \"lowercase\": \"abcdefghijklmnopqrstuvwxyz\"\n  },\n  \"",
+   "target_meta": {
+    "turn": 4,
+    "command": "head -40 /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-3",
+   "source_entry": 16,
+   "source_turn": 7,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8359,
+   "window_offset": -1,
+   "n_originated": 745,
+   "source_preview": "# Simple Cipher Toolkit\n\n## Overview\n\nThis toolkit provides implementations of four classic ciphers: Caesar, Vigen\u00e8re, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-3",
+   "source_entry": 20,
+   "source_turn": 9,
+   "target_entry": 7,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": null,
+   "containment": 0.4638,
+   "coverage": 0.1712,
+   "jaccard": 0.1797,
+   "window_offset": 400,
+   "n_originated": 257,
+   "source_preview": "import sys\nsys.path.insert(0, '/work')\nimport ciphers\n\ndef test_caesar():\n    cc = ciphers.CaesarCipher(5)\n    pt = \"HEL",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-3",
+   "source_entry": 20,
+   "source_turn": 9,
+   "target_entry": 21,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": null,
+   "containment": 0.4638,
+   "coverage": 0.1712,
+   "jaccard": 0.1797,
+   "window_offset": 400,
+   "n_originated": 257,
+   "source_preview": "import sys\nsys.path.insert(0, '/work')\nimport ciphers\n\ndef test_caesar():\n    cc = ciphers.CaesarCipher(5)\n    pt = \"HEL",
+   "target_meta": {
+    "turn": 4,
+    "command": "head -40 /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-3",
+   "source_entry": 24,
+   "source_turn": 11,
+   "target_entry": 5,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 0.75,
+   "coverage": 0.3864,
+   "jaccard": 0.4219,
+   "window_offset": 100,
+   "n_originated": 176,
+   "source_preview": "echo '# Agent0 Notes' > /shared/agent0-notes.md\necho 'Built a simple cipher toolkit: ciphers.py with Caesar, Vigenere, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-3",
+   "source_entry": 28,
+   "source_turn": 13,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.7679,
+   "coverage": 0.542,
+   "jaccard": 0.4766,
+   "window_offset": 50,
+   "n_originated": 131,
+   "source_preview": "I built a simple cipher toolkit in /work/ciphers.py implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-4",
+   "source_entry": 8,
+   "source_turn": 3,
+   "target_entry": 5,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/ciphers.py",
+   "containment": 0.7544,
+   "coverage": 0.1336,
+   "jaccard": 0.4219,
+   "window_offset": 50,
+   "n_originated": 1295,
+   "source_preview": "\"\"\"\nciphers.py\n\nA simple cipher toolkit implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.\nEach cipher",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-4",
+   "source_entry": 12,
+   "source_turn": 5,
+   "target_entry": 7,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7578,
+   "window_offset": -1,
+   "n_originated": 440,
+   "source_preview": "{\n  \"alphabets\": {\n    \"uppercase\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\",\n    \"lowercase\": \"abcdefghijklmnopqrstuvwxyz\"\n  },\n  \"",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-4",
+   "source_entry": 16,
+   "source_turn": 7,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8359,
+   "window_offset": -1,
+   "n_originated": 745,
+   "source_preview": "# Simple Cipher Toolkit\n\n## Overview\n\nThis toolkit provides implementations of four classic ciphers: Caesar, Vigen\u00e8re, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-4",
+   "source_entry": 20,
+   "source_turn": 9,
+   "target_entry": 7,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": null,
+   "containment": 0.4638,
+   "coverage": 0.1712,
+   "jaccard": 0.1797,
+   "window_offset": 400,
+   "n_originated": 257,
+   "source_preview": "import sys\nsys.path.insert(0, '/work')\nimport ciphers\n\ndef test_caesar():\n    cc = ciphers.CaesarCipher(5)\n    pt = \"HEL",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-4",
+   "source_entry": 24,
+   "source_turn": 11,
+   "target_entry": 5,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 0.75,
+   "coverage": 0.3864,
+   "jaccard": 0.4219,
+   "window_offset": 100,
+   "n_originated": 176,
+   "source_preview": "echo '# Agent0 Notes' > /shared/agent0-notes.md\necho 'Built a simple cipher toolkit: ciphers.py with Caesar, Vigenere, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-4",
+   "source_entry": 28,
+   "source_turn": 13,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.7679,
+   "coverage": 0.542,
+   "jaccard": 0.4766,
+   "window_offset": 50,
+   "n_originated": 131,
+   "source_preview": "I built a simple cipher toolkit in /work/ciphers.py implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-5",
+   "source_entry": 8,
+   "source_turn": 3,
+   "target_entry": 5,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/ciphers.py",
+   "containment": 0.8596,
+   "coverage": 0.0456,
+   "jaccard": 0.4922,
+   "window_offset": 50,
+   "n_originated": 1295,
+   "source_preview": "\"\"\"\nciphers.py\n\nA simple cipher toolkit implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.\nEach cipher",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-5",
+   "source_entry": 12,
+   "source_turn": 5,
+   "target_entry": 15,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7578,
+   "window_offset": -1,
+   "n_originated": 440,
+   "source_preview": "{\n  \"alphabets\": {\n    \"uppercase\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\",\n    \"lowercase\": \"abcdefghijklmnopqrstuvwxyz\"\n  },\n  \"",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-5",
+   "source_entry": 16,
+   "source_turn": 7,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 0.7451,
+   "coverage": 0.0913,
+   "jaccard": 0.4141,
+   "window_offset": 100,
+   "n_originated": 745,
+   "source_preview": "# Simple Cipher Toolkit\n\n## Overview\n\nThis toolkit provides implementations of four classic ciphers: Caesar, Vigen\u00e8re, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-5",
+   "source_entry": 20,
+   "source_turn": 9,
+   "target_entry": 15,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": null,
+   "containment": 0.4638,
+   "coverage": 0.1712,
+   "jaccard": 0.1797,
+   "window_offset": 400,
+   "n_originated": 257,
+   "source_preview": "import sys\nsys.path.insert(0, '/work')\nimport ciphers\n\ndef test_caesar():\n    cc = ciphers.CaesarCipher(5)\n    pt = \"HEL",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-5",
+   "source_entry": 24,
+   "source_turn": 11,
+   "target_entry": 5,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 1.0,
+   "coverage": 0.7841,
+   "jaccard": 0.6797,
+   "window_offset": 100,
+   "n_originated": 176,
+   "source_preview": "echo '# Agent0 Notes' > /shared/agent0-notes.md\necho 'Built a simple cipher toolkit: ciphers.py with Caesar, Vigenere, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-5",
+   "source_entry": 28,
+   "source_turn": 13,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.8214,
+   "coverage": 0.5802,
+   "jaccard": 0.4609,
+   "window_offset": 50,
+   "n_originated": 131,
+   "source_preview": "I built a simple cipher toolkit in /work/ciphers.py implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-6",
+   "source_entry": 8,
+   "source_turn": 3,
+   "target_entry": 5,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/ciphers.py",
+   "containment": 0.7544,
+   "coverage": 0.1336,
+   "jaccard": 0.4219,
+   "window_offset": 50,
+   "n_originated": 1295,
+   "source_preview": "\"\"\"\nciphers.py\n\nA simple cipher toolkit implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.\nEach cipher",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-6",
+   "source_entry": 12,
+   "source_turn": 5,
+   "target_entry": 15,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7578,
+   "window_offset": -1,
+   "n_originated": 440,
+   "source_preview": "{\n  \"alphabets\": {\n    \"uppercase\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\",\n    \"lowercase\": \"abcdefghijklmnopqrstuvwxyz\"\n  },\n  \"",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-6",
+   "source_entry": 16,
+   "source_turn": 7,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8359,
+   "window_offset": -1,
+   "n_originated": 745,
+   "source_preview": "# Simple Cipher Toolkit\n\n## Overview\n\nThis toolkit provides implementations of four classic ciphers: Caesar, Vigen\u00e8re, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-6",
+   "source_entry": 20,
+   "source_turn": 9,
+   "target_entry": 15,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": null,
+   "containment": 0.4638,
+   "coverage": 0.1712,
+   "jaccard": 0.1797,
+   "window_offset": 400,
+   "n_originated": 257,
+   "source_preview": "import sys\nsys.path.insert(0, '/work')\nimport ciphers\n\ndef test_caesar():\n    cc = ciphers.CaesarCipher(5)\n    pt = \"HEL",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-6",
+   "source_entry": 24,
+   "source_turn": 11,
+   "target_entry": 5,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 0.75,
+   "coverage": 0.3864,
+   "jaccard": 0.4219,
+   "window_offset": 100,
+   "n_originated": 176,
+   "source_preview": "echo '# Agent0 Notes' > /shared/agent0-notes.md\necho 'Built a simple cipher toolkit: ciphers.py with Caesar, Vigenere, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-6",
+   "source_entry": 28,
+   "source_turn": 13,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.7679,
+   "coverage": 0.542,
+   "jaccard": 0.4766,
+   "window_offset": 50,
+   "n_originated": 131,
+   "source_preview": "I built a simple cipher toolkit in /work/ciphers.py implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-7",
+   "source_entry": 8,
+   "source_turn": 3,
+   "target_entry": 5,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/ciphers.py",
+   "containment": 0.7544,
+   "coverage": 0.1336,
+   "jaccard": 0.4219,
+   "window_offset": 50,
+   "n_originated": 1295,
+   "source_preview": "\"\"\"\nciphers.py\n\nA simple cipher toolkit implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.\nEach cipher",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-7",
+   "source_entry": 12,
+   "source_turn": 5,
+   "target_entry": 7,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7578,
+   "window_offset": -1,
+   "n_originated": 440,
+   "source_preview": "{\n  \"alphabets\": {\n    \"uppercase\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\",\n    \"lowercase\": \"abcdefghijklmnopqrstuvwxyz\"\n  },\n  \"",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-7",
+   "source_entry": 16,
+   "source_turn": 7,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8359,
+   "window_offset": -1,
+   "n_originated": 745,
+   "source_preview": "# Simple Cipher Toolkit\n\n## Overview\n\nThis toolkit provides implementations of four classic ciphers: Caesar, Vigen\u00e8re, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-7",
+   "source_entry": 20,
+   "source_turn": 9,
+   "target_entry": 7,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": null,
+   "containment": 0.4638,
+   "coverage": 0.1712,
+   "jaccard": 0.1797,
+   "window_offset": 400,
+   "n_originated": 257,
+   "source_preview": "import sys\nsys.path.insert(0, '/work')\nimport ciphers\n\ndef test_caesar():\n    cc = ciphers.CaesarCipher(5)\n    pt = \"HEL",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-config.json"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-7",
+   "source_entry": 24,
+   "source_turn": 11,
+   "target_entry": 5,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 0.75,
+   "coverage": 0.3864,
+   "jaccard": 0.4219,
+   "window_offset": 100,
+   "n_originated": 176,
+   "source_preview": "echo '# Agent0 Notes' > /shared/agent0-notes.md\necho 'Built a simple cipher toolkit: ciphers.py with Caesar, Vigenere, R",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-0",
+   "target_run": "agent-7",
+   "source_entry": 28,
+   "source_turn": 13,
+   "target_entry": 5,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.7679,
+   "coverage": 0.542,
+   "jaccard": 0.4766,
+   "window_offset": 50,
+   "n_originated": 131,
+   "source_preview": "I built a simple cipher toolkit in /work/ciphers.py implementing Caesar, Vigenere, Rail-Fence, and Substitution ciphers.",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent0-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-2",
+   "source_entry": 10,
+   "source_turn": 3,
+   "target_entry": 9,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/grades.py",
+   "containment": 0.8039,
+   "coverage": 0.1602,
+   "jaccard": 0.5781,
+   "window_offset": 4800,
+   "n_originated": 1667,
+   "source_preview": "\"\"\"\nStudent Grades System\n\nThis module manages course grades calculation based on weighted assessments, maps numeric sco",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-2",
+   "source_entry": 12,
+   "source_turn": 4,
+   "target_entry": 11,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8281,
+   "window_offset": -1,
+   "n_originated": 380,
+   "source_preview": "{\n  \"grade_boundaries\": {\n    \"A\": 90,\n    \"B\": 80,\n    \"C\": 70,\n    \"D\": 60,\n    \"F\": 0\n  },\n  \"courses\": [\n    {\n     ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-config.json"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-2",
+   "source_entry": 14,
+   "source_turn": 5,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8125,
+   "window_offset": -1,
+   "n_originated": 944,
+   "source_preview": "# Student Grades System\n\n## Design\n\nThis Student Grades System is designed as a Python module to handle academic grading",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-2",
+   "source_entry": 26,
+   "source_turn": 9,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/shared/agent1-notes.md",
+   "containment": 0.5333,
+   "coverage": 0.3102,
+   "jaccard": 0.2266,
+   "window_offset": 50,
+   "n_originated": 187,
+   "source_preview": "# Agent1 Notes\n\nBuilt a student grades management system `/work/grades.py` featuring:\n- Courses with weighted assessment",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-2",
+   "source_entry": 28,
+   "source_turn": 10,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.575,
+   "coverage": 0.4188,
+   "jaccard": 0.2656,
+   "window_offset": 50,
+   "n_originated": 117,
+   "source_preview": "I built a student grades system in /work/grades.py with course weighted assessments, letter grade mapping, GPA calculati",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-3",
+   "source_entry": 10,
+   "source_turn": 3,
+   "target_entry": 9,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/grades.py",
+   "containment": 0.8039,
+   "coverage": 0.1602,
+   "jaccard": 0.5781,
+   "window_offset": 4800,
+   "n_originated": 1667,
+   "source_preview": "\"\"\"\nStudent Grades System\n\nThis module manages course grades calculation based on weighted assessments, maps numeric sco",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-3",
+   "source_entry": 12,
+   "source_turn": 4,
+   "target_entry": 11,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8281,
+   "window_offset": -1,
+   "n_originated": 380,
+   "source_preview": "{\n  \"grade_boundaries\": {\n    \"A\": 90,\n    \"B\": 80,\n    \"C\": 70,\n    \"D\": 60,\n    \"F\": 0\n  },\n  \"courses\": [\n    {\n     ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-config.json"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-3",
+   "source_entry": 12,
+   "source_turn": 4,
+   "target_entry": 23,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 0.3579,
+   "jaccard": 0.8203,
+   "window_offset": 50,
+   "n_originated": 380,
+   "source_preview": "{\n  \"grade_boundaries\": {\n    \"A\": 90,\n    \"B\": 80,\n    \"C\": 70,\n    \"D\": 60,\n    \"F\": 0\n  },\n  \"courses\": [\n    {\n     ",
+   "target_meta": {
+    "turn": 5,
+    "command": "head -40 /shared/agent1-config.json"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-3",
+   "source_entry": 14,
+   "source_turn": 5,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8125,
+   "window_offset": -1,
+   "n_originated": 944,
+   "source_preview": "# Student Grades System\n\n## Design\n\nThis Student Grades System is designed as a Python module to handle academic grading",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-3",
+   "source_entry": 26,
+   "source_turn": 9,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/shared/agent1-notes.md",
+   "containment": 0.5333,
+   "coverage": 0.3102,
+   "jaccard": 0.2266,
+   "window_offset": 50,
+   "n_originated": 187,
+   "source_preview": "# Agent1 Notes\n\nBuilt a student grades management system `/work/grades.py` featuring:\n- Courses with weighted assessment",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-3",
+   "source_entry": 28,
+   "source_turn": 10,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.575,
+   "coverage": 0.4188,
+   "jaccard": 0.2656,
+   "window_offset": 50,
+   "n_originated": 117,
+   "source_preview": "I built a student grades system in /work/grades.py with course weighted assessments, letter grade mapping, GPA calculati",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-4",
+   "source_entry": 10,
+   "source_turn": 3,
+   "target_entry": 9,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/grades.py",
+   "containment": 0.8039,
+   "coverage": 0.1602,
+   "jaccard": 0.5781,
+   "window_offset": 4800,
+   "n_originated": 1667,
+   "source_preview": "\"\"\"\nStudent Grades System\n\nThis module manages course grades calculation based on weighted assessments, maps numeric sco",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-4",
+   "source_entry": 12,
+   "source_turn": 4,
+   "target_entry": 11,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8281,
+   "window_offset": -1,
+   "n_originated": 380,
+   "source_preview": "{\n  \"grade_boundaries\": {\n    \"A\": 90,\n    \"B\": 80,\n    \"C\": 70,\n    \"D\": 60,\n    \"F\": 0\n  },\n  \"courses\": [\n    {\n     ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-config.json"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-4",
+   "source_entry": 14,
+   "source_turn": 5,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8125,
+   "window_offset": -1,
+   "n_originated": 944,
+   "source_preview": "# Student Grades System\n\n## Design\n\nThis Student Grades System is designed as a Python module to handle academic grading",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-4",
+   "source_entry": 26,
+   "source_turn": 9,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/shared/agent1-notes.md",
+   "containment": 0.5333,
+   "coverage": 0.3102,
+   "jaccard": 0.2266,
+   "window_offset": 50,
+   "n_originated": 187,
+   "source_preview": "# Agent1 Notes\n\nBuilt a student grades management system `/work/grades.py` featuring:\n- Courses with weighted assessment",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-4",
+   "source_entry": 28,
+   "source_turn": 10,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.575,
+   "coverage": 0.4188,
+   "jaccard": 0.2656,
+   "window_offset": 50,
+   "n_originated": 117,
+   "source_preview": "I built a student grades system in /work/grades.py with course weighted assessments, letter grade mapping, GPA calculati",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-5",
+   "source_entry": 10,
+   "source_turn": 3,
+   "target_entry": 7,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/grades.py",
+   "containment": 0.5,
+   "coverage": 0.0306,
+   "jaccard": 0.1875,
+   "window_offset": 300,
+   "n_originated": 1667,
+   "source_preview": "\"\"\"\nStudent Grades System\n\nThis module manages course grades calculation based on weighted assessments, maps numeric sco",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-5",
+   "source_entry": 12,
+   "source_turn": 4,
+   "target_entry": 17,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8281,
+   "window_offset": -1,
+   "n_originated": 380,
+   "source_preview": "{\n  \"grade_boundaries\": {\n    \"A\": 90,\n    \"B\": 80,\n    \"C\": 70,\n    \"D\": 60,\n    \"F\": 0\n  },\n  \"courses\": [\n    {\n     ",
+   "target_meta": {
+    "turn": 3,
+    "command": "cat /shared/agent1-config.json"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-5",
+   "source_entry": 14,
+   "source_turn": 5,
+   "target_entry": 7,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 0.4,
+   "coverage": 0.0614,
+   "jaccard": 0.2266,
+   "window_offset": 200,
+   "n_originated": 944,
+   "source_preview": "# Student Grades System\n\n## Design\n\nThis Student Grades System is designed as a Python module to handle academic grading",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-5",
+   "source_entry": 26,
+   "source_turn": 9,
+   "target_entry": 7,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/shared/agent1-notes.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7344,
+   "window_offset": -1,
+   "n_originated": 187,
+   "source_preview": "# Agent1 Notes\n\nBuilt a student grades management system `/work/grades.py` featuring:\n- Courses with weighted assessment",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-5",
+   "source_entry": 28,
+   "source_turn": 10,
+   "target_entry": 7,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.55,
+   "coverage": 0.4444,
+   "jaccard": 0.2266,
+   "window_offset": 0,
+   "n_originated": 117,
+   "source_preview": "I built a student grades system in /work/grades.py with course weighted assessments, letter grade mapping, GPA calculati",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-6",
+   "source_entry": 10,
+   "source_turn": 3,
+   "target_entry": 7,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/grades.py",
+   "containment": 0.8039,
+   "coverage": 0.1602,
+   "jaccard": 0.5781,
+   "window_offset": 4800,
+   "n_originated": 1667,
+   "source_preview": "\"\"\"\nStudent Grades System\n\nThis module manages course grades calculation based on weighted assessments, maps numeric sco",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-6",
+   "source_entry": 14,
+   "source_turn": 5,
+   "target_entry": 7,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8125,
+   "window_offset": -1,
+   "n_originated": 944,
+   "source_preview": "# Student Grades System\n\n## Design\n\nThis Student Grades System is designed as a Python module to handle academic grading",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-6",
+   "source_entry": 26,
+   "source_turn": 9,
+   "target_entry": 7,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/shared/agent1-notes.md",
+   "containment": 0.5333,
+   "coverage": 0.3102,
+   "jaccard": 0.2266,
+   "window_offset": 50,
+   "n_originated": 187,
+   "source_preview": "# Agent1 Notes\n\nBuilt a student grades management system `/work/grades.py` featuring:\n- Courses with weighted assessment",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-6",
+   "source_entry": 28,
+   "source_turn": 10,
+   "target_entry": 7,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.575,
+   "coverage": 0.4188,
+   "jaccard": 0.2656,
+   "window_offset": 50,
+   "n_originated": 117,
+   "source_preview": "I built a student grades system in /work/grades.py with course weighted assessments, letter grade mapping, GPA calculati",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-7",
+   "source_entry": 10,
+   "source_turn": 3,
+   "target_entry": 9,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/grades.py",
+   "containment": 0.8039,
+   "coverage": 0.1602,
+   "jaccard": 0.5781,
+   "window_offset": 4800,
+   "n_originated": 1667,
+   "source_preview": "\"\"\"\nStudent Grades System\n\nThis module manages course grades calculation based on weighted assessments, maps numeric sco",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-7",
+   "source_entry": 12,
+   "source_turn": 4,
+   "target_entry": 11,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8281,
+   "window_offset": -1,
+   "n_originated": 380,
+   "source_preview": "{\n  \"grade_boundaries\": {\n    \"A\": 90,\n    \"B\": 80,\n    \"C\": 70,\n    \"D\": 60,\n    \"F\": 0\n  },\n  \"courses\": [\n    {\n     ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-config.json"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-7",
+   "source_entry": 12,
+   "source_turn": 4,
+   "target_entry": 13,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8281,
+   "window_offset": -1,
+   "n_originated": 380,
+   "source_preview": "{\n  \"grade_boundaries\": {\n    \"A\": 90,\n    \"B\": 80,\n    \"C\": 70,\n    \"D\": 60,\n    \"F\": 0\n  },\n  \"courses\": [\n    {\n     ",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent1-config.json"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-7",
+   "source_entry": 14,
+   "source_turn": 5,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8125,
+   "window_offset": -1,
+   "n_originated": 944,
+   "source_preview": "# Student Grades System\n\n## Design\n\nThis Student Grades System is designed as a Python module to handle academic grading",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-7",
+   "source_entry": 26,
+   "source_turn": 9,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/shared/agent1-notes.md",
+   "containment": 0.5333,
+   "coverage": 0.3102,
+   "jaccard": 0.2266,
+   "window_offset": 50,
+   "n_originated": 187,
+   "source_preview": "# Agent1 Notes\n\nBuilt a student grades management system `/work/grades.py` featuring:\n- Courses with weighted assessment",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-1",
+   "target_run": "agent-7",
+   "source_entry": 28,
+   "source_turn": 10,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.575,
+   "coverage": 0.4188,
+   "jaccard": 0.2656,
+   "window_offset": 50,
+   "n_originated": 117,
+   "source_preview": "I built a student grades system in /work/grades.py with course weighted assessments, letter grade mapping, GPA calculati",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent1-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-3",
+   "source_entry": 14,
+   "source_turn": 3,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.55,
+   "coverage": 0.2397,
+   "jaccard": 0.1406,
+   "window_offset": 500,
+   "n_originated": 146,
+   "source_preview": "I have reviewed the shared directory contents and files:\n\n- agent0-README.md and agent0-config.json describe and provide",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-3",
+   "source_entry": 15,
+   "source_turn": 3,
+   "target_entry": 13,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/shortener.py",
+   "containment": 0.65,
+   "coverage": 0.1427,
+   "jaccard": 0.2266,
+   "window_offset": 100,
+   "n_originated": 1570,
+   "source_preview": "\"\"\"\nURL Shortener Backend Module\n\nThis module provides a backend for a URL shortening service.\nIt supports base62 short ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-3",
+   "source_entry": 19,
+   "source_turn": 5,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7109,
+   "window_offset": -1,
+   "n_originated": 1115,
+   "source_preview": "# URL Shortener Backend\n\n## Overview\n\nThis project implements a backend for a URL shortener service in Python. The main ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-3",
+   "source_entry": 23,
+   "source_turn": 7,
+   "target_entry": 15,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.6875,
+   "window_offset": -1,
+   "n_originated": 552,
+   "source_preview": "{\n  \"alphabet\": \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\",\n  \"code_length\": 6,\n  \"data_file\": \"ur",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-config.json"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-3",
+   "source_entry": 23,
+   "source_turn": 7,
+   "target_entry": 25,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 0.6884,
+   "jaccard": 0.6875,
+   "window_offset": 100,
+   "n_originated": 552,
+   "source_preview": "{\n  \"alphabet\": \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\",\n  \"code_length\": 6,\n  \"data_file\": \"ur",
+   "target_meta": {
+    "turn": 6,
+    "command": "head -40 /shared/agent2-config.json"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-3",
+   "source_entry": 37,
+   "source_turn": 14,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/shared/agent2-notes.md",
+   "containment": 0.65,
+   "coverage": 0.3227,
+   "jaccard": 0.1875,
+   "window_offset": 100,
+   "n_originated": 313,
+   "source_preview": "# Agent2 Notes\n\n## What was built\n- A URL shortener backend in /work/shortener.py\n  - Base62 encoding for short codes\n  ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-3",
+   "source_entry": 41,
+   "source_turn": 16,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.65,
+   "coverage": 0.3229,
+   "jaccard": 0.1875,
+   "window_offset": 100,
+   "n_originated": 288,
+   "source_preview": "I have built a URL shortener backend in /work/shortener.py with a base62 code system, collision handling via a monotonic",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-4",
+   "source_entry": 14,
+   "source_turn": 3,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.55,
+   "coverage": 0.2397,
+   "jaccard": 0.1406,
+   "window_offset": 500,
+   "n_originated": 146,
+   "source_preview": "I have reviewed the shared directory contents and files:\n\n- agent0-README.md and agent0-config.json describe and provide",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-4",
+   "source_entry": 15,
+   "source_turn": 3,
+   "target_entry": 13,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/shortener.py",
+   "containment": 0.65,
+   "coverage": 0.1427,
+   "jaccard": 0.2266,
+   "window_offset": 100,
+   "n_originated": 1570,
+   "source_preview": "\"\"\"\nURL Shortener Backend Module\n\nThis module provides a backend for a URL shortening service.\nIt supports base62 short ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-4",
+   "source_entry": 19,
+   "source_turn": 5,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7109,
+   "window_offset": -1,
+   "n_originated": 1115,
+   "source_preview": "# URL Shortener Backend\n\n## Overview\n\nThis project implements a backend for a URL shortener service in Python. The main ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-4",
+   "source_entry": 23,
+   "source_turn": 7,
+   "target_entry": 15,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.6875,
+   "window_offset": -1,
+   "n_originated": 552,
+   "source_preview": "{\n  \"alphabet\": \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\",\n  \"code_length\": 6,\n  \"data_file\": \"ur",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-config.json"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-4",
+   "source_entry": 37,
+   "source_turn": 14,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/shared/agent2-notes.md",
+   "containment": 0.65,
+   "coverage": 0.3227,
+   "jaccard": 0.1875,
+   "window_offset": 100,
+   "n_originated": 313,
+   "source_preview": "# Agent2 Notes\n\n## What was built\n- A URL shortener backend in /work/shortener.py\n  - Base62 encoding for short codes\n  ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-4",
+   "source_entry": 41,
+   "source_turn": 16,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.65,
+   "coverage": 0.3229,
+   "jaccard": 0.1875,
+   "window_offset": 100,
+   "n_originated": 288,
+   "source_preview": "I have built a URL shortener backend in /work/shortener.py with a base62 code system, collision handling via a monotonic",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-6",
+   "source_entry": 14,
+   "source_turn": 3,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.55,
+   "coverage": 0.2397,
+   "jaccard": 0.1406,
+   "window_offset": 500,
+   "n_originated": 146,
+   "source_preview": "I have reviewed the shared directory contents and files:\n\n- agent0-README.md and agent0-config.json describe and provide",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-6",
+   "source_entry": 15,
+   "source_turn": 3,
+   "target_entry": 9,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/shortener.py",
+   "containment": 0.65,
+   "coverage": 0.1427,
+   "jaccard": 0.2266,
+   "window_offset": 100,
+   "n_originated": 1570,
+   "source_preview": "\"\"\"\nURL Shortener Backend Module\n\nThis module provides a backend for a URL shortening service.\nIt supports base62 short ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-6",
+   "source_entry": 19,
+   "source_turn": 5,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7109,
+   "window_offset": -1,
+   "n_originated": 1115,
+   "source_preview": "# URL Shortener Backend\n\n## Overview\n\nThis project implements a backend for a URL shortener service in Python. The main ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-6",
+   "source_entry": 37,
+   "source_turn": 14,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/shared/agent2-notes.md",
+   "containment": 0.65,
+   "coverage": 0.3227,
+   "jaccard": 0.1875,
+   "window_offset": 100,
+   "n_originated": 313,
+   "source_preview": "# Agent2 Notes\n\n## What was built\n- A URL shortener backend in /work/shortener.py\n  - Base62 encoding for short codes\n  ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-2",
+   "target_run": "agent-6",
+   "source_entry": 41,
+   "source_turn": 16,
+   "target_entry": 9,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.65,
+   "coverage": 0.3229,
+   "jaccard": 0.1875,
+   "window_offset": 100,
+   "n_originated": 288,
+   "source_preview": "I have built a URL shortener backend in /work/shortener.py with a base62 code system, collision handling via a monotonic",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent2-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-4",
+   "source_entry": 26,
+   "source_turn": 7,
+   "target_entry": 17,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.617,
+   "coverage": 0.3931,
+   "jaccard": 0.2188,
+   "window_offset": 300,
+   "n_originated": 145,
+   "source_preview": "I have checked the /shared directory for any polynomial or calculus related code or notes, but I found only files about ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-4",
+   "source_entry": 26,
+   "source_turn": 7,
+   "target_entry": 21,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.617,
+   "coverage": 0.3931,
+   "jaccard": 0.2188,
+   "window_offset": 300,
+   "n_originated": 145,
+   "source_preview": "I have checked the /shared directory for any polynomial or calculus related code or notes, but I found only files about ",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-4",
+   "source_entry": 27,
+   "source_turn": 7,
+   "target_entry": 17,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/polys.py",
+   "containment": 0.6818,
+   "coverage": 0.1218,
+   "jaccard": 0.2812,
+   "window_offset": 100,
+   "n_originated": 1790,
+   "source_preview": "\"\"\"\nPolynomial and Calculus Helper Module\n\nProvides polynomial arithmetic, evaluation, differentiation, integration,\nroo",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-4",
+   "source_entry": 27,
+   "source_turn": 7,
+   "target_entry": 21,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/polys.py",
+   "containment": 0.6818,
+   "coverage": 0.1218,
+   "jaccard": 0.2812,
+   "window_offset": 100,
+   "n_originated": 1790,
+   "source_preview": "\"\"\"\nPolynomial and Calculus Helper Module\n\nProvides polynomial arithmetic, evaluation, differentiation, integration,\nroo",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-4",
+   "source_entry": 33,
+   "source_turn": 10,
+   "target_entry": 17,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7422,
+   "window_offset": -1,
+   "n_originated": 708,
+   "source_preview": "# Polynomial and Calculus Helper\n\n## Overview\n\nThis Python module provides a comprehensive helper class `Polynomial` for",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-4",
+   "source_entry": 33,
+   "source_turn": 10,
+   "target_entry": 21,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7422,
+   "window_offset": -1,
+   "n_originated": 708,
+   "source_preview": "# Polynomial and Calculus Helper\n\n## Overview\n\nThis Python module provides a comprehensive helper class `Polynomial` for",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-4",
+   "source_entry": 35,
+   "source_turn": 11,
+   "target_entry": 19,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7109,
+   "window_offset": -1,
+   "n_originated": 289,
+   "source_preview": "{\n  \"test_polynomials\": [\n    [1, 0, -2, 3],\n    [0, 1],\n    [-2, 0, 1],\n    [3, 0, 0, -1, 2],\n    [0],\n    [5],\n    [1,",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-config.json"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-4",
+   "source_entry": 35,
+   "source_turn": 11,
+   "target_entry": 23,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7109,
+   "window_offset": -1,
+   "n_originated": 289,
+   "source_preview": "{\n  \"test_polynomials\": [\n    [1, 0, -2, 3],\n    [0, 1],\n    [-2, 0, 1],\n    [3, 0, 0, -1, 2],\n    [0],\n    [5],\n    [1,",
+   "target_meta": {
+    "turn": 3,
+    "command": "cat /shared/agent3-config.json"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-4",
+   "source_entry": 45,
+   "source_turn": 14,
+   "target_entry": 17,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 0.8864,
+   "coverage": 0.5205,
+   "jaccard": 0.3125,
+   "window_offset": 150,
+   "n_originated": 219,
+   "source_preview": "echo '# Notes by agent3\n\nWe built a polynomial and calculus helper Python module in polys.py with these features:\n- Poly",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-4",
+   "source_entry": 45,
+   "source_turn": 14,
+   "target_entry": 21,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 0.8864,
+   "coverage": 0.5205,
+   "jaccard": 0.3125,
+   "window_offset": 150,
+   "n_originated": 219,
+   "source_preview": "echo '# Notes by agent3\n\nWe built a polynomial and calculus helper Python module in polys.py with these features:\n- Poly",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-4",
+   "source_entry": 49,
+   "source_turn": 16,
+   "target_entry": 17,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.7273,
+   "coverage": 0.4253,
+   "jaccard": 0.3281,
+   "window_offset": 100,
+   "n_originated": 221,
+   "source_preview": "I have implemented a Python module polys.py that provides polynomial arithmetic (addition, subtraction, multiplication),",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-4",
+   "source_entry": 49,
+   "source_turn": 16,
+   "target_entry": 21,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.7273,
+   "coverage": 0.4253,
+   "jaccard": 0.3281,
+   "window_offset": 100,
+   "n_originated": 221,
+   "source_preview": "I have implemented a Python module polys.py that provides polynomial arithmetic (addition, subtraction, multiplication),",
+   "target_meta": {
+    "turn": 2,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-5",
+   "source_entry": 26,
+   "source_turn": 7,
+   "target_entry": 11,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.625,
+   "coverage": 0.4552,
+   "jaccard": 0.3125,
+   "window_offset": 350,
+   "n_originated": 145,
+   "source_preview": "I have checked the /shared directory for any polynomial or calculus related code or notes, but I found only files about ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-5",
+   "source_entry": 27,
+   "source_turn": 7,
+   "target_entry": 11,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/polys.py",
+   "containment": 0.7273,
+   "coverage": 0.0475,
+   "jaccard": 0.4141,
+   "window_offset": 100,
+   "n_originated": 1790,
+   "source_preview": "\"\"\"\nPolynomial and Calculus Helper Module\n\nProvides polynomial arithmetic, evaluation, differentiation, integration,\nroo",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-5",
+   "source_entry": 33,
+   "source_turn": 10,
+   "target_entry": 11,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 0.625,
+   "coverage": 0.161,
+   "jaccard": 0.2969,
+   "window_offset": 350,
+   "n_originated": 708,
+   "source_preview": "# Polynomial and Calculus Helper\n\n## Overview\n\nThis Python module provides a comprehensive helper class `Polynomial` for",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-5",
+   "source_entry": 45,
+   "source_turn": 14,
+   "target_entry": 11,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 1.0,
+   "coverage": 0.9817,
+   "jaccard": 0.7266,
+   "window_offset": 100,
+   "n_originated": 219,
+   "source_preview": "echo '# Notes by agent3\n\nWe built a polynomial and calculus helper Python module in polys.py with these features:\n- Poly",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-5",
+   "source_entry": 49,
+   "source_turn": 16,
+   "target_entry": 11,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.72,
+   "coverage": 0.4344,
+   "jaccard": 0.4453,
+   "window_offset": 150,
+   "n_originated": 221,
+   "source_preview": "I have implemented a Python module polys.py that provides polynomial arithmetic (addition, subtraction, multiplication),",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-6",
+   "source_entry": 26,
+   "source_turn": 7,
+   "target_entry": 11,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.617,
+   "coverage": 0.3931,
+   "jaccard": 0.2188,
+   "window_offset": 300,
+   "n_originated": 145,
+   "source_preview": "I have checked the /shared directory for any polynomial or calculus related code or notes, but I found only files about ",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-6",
+   "source_entry": 27,
+   "source_turn": 7,
+   "target_entry": 11,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/polys.py",
+   "containment": 0.6818,
+   "coverage": 0.1218,
+   "jaccard": 0.2812,
+   "window_offset": 100,
+   "n_originated": 1790,
+   "source_preview": "\"\"\"\nPolynomial and Calculus Helper Module\n\nProvides polynomial arithmetic, evaluation, differentiation, integration,\nroo",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-6",
+   "source_entry": 33,
+   "source_turn": 10,
+   "target_entry": 11,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.7422,
+   "window_offset": -1,
+   "n_originated": 708,
+   "source_preview": "# Polynomial and Calculus Helper\n\n## Overview\n\nThis Python module provides a comprehensive helper class `Polynomial` for",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-6",
+   "source_entry": 45,
+   "source_turn": 14,
+   "target_entry": 11,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 0.8864,
+   "coverage": 0.5205,
+   "jaccard": 0.3125,
+   "window_offset": 150,
+   "n_originated": 219,
+   "source_preview": "echo '# Notes by agent3\n\nWe built a polynomial and calculus helper Python module in polys.py with these features:\n- Poly",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-3",
+   "target_run": "agent-6",
+   "source_entry": 49,
+   "source_turn": 16,
+   "target_entry": 11,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.7273,
+   "coverage": 0.4253,
+   "jaccard": 0.3281,
+   "window_offset": 100,
+   "n_originated": 221,
+   "source_preview": "I have implemented a Python module polys.py that provides polynomial arithmetic (addition, subtraction, multiplication),",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent3-README.md"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-5",
+   "source_entry": 24,
+   "source_turn": 4,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.36,
+   "coverage": 0.257,
+   "jaccard": 0.1641,
+   "window_offset": 350,
+   "n_originated": 179,
+   "source_preview": "I have reviewed the shared directory and found no relevant existing code or notes pertaining to a parking-garage simulat",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent4-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-5",
+   "source_entry": 25,
+   "source_turn": 4,
+   "target_entry": 19,
+   "artifact_type": "structured",
+   "channel": "heredoc",
+   "path": "/work/config.json",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.6875,
+   "window_offset": -1,
+   "n_originated": 674,
+   "source_preview": "{\n  \"levels\": 5,\n  \"spots_per_level\": 50,\n  \"vehicle_classes\": [\"motorcycle\", \"compact\", \"standard\", \"large\"],\n  \"spot_s",
+   "target_meta": {
+    "turn": 4,
+    "command": "cat /shared/agent4-config.json"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-5",
+   "source_entry": 29,
+   "source_turn": 6,
+   "target_entry": 13,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/garage.py",
+   "containment": 0.7018,
+   "coverage": 0.0597,
+   "jaccard": 0.4141,
+   "window_offset": 50,
+   "n_originated": 1507,
+   "source_preview": "\"\"\"\nParking Garage Simulator\n\nThis module simulates a multi-level parking garage with vehicle size-based spots, ticketin",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent4-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-5",
+   "source_entry": 29,
+   "source_turn": 6,
+   "target_entry": 19,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/garage.py",
+   "containment": 0.4146,
+   "coverage": 0.0431,
+   "jaccard": 0.1641,
+   "window_offset": 1700,
+   "n_originated": 1507,
+   "source_preview": "\"\"\"\nParking Garage Simulator\n\nThis module simulates a multi-level parking garage with vehicle size-based spots, ticketin",
+   "target_meta": {
+    "turn": 4,
+    "command": "cat /shared/agent4-config.json"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-5",
+   "source_entry": 33,
+   "source_turn": 8,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 0.6038,
+   "coverage": 0.1004,
+   "jaccard": 0.3359,
+   "window_offset": 50,
+   "n_originated": 807,
+   "source_preview": "# Parking Garage Simulator\n\n## Design\n\nThis parking garage simulator models a multi-level parking structure with fixed-s",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent4-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-5",
+   "source_entry": 35,
+   "source_turn": 9,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 0.6038,
+   "coverage": 0.1004,
+   "jaccard": 0.3359,
+   "window_offset": 50,
+   "n_originated": 807,
+   "source_preview": "# Parking Garage Simulator\n\n## Design\n\nThis parking garage simulator models a multi-level parking structure with fixed-s",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent4-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-5",
+   "source_entry": 43,
+   "source_turn": 13,
+   "target_entry": 13,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 1.0,
+   "coverage": 0.9681,
+   "jaccard": 0.7266,
+   "window_offset": 100,
+   "n_originated": 251,
+   "source_preview": "echo \"# Notes for Other Agents\\n\\nI have implemented a parking garage simulator in Python with the following files:\\n- g",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent4-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-5",
+   "source_entry": 47,
+   "source_turn": 15,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.675,
+   "coverage": 0.3923,
+   "jaccard": 0.3594,
+   "window_offset": 350,
+   "n_originated": 260,
+   "source_preview": "I have built a parking garage simulator in Python with these main components:\n\n- /work/garage.py: Implements a multi-lev",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent4-notes.md"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-6",
+   "source_entry": 24,
+   "source_turn": 4,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.5854,
+   "coverage": 0.3464,
+   "jaccard": 0.1641,
+   "window_offset": 400,
+   "n_originated": 179,
+   "source_preview": "I have reviewed the shared directory and found no relevant existing code or notes pertaining to a parking-garage simulat",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent4-README.md"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-6",
+   "source_entry": 29,
+   "source_turn": 6,
+   "target_entry": 13,
+   "artifact_type": "code",
+   "channel": "heredoc",
+   "path": "/work/garage.py",
+   "containment": 0.7636,
+   "coverage": 0.1208,
+   "jaccard": 0.3906,
+   "window_offset": 0,
+   "n_originated": 1507,
+   "source_preview": "\"\"\"\nParking Garage Simulator\n\nThis module simulates a multi-level parking garage with vehicle size-based spots, ticketin",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent4-README.md"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-6",
+   "source_entry": 33,
+   "source_turn": 8,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8047,
+   "window_offset": -1,
+   "n_originated": 807,
+   "source_preview": "# Parking Garage Simulator\n\n## Design\n\nThis parking garage simulator models a multi-level parking structure with fixed-s",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent4-README.md"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-6",
+   "source_entry": 35,
+   "source_turn": 9,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "heredoc",
+   "path": "/work/README.md",
+   "containment": 1.0,
+   "coverage": 1.0,
+   "jaccard": 0.8047,
+   "window_offset": -1,
+   "n_originated": 807,
+   "source_preview": "# Parking Garage Simulator\n\n## Design\n\nThis parking garage simulator models a multi-level parking structure with fixed-s",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent4-README.md"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-6",
+   "source_entry": 43,
+   "source_turn": 13,
+   "target_entry": 13,
+   "artifact_type": "terse",
+   "channel": "bash_command",
+   "path": null,
+   "containment": 0.6,
+   "coverage": 0.3227,
+   "jaccard": 0.1875,
+   "window_offset": 100,
+   "n_originated": 251,
+   "source_preview": "echo \"# Notes for Other Agents\\n\\nI have implemented a parking garage simulator in Python with the following files:\\n- g",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent4-README.md"
+   }
+  },
+  {
+   "source_run": "agent-4",
+   "target_run": "agent-6",
+   "source_entry": 47,
+   "source_turn": 15,
+   "target_entry": 13,
+   "artifact_type": "prose",
+   "channel": "text",
+   "path": null,
+   "containment": 0.7115,
+   "coverage": 0.4038,
+   "jaccard": 0.3516,
+   "window_offset": 100,
+   "n_originated": 260,
+   "source_preview": "I have built a parking garage simulator in Python with these main components:\n\n- /work/garage.py: Implements a multi-lev",
+   "target_meta": {
+    "turn": 1,
+    "command": "cat /shared/agent4-README.md"
+   }
+  }
+ ],
+ "matrix": {
+  "runs": [
+   "agent-0",
+   "agent-1",
+   "agent-2",
+   "agent-3",
+   "agent-4",
+   "agent-5",
+   "agent-6",
+   "agent-7"
+  ],
+  "matrix": [
+   [
+    0,
+    8,
+    10,
+    8,
+    6,
+    6,
+    6,
+    6
+   ],
+   [
+    0,
+    0,
+    5,
+    6,
+    5,
+    5,
+    4,
+    6
+   ],
+   [
+    0,
+    0,
+    0,
+    7,
+    6,
+    0,
+    5,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    12,
+    5,
+    5,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    8,
+    6,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ]
+ }
+}

@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+data/runs/*/agent-*/work/
+data/runs/*/agent-*/solo/
+data/runs/*/shared/
+data/runs/smoke/
+data/rederived/cases/
+.DS_Store

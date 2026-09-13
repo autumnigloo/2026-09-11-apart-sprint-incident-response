@@ -1,0 +1,11 @@
+{
+ "agents": 8,
+ "turns": 25,
+ "shared": false,
+ "arm": "unspecified",
+ "tasks_file": "tasks_solo_long.txt",
+ "same_task": 0,
+ "model": "gpt-4.1-mini",
+ "stagger": 0.0,
+ "started": 1789246620.354801
+}

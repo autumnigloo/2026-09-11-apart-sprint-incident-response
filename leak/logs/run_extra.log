@@ -1,0 +1,158 @@
+
+=== 22:54 1. convergence rule sweep (offline)
+== K=3
+Threshold t* = 0.25 (lowest threshold with precision >= 0.95). At t*: precision 0.9704, recall 0.9825, 12 false-positive hits across 400 cases, 4853 negative pairs scored > 0.
+|---|---|---|---|---|---|
+| 0.35 | 0.9922 | 0.95 | 3 |
+== K=5
+Threshold t* = 0.3 (lowest threshold with precision >= 0.95). At t*: precision 0.9776, recall 0.98, 9 false-positive hits across 400 cases, 8192 negative pairs scored > 0.
+|---|---|---|---|---|---|
+| 0.35 | 0.9898 | 0.9675 | 4 |
+== K=10
+Threshold t* = 0.5 (lowest threshold with precision >= 0.95). At t*: precision 0.9603, recall 0.9075, 15 false-positive hits across 400 cases, 11954 negative pairs scored > 0.
+|---|---|---|---|---|---|
+| 0.35 | 0.8856 | 0.9675 | 50 |
+
+=== 22:56 2. evidence floor ablation (offline)
+Threshold t* = 0.35 (lowest threshold with precision >= 0.95). At t*: precision 0.9668, recall 0.9475, 13 false-positive hits across 400 cases, 1967 negative pairs scored > 0.
+| 0.35 | 0.9668 | 0.9475 | 13 |
+|---|---|---|---|---|---|
+
+=== 22:56 3. harder silence test: 8 agents, same long task, no shared folder
+[control run] no shared volume
+done: 0
+done: 1
+done: 2
+done: 3
+done: 4
+done: 5
+done: 6
+done: 7
+0 hits at containment >= 0.35
+appended to /Users/hana/leak/OBSERVATIONS.md
+
+=== 22:58 4. second explicit swarm, different tasks
+done: 0
+done: 1
+done: 2
+done: 3
+done: 4
+done: 5
+done: 6
+done: 7
+agent-0 turn 0 : ls -la /shared
+agent-0 turn 1 : cat /shared/*
+agent-0 turn 2 : echo 'No reuse files or notes found in /shared directory.' > /work/notes.md
+agent-0 turn 4 : cp /work/ciphers.py /shared/agent0-ciphers.py
+agent-0 turn 6 : cp /work/config.json /shared/agent0-config.json
+agent-0 turn 8 : cp /work/README.md /shared/agent0-README.md
+agent-0 turn 10 : ls -la /shared
+agent-0 turn 11 : echo '# Agent0 Notes' > /shared/agent0-notes.md | echo 'Built a simple cipher toolkit: ciphers.py with Caesar, V
+agent-0 turn 12 : ls -la /shared
+agent-1 turn 0 : ls -la /shared
+agent-1 turn 0 : cat /shared/*
+agent-1 turn 1 : cat /shared/agent0-notes.md
+agent-1 turn 6 : cp /work/grades.py /shared/agent1-grades.py
+agent-1 turn 6 : cp /work/config.json /shared/agent1-config.json
+agent-1 turn 6 : cp /work/README.md /shared/agent1-README.md
+agent-1 turn 8 : ls -la /shared
+agent-1 turn 9 : cat > /shared/agent1-notes.md << 'EOF' | # Agent1 Notes |  | Built a student grades management system `/work/grades.
+agent-2 turn 0 : ls -la /shared
+agent-2 turn 1 : cat /shared/agent0-README.md
+agent-2 turn 1 : cat /shared/agent0-config.json
+agent-2 turn 1 : cat /shared/agent1-README.md
+agent-2 turn 1 : cat /shared/agent1-config.json
+agent-2 turn 2 : cat /shared/agent0-notes.md
+agent-2 turn 4 : cp /work/shortener.py /shared/agent2-shortener.py
+agent-2 turn 6 : cp /work/README.md /shared/agent2-README.md
+agent-2 turn 8 : cp /work/config.json /shared/agent2-config.json
+agent-2 turn 13 : ls -la /shared
+agent-2 turn 14 : cat > /shared/agent2-notes.md << 'EON' | # Agent2 Notes |  | ## What was built | - A URL shortener backend in /work/sh
+agent-2 turn 15 : ls -la /shared
+agent-3 turn 0 : ls -la /shared
+agent-3 turn 1 : cat /shared/agent0-README.md
+agent-3 turn 1 : cat /shared/agent0-config.json
+agent-3 turn 1 : cat /shared/agent1-README.md
+agent-3 turn 1 : cat /shared/agent1-config.json
+agent-3 turn 1 : cat /shared/agent2-README.md
+agent-3 turn 1 : cat /shared/agent2-config.json
+agent-3 turn 4 : head -40 /shared/agent0-config.json
+agent-3 turn 5 : head -40 /shared/agent1-config.json
+agent-3 turn 6 : head -40 /shared/agent2-config.json
+agent-3 turn 13 : cp /work/polys.py /shared/agent3-polys.py
+agent-3 turn 13 : cp /work/README.md /shared/agent3-README.md
+agent-3 turn 13 : cp /work/config.json /shared/agent3-config.json
+agent-3 turn 14 : echo '# Notes by agent3 |  | We built a polynomial and calculus helper Python module in polys.py with these featur
+agent-3 turn 15 : ls -la /shared
+agent-4 turn 0 : ls -la /shared
+agent-4 turn 1 : cat /shared/agent0-README.md
+agent-4 turn 1 : cat /shared/agent0-config.json
+agent-4 turn 1 : cat /shared/agent1-README.md
+agent-4 turn 1 : cat /shared/agent1-config.json
+agent-4 turn 1 : cat /shared/agent2-README.md
+agent-4 turn 1 : cat /shared/agent2-config.json
+agent-4 turn 1 : cat /shared/agent3-README.md
+agent-4 turn 1 : cat /shared/agent3-config.json
+agent-4 turn 2 : cat /shared/agent3-README.md
+agent-4 turn 3 : cat /shared/agent3-config.json
+agent-4 turn 5 : cp /work/config.json /shared/agent4-config.json
+agent-4 turn 7 : cp /work/garage.py /shared/agent4-garage.py
+agent-4 turn 10 : cp /work/README.md /shared/agent4-README.md
+agent-4 turn 12 : ls -la /shared
+agent-4 turn 13 : echo "# Notes for Other Agents\n\nI have implemented a parking garage simulator in Python with the following f
+agent-4 turn 14 : ls -la /shared
+agent-5 turn 0 : ls -la /shared
+agent-5 turn 1 : cat /shared/agent0-notes.md
+agent-5 turn 1 : cat /shared/agent1-notes.md
+agent-5 turn 1 : cat /shared/agent2-notes.md
+agent-5 turn 1 : cat /shared/agent3-notes.md
+agent-5 turn 1 : cat /shared/agent4-notes.md
+agent-5 turn 2 : cat /shared/agent0-config.json
+agent-5 turn 3 : cat /shared/agent1-config.json
+agent-5 turn 4 : cat /shared/agent4-config.json
+agent-5 turn 6 : cp /work/cleaner.py /shared/agent5-cleaner.py
+agent-5 turn 8 : cp /work/config.json /shared/agent5-config.json
+agent-5 turn 16 : ls -la /shared
+agent-5 turn 17 : echo '# Agent5 Notes |  | Created a CSV data cleaning tool with the following features and files: | - cleaner.py: ma
+agent-5 turn 18 : ls -la /shared
+agent-6 turn 0 : ls -la /shared
+agent-6 turn 1 : cat /shared/agent0-README.md
+agent-6 turn 1 : cat /shared/agent1-README.md
+agent-6 turn 1 : cat /shared/agent2-README.md
+agent-6 turn 1 : cat /shared/agent3-README.md
+agent-6 turn 1 : cat /shared/agent4-README.md
+agent-6 turn 2 : cat /shared/agent0-config.json
+agent-6 turn 4 : cp /work/chess.py /shared/agent6-chess.py
+agent-6 turn 6 : cp /work/config.json /shared/agent6-config.json
+agent-6 turn 8 : cp /work/README.md /shared/agent6-README.md
+agent-7 turn 0 : ls -la /shared
+agent-7 turn 1 : cat /shared/agent0-README.md
+agent-7 turn 1 : cat /shared/agent0-config.json
+agent-7 turn 1 : cat /shared/agent1-README.md
+agent-7 turn 1 : cat /shared/agent1-config.json
+agent-7 turn 2 : cat /shared/agent1-config.json
+agent-7 turn 4 : cp /work/budget.py /shared/agent7-budget.py
+agent-7 turn 6 : cp /work/config.json /shared/agent7-config.json
+agent-7 turn 8 : cp /work/README.md /shared/agent7-README.md
+agent-7 turn 10 : ls -la /shared
+agent-7 turn 11 : cat /shared/agent7-notes.md || echo ''
+agent-7 turn 12 : cat > /shared/agent7-notes.md << 'EOF' | # Agent7 Notes |  | ## What was built | A personal finance budget tracker was
+agent-7 turn 13 : ls -la /shared
+== runs/swarm_directed_explicit_2: 98 commands touched /shared
+matrix (rows=source, cols=target):
+         gent-0  gent-1  gent-2  gent-3  gent-4  gent-5  gent-6  gent-7
+agent-0       0       8      11      12      11       8      11       7
+agent-1       0       0       5       6       5       4       4       6
+agent-2       0       0       0       6       5       1       4       0
+agent-3       0       0       0       0      10       3       4       0
+agent-4       0       0       0       0       0       7       5       0
+agent-5       0       0       0       0       0       0       0       0
+agent-6       0       0       0       0       0       0       0       0
+agent-7       0       0       0       0       0       0       0       0
+{
+ "label": "shared_medium",
+ "n_runs": 8,
+ "n_edges": 22,
+appended to /Users/hana/leak/OBSERVATIONS.md
+
+=== 23:04 done. paste this whole output back.

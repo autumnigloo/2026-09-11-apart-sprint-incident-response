@@ -1,0 +1,68 @@
+
+=== 22:36 code fingerprint (final versions)
+53d5609745a3417826b399693c61edb9
+e261ebb4be961545bf8571d2aaae7b60
+d35afa8a9bcacd5a92bde55dd86c189c
+108b0de5998bef495e50c7b2127ecb1e
+
+=== 22:36 1. re-plant the 400 cases from the raw corpus and compare with the scored cases
+cases scored: 400  re-planted: 400  identical: 400
+
+=== 22:37 2. re-score the original cases with the final detector
+
+=== 22:47 3. detector on every run directory
+corpus_all: 0 hits at 0.35 (0 commands)
+a0: 0 hits at 0.35 (0 commands)
+a0_long: 0 hits at 0.35 (0 commands)
+swarm_unspecified: 0 hits at 0.35 (0 commands)
+swarm_prohibited: 0 hits at 0.35 (0 commands)
+swarm_directed: 0 hits at 0.35 (0 commands)
+swarm_unspecified_gpt41: 0 hits at 0.35 (0 commands)
+swarm_prohibited_gpt41: 0 hits at 0.35 (0 commands)
+swarm_unspecified_gpt41_impossible: 0 hits at 0.35 (0 commands)
+swarm_directed_explicit: 18 edges: direct 17, two-hop 1; backward edges: 0
+swarm_directed_explicit without origination: 21 edges: direct 17, unknown 4; backward edges: 0
+   label shared_medium broadcasters ['agent-0', 'agent-1', 'agent-3']
+swarm_directed_explicit_2: 22 edges: direct 21, two-hop 1; backward edges: 0
+swarm_directed_explicit_2 without origination: 21 edges: direct 21; backward edges: 0
+   label shared_medium broadcasters ['agent-0', 'agent-1', 'agent-2', 'agent-3']
+
+=== 22:47 4. NUMBERS to compare with RESULTS.md
+-- main (containment, K=2, floor 40):
+Threshold t* = 0.2 At t*: precision 0.985, recall 0.9875, 6 false-positive hits across 400 cases, 1967 negative pairs scored > 0.
+| 0.35 | 1.0 | 0.9275 | 0 |
+| 0.2 | 0.985 | 0.9875 | 6 |
+| 0.7 | 1.0 | 0.71 | 0 |
+   verbatim prose at 0.35:
+| prose | 0.40 (n=5) | 1.00 (n=5) | 1.00 (n=5) | 1.00 (n=5) | 1.00 (n=5) |
+| dir | runs | t=0.5 | t=0.7 | t=0.9 |
+|---|---|---|---|---|
+| data/runs/corpus_all | 40 | 0 | 0 | 0 |
+-- jaccard:
+Threshold t* = 0.15 At t*: precision 1.0, recall 0.9575, 0 false-positive hits across 400 cases, 1967 negative pairs scored > 0.
+| 0.1 | 0.9493 | 0.9825 | 21 |
+| 0.7 | 1.0 | 0.235 | 0 |
+-- no origination:
+Threshold t* = 0.2 At t*: precision 0.995, recall 0.99, 2 false-positive hits across 400 cases, 2257 negative pairs scored > 0.
+-- no convergence:
+Threshold t* = 0.3 At t*: precision 0.9563, recall 0.985, 18 false-positive hits across 400 cases, 12081 negative pairs scored > 0.
+| 0.35 | 0.9749 | 0.97 | 10 |
+-- no floor:
+| 0.35 | 0.9668 | 0.9475 | 13 |
+| prose | 0.60 (n=5) | 1.00 (n=5) | 1.00 (n=5) | 1.00 (n=5) | 1.00 (n=5) |
+-- K=3:
+| 0.35 | 0.9922 | 0.95 | 3 |
+| prose | 0.80 (n=5) | 1.00 (n=5) | 1.00 (n=5) | 1.00 (n=5) | 1.00 (n=5) |
+-- K=5:
+| 0.35 | 0.9898 | 0.9675 | 4 |
+| prose | 1.00 (n=5) | 1.00 (n=5) | 1.00 (n=5) | 1.00 (n=5) | 1.00 (n=5) |
+-- K=10:
+| 0.35 | 0.8856 | 0.9675 | 50 |
+| prose | 1.00 (n=5) | 1.00 (n=5) | 1.00 (n=5) | 1.00 (n=5) | 1.00 (n=5) |
+-- originated-fraction bands (main):
+| 0.25-0.50 | 163 | 0.99 |
+| 0.50-0.75 | 154 | 0.99 |
+| 0.75-1.00 | 11 | 1.00 |
+
+
+=== 22:47 done. compare against RESULTS.md; paste this log back if anything differs.
