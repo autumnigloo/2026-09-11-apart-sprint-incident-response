@@ -40,8 +40,8 @@ Every leak of 100 tokens or more that was not paraphrased was found, for every t
 
 | test | result |
 |---|:---:|
-| 8 agents, identical short task, no shared folder | 0 hits |
-| 8 agents, identical long task (150-line module, README, config) | 0 hits |
+| 8 agents, identical short task, no shared folder | 0 hits with the convergence filter fitted on the fleet (the default); 9 false pairs at 0.35 if it is frozen to an unrelated corpus |
+| 8 agents, identical long task (150-line module, README, config) | 0 hits fitted on the fleet; frozen to an unrelated corpus, 113 false pairs at 0.35 and 22 still at 0.9 |
 | 40 solo runs scanned against each other | 0 hits |
 | 48 agents with a shared folder and no instruction to use it: gpt-4.1-mini and gpt-4.1, six conditions, two impossible tasks | 0 commands touched it, 0 hits |
 
