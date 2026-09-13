@@ -1,262 +1,317 @@
 <!--
-  Apart Research sprint report. Structure mirrors the Google Doc template so
-  sections can be pasted back one at a time.
+  Apart Research sprint report. Section structure follows the official Google Doc
+  template so each section can be pasted back one at a time:
+  https://docs.google.com/document/d/1PQBlhI3tM5vb51x7jBWXBQMYg6hkiU_x8RaCws4kjl4/copy
 
-  Template rules worth keeping in view:
+  Template rules, to delete along with all guidance before submitting:
+    - Replace the italicized guidance under each heading with your content.
+      The structure is strong guidance, not rigid; adapt it if the project needs to.
     - Recommended length: 4 pages excluding references and appendix.
-      Rough guide: Intro + Related Work 1p, Methods + Results 2.5p,
-      Discussion 0.5p.
-    - Guidance text (these HTML comments) gets deleted before submission.
-    - Judged on the written report; rubric:
+      Rough guide: Intro + Related Work 1p, Methods + Results 2.5p, Discussion 0.5p.
+    - Judged on the written report. Rubric:
       https://apartresearch.notion.site/sprint-evaluation-rubric
-    - At least one figure strongly encouraged; number and caption everything.
+    - Figures: number everything (Figure 1, Table 1...), captions that stand alone,
+      place them near first reference, and make sure text in figures is legible.
+    - Apart strongly encourages the final version be primarily written by the team.
 
-  STATUS: outline. Bullets are content notes, not prose. Numbers in [brackets]
-  are verified against the repo; numbers marked (pending) are still running.
+  STATUS: outline. Bullets are content notes, not prose. Numbers in [brackets] are
+  verified against the repo. Sections marked (+) are additions to the template.
 -->
 
 # Who Leaked to Whom: Recovering Cross-Run Contamination from Agent Transcripts Alone
 
-| TODO: your name | Claude Opus 5 |
-|---|---|
-| Independent | Anthropic |
+| TODO: your name |
+|---|
+| Independent |
 
-With **Apart Research**. Research conducted at the
-[Incident Response Research Sprint](https://apartresearch.com/sprints),
-11–13 September 2026.
+**With Apart Research.** Incident Response Research Sprint, 11–13 September 2026.
 
-<!-- TODO: confirm the sprint's exact title and URL. -->
+<!-- TODO: confirm sprint title/URL. Add co-authors and affiliations if any. -->
 
 ## Abstract
 
 <!--
-  150-250 words. Cover: the problem, the approach, key results, main takeaway.
-  Write this LAST -- it should reflect final results, not the initial plan.
+  150-250 words. Cover: the problem, the approach, key results, the main takeaway.
+  Polish it last — it should reflect final results, not the initial plan.
 -->
 
 - Problem: eval harnesses run many agents in parallel against a shared cache,
-  proxy or folder, promise per-task isolation, and offer no way to check it.
-- Approach: detect leaks from the transcripts alone — no model access, no
-  instrumentation, no watermark. Credit each span to its first author.
-- Headline results: [371/400] planted leaks recalled at precision [1.000];
-  [40/40] live swarm edges recovered with [0] backward and [0] spurious;
-  [0] hits across [48] agent-runs where nothing could have leaked.
-- Takeaway: attribution, not just detection — the detector names the source
-  run correctly [371/371] among 39 candidates and [269/269] among 7 agents
-  that wrote the same files.
-- Methodological result worth its own line: the planted benchmark cannot
-  measure either filter. Both look redundant on 685 labelled cases and both
-  are load-bearing on the live swarms (§4.7).
+  proxy or folder, promise per-task isolation, and give no way to audit it.
+- Approach: detect leaks from transcripts alone — no model access, no
+  instrumentation, no watermark — and credit each span to its first author.
+- Key results: [371/400] planted leaks at precision [1.000]; [40/40] live swarm
+  edges with [0] backward and [0] spurious; [0] hits across [48] agent-runs
+  where nothing could have leaked; correct source named [371/371] among 39
+  candidates and [269/269] among 7 agents that wrote the same files.
+- Takeaway: attribution, not just detection — and the benchmark that validates
+  the score cannot validate the filters that make attribution work.
 
 ## 1. Introduction
 
+<!--
+  What problem, why it matters, why it is practically valuable. Enough background
+  to follow the work. Describe the threat model or failure mode.
+-->
+
 - The isolation gap: harnesses assert per-task isolation; nothing audits it.
-- Why it matters now: parallel agent evaluation is standard, and a shared
-  medium (cache, proxy, `/tmp`, a mounted folder) is the normal case.
-- Threat model is **non-adversarial**: unintended leaks, not an agent
-  deliberately laundering identifiers. State this early and plainly.
-- Contribution list: (1) a transcript-only detector with two ordered filters,
-  (2) a 400-case planted benchmark, (3) live swarm topology recovery,
-  (4) a measured comparison against keyed watermarking.
+- Why now: parallel agent evaluation is standard, and a shared medium (cache,
+  proxy, `/tmp`, a mounted volume) is the normal deployment, not the exception.
+- Threat model, stated plainly and early: **non-adversarial**. Unintended
+  leakage between concurrent runs, not an agent deliberately laundering what it
+  copies. An agent that renamed identifiers would defeat this.
+- Why an outside evaluator cannot use the obvious alternative: watermarking
+  needs logit access, which only the lab serving the model has.
+
+***Our main contributions are:***
+
+1. A transcript-only cross-run leak detector that needs no model access and no
+   harness cooperation, built on two ordered filters plus an evidence floor.
+2. A labelled benchmark of [400] planted leaks across [4] artifact types, [5]
+   lengths and [4] transformations, plus [285] cases planted on near-identical
+   sources, with first-author attribution measured rather than assumed.
+3. Recovery of the true communication topology from two live agent swarms
+   ([40] edges, [0] backward), verified against transcript reads by script.
+4. A measured comparison against keyed watermarking on matched artifacts, and
+   the result that a planted benchmark cannot measure either filter — both look
+   redundant on [685] labelled cases and both are load-bearing on live runs.
 
 ## 2. Related Work
 
-- Near-duplicate detection / MinHash + shingling lineage; why a document-level
-  Jaccard threshold is the wrong instrument for an embedded leak (§6).
-- LLM watermarking: Kirchenbauer et al. green-list scheme; what it requires
-  (logit access) and why an outside evaluator can never apply it.
-- Benchmark contamination literature — related but distinct: contamination is
-  train/test overlap, this is run-to-run overlap at inference time.
-- Provenance and first-author attribution.
-<!-- TODO: real citations; the repo currently cites only KGW. -->
+<!--
+  Most similar prior work and how this differs. What gap does this address?
+  When and why would someone use this over the state of the art?
+  What insight does it provide that we did not have before?
+-->
+
+- Shingling and MinHash near-duplicate detection: the machinery is standard;
+  the contribution is what gets *subtracted* before comparison.
+- Why a document-level Jaccard threshold is the wrong instrument here: a
+  100-char leak inside a 3,000-char tool output has Jaccard ≈ 0.03 by
+  construction (§4.5).
+- LLM watermarking (Kirchenbauer et al.): requires logit access; measured here
+  as the alternative an evaluator cannot actually deploy.
+- Benchmark contamination: related but distinct — train/test overlap, versus
+  run-to-run overlap at inference time.
+- When to use this instead: when you hold transcripts but not the model, and
+  you need to name the source run, not just flag a collision.
+<!-- TODO: real citations. The repo currently cites only KGW. -->
 
 ## 3. Methods
+
+<!--
+  Replicable detail. Key design choices, justified. Models, datasets, tools and
+  why. Key parameters. What you tried that did not work.
+-->
 
 ### 3.1 Harness and corpora
 
 - One model instance per Docker container, `--network none`, 512 MB, 1 CPU,
   private `/work`, optional shared `/shared`.
-- JSONL transcripts, every entry tagged INGRESS (prompt, tool output) or
-  EGRESS (assistant text, bash command).
+- JSONL transcripts, every entry tagged INGRESS (prompt, tool output) or EGRESS
+  (assistant text, bash command). That tagging is what makes origination
+  decidable.
 - Models: gpt-4.1-mini; containment arms also gpt-4.1.
-- Corpora: [40] solo runs (20 short, 20 long tasks); same-task baselines at
-  [8] agents; four shared-folder swarm arms.
+- Corpora: [40] solo runs (20 short, 20 long tasks); same-task baselines at [8]
+  agents each; four shared-folder swarm arms.
 
 ### 3.2 The detector
 
 - Character 5-grams after NFKC normalisation; 100-char source windows.
-- **Origination filter** (source side): subtract every shingle that entered
-  the run's context before the span was emitted. Causal, one accumulating set.
+- **Origination filter** (source side): subtract every shingle that entered the
+  run's context before the span was emitted. Causal — it only looks backwards.
 - **Convergence filter** (cross-run, K=2): drop shingles that K or more runs
   originated independently. Removed [17,313] shingles on the solo corpus,
   [8,126] on the same-task corpus.
-- **Evidence floor**: containment = |∩| / max(|window|, 40).
-- Order is load-bearing — see §4.3 and Figure 3.
-- Decision score is containment, not Jaccard, because its threshold has a
-  stable meaning across tool-output lengths (§4.5).
+- **Evidence floor**: containment = |∩| / max(|window|, 40), so a window reduced
+  to a dozen generic shingles cannot score 1.0.
+- Order is load-bearing: convergence counts originators, so a receiver's
+  re-emission must already have been stripped (§4.3).
+- Decision score is containment, not Jaccard, because its threshold keeps a
+  stable meaning across tool-output lengths.
 
-### 3.3 Experiment A — planted leaks
+### 3.3 Experiments
 
-- [4] artifact types × [5] lengths (25–500 tokens) × [4] transformations ×
-  [5] replicates = [400] cases.
-- Transformations: verbatim, reformatted, truncated to 60%, paraphrased by
-  the same model.
-- Every run is solo, so a hit on the injected entry is correct by
-  construction and any other hit is a false alarm.
+- **A — planted leaks**: [4] types × [5] lengths (25–500 tokens) × [4]
+  transformations × [5] replicates = [400]. Every run is solo, so a hit on the
+  injected entry is correct by construction and any other hit is a false alarm.
+- **B — live swarm**: [8] agents coordinating through `/shared`, started 45s
+  apart, run twice. Ground truth is every `cat`/`head`/`tail` of another agent's
+  file; edges checked by `verify_edges.py`, not by eye.
+- **C — watermark alternative**: KGW green-list on Qwen2.5-0.5B-Instruct,
+  gamma 0.25, delta 2.0; empirical null from [5,120] scores.
 
-### 3.4 Experiment B — live swarm
+### 3.4 What did not work
 
-- [8] agents told to coordinate through `/shared`, started 45s apart, run
-  twice on different task sets.
-- Ground truth: every `cat`/`head`/`tail` of another agent's file, extracted
-  by `shared_usage.py`; edges checked by `verify_edges.py`, not by eye.
+<!-- The template asks for this explicitly, and it is real evidence of rigour. -->
 
-### 3.5 Experiment C — the watermark alternative
-
-- Keyed green-list watermark (KGW) on Qwen2.5-0.5B-Instruct, gamma 0.25,
-  delta 2.0. Could not run on the agents — needs logits.
-- Empirical null from [5,120] scores; why the textbook 1% threshold fails.
+- The a-priori configuration (MinHash Jaccard ≥ 0.7) recalls [23.5%] — wrong
+  instrument, not a wrong idea (§4.5).
+- A textbook MinHash implementation that was silently incorrect.
+- The first corpus contained no span over 200 tokens, so the length sweep had
+  no top end.
+- The first version of the score had no evidence floor and rated generic text
+  at 1.0.
+- The first "coordinate via `/shared`" instruction was too weak for any agent
+  to act on, producing an empty swarm.
+- All visible in `OBSERVATIONS.md`, the dated lab notebook.
 
 ## 4. Results
 
 <!--
-  Findings with evidence. Separate observation from interpretation.
-  Figures numbered with self-contained captions.
-  Available figures: docs/img/{pipeline,scoreboard,topology_run1,compare}.svg
-  TODO: convert to PNG for the Google Doc paste.
+  Findings with evidence; separate observation from interpretation. Argue
+  robustness: enough data? significant? stable under design changes?
+  Figures: docs/img/{pipeline,scoreboard,topology_run1,compare}.svg
+  TODO: convert to PNG and check legibility at Doc size.
 -->
 
 ### 4.1 Planted leaks are found
 
-- PR table at thresholds 0.20 / 0.35 / 0.70; operating point t = 0.35 gives
-  precision [1.000], recall [0.9275], [0] false-alarm pairs.
+- t = 0.35: precision [1.000], recall [0.9275], [0] false-alarm pairs.
+  Wilson 95% CI on recall [89.8–94.9].
 - Every leak ≥100 tokens that was not paraphrased was recalled, all 4 types.
-- Table 1: recall per (type × length) for each transformation.
+- **Table 1**: recall per (type × length) for each transformation.
+- Robustness: [5] replicates per cell means cell values move in steps of 0.2 —
+  argue from the aggregate, not the cell.
 
 ### 4.2 Unrelated runs are silent
 
 - [0] hits across [48] agent-runs, two models, six shared-folder conditions.
 - [0] on 40 solo runs scanned against each other; [0] on both same-task
-  baselines (short and long task).
+  baselines.
 - Observation worth its own sentence: under an unsatisfiable dependency,
   gpt-4.1 probed the closed network path (pip, ping, nslookup, resolv.conf,
   apt-get) and never the open shared folder.
 
 ### 4.3 Real transmissions produce the right map
 
-- Two staggered swarms: [40] directed edges, [38] direct, [2] two-hop,
-  [0] spurious, [0] backward.
-- Figure: recovered topology of run 1.
+- **Figure 1**: recovered topology, swarm run 1.
+- Two staggered swarms: [40] edges, [38] direct, [2] two-hop, [0] spurious,
+  [0] backward.
 - Ablation: without origination, [4] edges appear that match no read, the
   two-hop edge is lost, and one edge inflates [5 → 14] pairs.
 
 ### 4.4 Source attribution is exact
 
-- [371/371] recalled leaks attributed to the true source among 39 candidates.
-- [269/269] among 7 near-identical candidates (same-task benchmark).
-- This is what makes cross-organisational use possible: a lab can answer
-  "did text from your run reach ours" from originated hash sets alone.
+- [371/371] among 39 candidates; [269/269] among 7 near-identical candidates.
+- Interpretation: this is what makes cross-organisational use possible — a lab
+  can answer "did text from your run reach ours" from originated hash sets
+  alone, without exchanging transcripts.
 
 ### 4.5 Jaccard was mis-calibrated, not wrong
 
-- The a-priori config (Jaccard ≥ 0.7) recalls [23.5%]; calibrated to 0.15 it
-  recalls [95.75%] at precision 1.0.
-- Structural reason: a 100-char leak inside a 3,000-char tool output has
-  Jaccard ≈ 0.03 by construction.
+- Jaccard ≥ 0.7 recalls [23.5%]; calibrated to 0.15, [95.75%] at precision 1.0.
+- Interpretation: containment buys a threshold with a stable meaning, not
+  better accuracy.
 
 ### 4.6 Watermarking, measured on matched artifacts
 
+- **Figure 2**: entropy by type, detection by length, key-count FPR.
 - [20–40%] detection at 50 tokens for code/JSON/shell; [70–100%] from 100.
-- False alarms rise [1% → 15.6%] when one text is scanned against 32 keys.
-- Hashing needs no model access and its false-alarm rate does not grow with
-  the number of parallel runs.
+- False alarms [1% → 15.6%] scanning against 32 keys; hashing has no per-run
+  key, so its false-alarm rate does not grow with the number of runs.
 
 ### 4.7 A planted benchmark cannot measure the filters
 
-<!-- Added after the main study. Full tables in RESULTS.md section 9. -->
-
-- Setup: a 2×2 (and beyond) over {convergence K = 2, 3, 5, off} × {target-side
-  origination filter on, off}, scored on both benchmarks, the three negative
-  sets, and both live swarms.
-- On the benchmarks the target filter dominates: false alarms to [0] in every
-  K, attribution never wrong, recall up to [0.9700] with convergence off
-  against [0.9275] shipped. Read alone, this says convergence is redundant.
-- It is not. On the live swarms, where a backward edge is impossible by
-  construction (agents start 45s apart), convergence-off gives [10] and [17]
-  backward edges, K=5 gives [9] and [12], K=3 gives [2] and [4]. Only K=2
-  gives [0].
-- The benchmark is blind to this because every planted case is a pair of solo
-  runs with one injected entry — convergent boilerplate has no third party to
-  invent an edge between. §5 already says the benchmark cannot measure the
-  origination filter; the same holds for convergence.
-- Generalisable claim for the report: **a precision/recall benchmark built
-  from planted leaks measures the score, not the filters.** Filter value has
-  to be measured on live runs against a structural ground truth.
-- The target filter itself: monotone, free, and at K=2 changes nothing
-  measurable. Kept off by default as defence in depth.
+- Design: {convergence K = 2, 3, 5, off} × {target-side origination filter on,
+  off}, scored on both benchmarks, three negative sets, and both live swarms.
+- **Table 2** (benchmarks): the target filter dominates — false alarms to [0]
+  at every K, attribution never wrong, recall up to [0.9700] with convergence
+  off against [0.9275] shipped. Read alone, this says convergence is redundant.
+- **Table 3** (live swarms): it is not. A backward edge is impossible by
+  construction (45s stagger), and convergence-off gives [10] and [17] backward
+  edges, K=5 gives [9] and [12], K=3 gives [2] and [4]. Only K=2 gives [0].
+- Mechanism: every planted case is a pair of solo runs with one injected entry,
+  so convergent boilerplate has no third party to invent an edge between.
+- Generalisable claim: **a precision/recall benchmark built from planted leaks
+  measures the score, not the filters.** Filter value has to be measured on live
+  runs against a structural ground truth.
+- This also corrects our own earlier advice that a recall-hungry harness should
+  run K=5.
 
 ## 5. Discussion and Limitations
 
-- What the detector buys an evaluator: an audit that needs no cooperation
-  from the model or the harness vendor.
-- Why attribution matters more than detection for the cross-lab use case.
+<!-- Broader implications for AI safety. What do the results mean? -->
+
+- What an evaluator gains: an isolation audit that needs no cooperation from the
+  model provider or the harness vendor — only the transcripts they already hold.
+- Attribution matters more than detection for the cross-lab case, and it is the
+  part that prior tooling does not provide.
+- Safety framing: isolation failures silently corrupt eval results that feed
+  deployment decisions. A cheap audit is worth more than a perfect one nobody
+  can run.
+- (+) Dual use: the same machinery fingerprints an agent's output. The asymmetry
+  that limits misuse is that it needs transcripts the auditor already holds.
 
 ### Limitations
 
-- Non-adversarial threat model; renamed identifiers defeat it.
+<!--
+  Template asks explicitly: state the assumptions, and how interpretation would
+  change if each did not hold.
+-->
+
+- **Assumption: non-adversarial agents.** If false, the method degrades sharply —
+  renamed identifiers defeat it. Nothing here is a claim about adversarial
+  contamination.
+- **Assumption: INGRESS/EGRESS tagging is available and correct.** If a harness
+  cannot distinguish what a run read from what it wrote, the origination filter
+  is unavailable and, per §4.3, the map is wrong without it.
+- **Assumption: enough concurrent runs to estimate convergence from.** K=2 is
+  estimated from the corpus; with 2–3 runs there is almost no statistical power.
+  Untested.
 - Smallest detectable unit ≈ 40 characters of originated text.
-- [5] planted leaks per cell; cell values move in steps of 0.2.
-- One model wrote the corpus and the paraphrases; two models used only for
-  the silence claim.
-- Read-back laundering: a run that reads its own file back keeps only its
-  first emission as its own.
-- Experiment B demonstrates topology recovery on instructed transmissions; it
+- [5] planted leaks per cell; K=2 and the floor of 40 were first settings that
+  happened to be zero-false-alarm, and nothing was cross-validated.
+- One model wrote the corpus and the paraphrases; two models used only for the
+  silence claim.
+- Read-back laundering: a run that reads its own file back keeps only its first
+  emission as its own.
+- Experiment B demonstrates topology recovery on *instructed* transmissions; it
   does not estimate how often agents leak unprompted.
-- Experiment C ran on a different, smaller model than the agents.
-- K=2 and the floor of 40 were first settings that happened to be the
-  zero-false-alarm ones; sweeps show the trade but nothing was cross-validated.
-
-### Dual-Use and Ethical Considerations
-
-- The detector is an auditing tool, but the same machinery fingerprints an
-  agent's output. Note the asymmetry: it needs transcripts the auditor
-  already holds.
-- No human-subject data; all text is model-generated inside containers.
+- Experiment C ran on a different, smaller model than the agents, on prompted
+  artifacts rather than harness transcripts, with one scheme at one setting.
 
 ### Future Work
 
-- Whether the target-side filter carries the load in deployments too small
-  for convergence to have statistical power (2-3 runs), which is untested.
+- Whether the target-side filter carries the load where convergence has no
+  statistical power (2–3 runs).
 - Document-frequency weighting instead of hard shingle removal.
-- Adversarial arm: an agent instructed to launder what it copies.
-- Cross-organisational protocol: exchange originated hash sets, not text.
+- An adversarial arm: an agent instructed to launder what it copies.
+- A cross-organisational protocol exchanging originated hash sets, not text.
+- Measuring unprompted leak rates, which Experiment B deliberately does not.
 
 ## 6. Conclusion
 
-- Cross-run leaks are detectable and attributable from transcripts alone.
-- The filters are not a heuristic pile: each is a measured dial, and their
-  order is load-bearing.
-- And the benchmark that validates the score cannot validate the filters —
-  a caution for anyone evaluating a contamination detector on planted data.
-- One sentence on what an eval harness should do with this.
+<!-- 1-2 paragraphs. -->
+
+- Cross-run leaks are detectable *and attributable* from transcripts alone, at
+  precision [1.000] on [400] planted cases and [40/40] edges on live swarms.
+- The filters are not a heuristic pile: each is a measured dial and their order
+  is load-bearing — and the benchmark that validates the score cannot validate
+  them, which is a caution for anyone evaluating a contamination detector on
+  planted data.
 
 ## Code and Data
 
 - **Code repository**:
   <https://github.com/autumnigloo/2026-09-11-apart-sprint-incident-response>
 - **Data/Datasets**: same repository — `data/runs/` every transcript reported,
-  `data/cases/` the 400 labelled cases with results, `data/cases_sametask/`
-  the near-identical-source benchmark, `data/results_c/` Experiment C.
-- **Other artifacts**: `OBSERVATIONS.md` is the full lab notebook including
-  results that did not make the report; `RESULTS.md` maps every claim to the
-  file it comes from; `leak_explainer.html` is a visual walkthrough.
+  `data/cases/` the 400 labelled cases with results, `data/cases_sametask/` the
+  near-identical-source benchmark, `data/results_c/` Experiment C.
+- **Other artifacts**: `leak_explainer.html` is a visual walkthrough;
+  `OBSERVATIONS.md` the full lab notebook including results that did not make
+  the report; `RESULTS.md` maps every claim to the file it comes from.
 - **Reproduction**: `bash scripts/rederive.sh` recomputes every number offline
-  from the raw transcripts; last audit log in `logs/rederive.log`.
+  from the raw transcripts (log: `logs/rederive.log`);
+  `bash scripts/ablate_target_origination.sh` reproduces §4.7.
+
+## Author Contributions
+
+<!-- Optional in the template. TODO or delete. -->
 
 ## References
 
-<!-- TODO. At minimum: Kirchenbauer et al. on green-list watermarking;
-     Broder on shingling/MinHash; a benchmark-contamination reference. -->
+<!-- TODO. At minimum: Kirchenbauer et al. (green-list watermarking); Broder
+     (shingling/MinHash); a benchmark-contamination reference. -->
 
 ## Appendix
 
@@ -264,11 +319,19 @@ With **Apart Research**. Research conducted at the
 ### A.2 The K sweep and the evidence-floor ablation
 ### A.3 Swarm pair-count matrices, both runs
 ### A.4 Negative-set scans: what the surviving false alarms actually were
-### A.5 Experiment C: entropy by artifact type, detection by length, key-count FPR
-### A.6 Reproduction and the audit
+### A.5 Experiment C: entropy by type, detection by length, key-count FPR
+### A.6 The target-filter grid in full (RESULTS.md §9, Tables 7–9)
 ### A.7 Task files and instruction arms
 
 ## LLM Usage Statement
 
-<!-- TODO: state how models were used for the research itself (the agents under
-     study) and for writing/analysis. -->
+<!--
+  Template: note how LLM assistance was used, and confirm claims were verified.
+  Apart strongly encourages the final submission be primarily team-written.
+-->
+
+- Distinguish two uses: models as the *object of study* (the agents in the
+  containers, gpt-4.1-mini and gpt-4.1; Qwen2.5-0.5B for Experiment C), and
+  model assistance in building and writing.
+- State that every number is re-derived offline by `scripts/rederive.sh` from
+  raw transcripts, and that the audit log is in the repository.
