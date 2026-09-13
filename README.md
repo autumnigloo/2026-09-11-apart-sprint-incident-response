@@ -31,7 +31,7 @@ Forty solo agents ran with no shared folder, so their transcripts contain no lea
 | **0.35** | **1.000** | **0.928** | **0** |
 | 0.70 | 1.000 | 0.710 | 0 |
 
-Every leak of 100 tokens or more that was not paraphrased was found, for every type, and every recalled leak was attributed to the correct source run: 371 of 371 among 39 unrelated candidates, and 269 of 269 among 7 agents that had all written the same module, README and config. The 29 misses at 0.35: 21 are 25-token leaks, 6 paraphrases, 2 short prose. The convergence rule and the evidence floor are each a measured dial; see the K sweep and floor ablation in [`RESULTS.md`](RESULTS.md).
+Every leak of 100 tokens or more that was not paraphrased was found, for every type, and every recalled leak was attributed to the correct source run: 371 of 371 among 39 unrelated candidates, and 269 of 269 among 7 agents that had all written the same module, README and config. The 29 misses at 0.35: 21 are 25-token leaks, 6 paraphrases, 2 short prose. The convergence rule must stay at K = 2: relaxing it raises planted-leak recall but produces impossible backward edges on the live swarms (9 and 12 at K = 5). The evidence floor is a measured trade (13 false-alarm pairs removed for 8 leaks). Both filters look redundant on planted cases and are load-bearing on live swarms; the benchmark measures the score, not the filters. See [`RESULTS.md`](RESULTS.md) §7 and §9.
 </details>
 
 <details open>
@@ -123,6 +123,6 @@ Everything after the agent runs is offline and deterministic. `bash scripts/rede
 
 ## What this does not claim
 
-Non-adversarial threat model: an agent that rewrote identifiers on purpose would defeat it. The smallest detectable leak is about 40 characters of text the agent actually originated. An agent that reads its own file back keeps only its first version as its own. Five planted leaks per benchmark cell. The corpus and paraphrases come from one model; the silence tests used two. Experiment B shows the map can be recovered from real transmissions, not how often agents leak. Experiment C ran on a different, smaller model than the agents. Details in [`RESULTS.md`](RESULTS.md).
+Non-adversarial threat model: an agent that rewrote identifiers on purpose would defeat it. The smallest detectable leak is about 40 characters of text the agent actually originated. An agent that reads its own file back keeps only its first version as its own. Five planted leaks per benchmark cell. The corpus and paraphrases come from one model; the silence tests used two. Experiment B shows the map can be recovered from real transmissions, not how often agents leak. Experiment C ran on a different, smaller model than the agents. The convergence filter must be fitted on the fleet being monitored; frozen to an unrelated corpus it alarms on same-task fleets. The operating threshold was chosen in-sample; a split-half check gives 0.2 on both halves with held-out precision 0.99 and 0.98. Details in [`RESULTS.md`](RESULTS.md).
 
 <p align="center"><sub>Apart Research incident-response sprint, 11 to 13 September 2026</sub></p>

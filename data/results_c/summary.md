@@ -11,14 +11,14 @@ gamma 0.25, delta 2.0, sampling T=0.8 top-p 0.95, 10 samples per cell each way, 
 | structured | 0.20 (n=10, mean tokens 50) | 0.90 (n=10, mean tokens 97) | 0.70 (n=10, mean tokens 178) | 0.80 (n=10, mean tokens 201) |
 | terse | 0.40 (n=10, mean tokens 48) | 1.00 (n=10, mean tokens 100) | 1.00 (n=10, mean tokens 192) | 1.00 (n=10, mean tokens 332) |
 
-## Detection rate at 1% FPR on the first 50 and first 100 tokens
+## Detection rate at 1% FPR on the first 50 and first 100 tokens (truncated-null thresholds z >= 2.89 / 3.31)
 
 | type | first 50 | first 100 |
 |---|---|---|
-| prose | 0.62 (n=40) | 0.87 (n=30) |
-| code | 0.38 (n=40) | 0.60 (n=30) |
-| structured | 0.30 (n=40) | 0.76 (n=25) |
-| terse | 0.66 (n=38) | 0.97 (n=29) |
+| prose | 0.90 (n=40) | 0.97 (n=30) |
+| code | 0.65 (n=40) | 0.73 (n=30) |
+| structured | 0.57 (n=40) | 0.84 (n=25) |
+| terse | 0.84 (n=38) | 1.00 (n=29) |
 
 ## Next-token entropy by type: the room a watermark has (unwatermarked samples)
 

@@ -319,8 +319,7 @@ Mean generated length in brackets where the model stopped short of the target.
 | structured | 0.20 | 0.90 | 0.70 (178) | 0.80 (201) |
 | terse | 0.40 | 1.00 | 1.00 (192) | 1.00 (332) |
 
-Truncated to the first 50 tokens of every sample: prose 0.62, code 0.38, structured
-0.30, terse 0.66. First 100: 0.87, 0.60, 0.76, 0.97. Both rows were judged against the
+Truncated to the first 50 tokens of every sample, judged against truncated-null 1% thresholds (z >= 2.89 / 3.31): prose 0.90, code 0.65, structured 0.57, terse 0.84. First 100: 0.97, 0.73, 0.84, 1.00. Both rows were judged against the
 full-length null threshold; a null of equally truncated samples is the exact reference,
 so the effective FPR here is approximate (`code/experiment_c.py` now computes
 truncated-null thresholds; a re-run makes these rows exact).
