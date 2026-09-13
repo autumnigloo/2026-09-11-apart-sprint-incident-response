@@ -41,8 +41,9 @@ THRESHOLDS = [round(x, 2) for x in np.arange(0.05, 1.0001, 0.05)]
 
 
 def run_case(cdir: pathlib.Path, hasher: det.MinHasher, origination: bool,
-             common: set[int] | None) -> list[det.Hit]:
-    runs = det.load_runs(cdir, hasher, origination, common_ref=common)
+             common: set[int] | None, target_origination: bool = False) -> list[det.Hit]:
+    runs = det.load_runs(cdir, hasher, origination, common_ref=common,
+                         target_origination=target_origination)
     return det.scan_all(runs, hasher)
 
 
@@ -55,6 +56,9 @@ def main():
     ap.add_argument("--negatives", type=pathlib.Path, nargs="*", default=[],
                     help="dirs of solo runs with nothing injected (A0 convergence, unrelated)")
     ap.add_argument("--no-origination", action="store_true", help="ablation")
+    ap.add_argument("--target-origination", action="store_true",
+                    help="also filter the target side: drop from each ingress entry the "
+                         "shingles the receiving run emitted earlier")
     ap.add_argument("--common-runs", type=int, default=det.COMMON_RUNS,
                     help="convergence filter K, estimated on the full corpus in meta.json; 0 disables")
     ap.add_argument("--min-evidence", type=int, default=det.MIN_EVIDENCE,
@@ -94,7 +98,8 @@ def main():
     raw = open(out / "raw_hits.jsonl", "w")
     for i, cid in enumerate(sorted(by_case)):
         lab = by_case[cid]
-        hits = run_case(args.cases / cid, hasher, not args.no_origination, common)
+        hits = run_case(args.cases / cid, hasher, not args.no_origination, common,
+                        target_origination=args.target_origination)
         best = 0.0
         for h in hits:
             d = h.__dict__ | {"case_id": cid}
@@ -150,7 +155,8 @@ def main():
     # ---- negative dirs (A0 convergence, unrelated)
     neg_rows = []
     for nd in args.negatives:
-        runs = det.load_runs(nd, hasher, not args.no_origination, args.common_runs)
+        runs = det.load_runs(nd, hasher, not args.no_origination, args.common_runs,
+                             target_origination=args.target_origination)
         hits = det.scan_all(runs, hasher)
         s = np.array([getattr(h, sc) for h in hits]) if hits else np.zeros(0)
         n_pairs = sum(len(r.spans) for r in runs.values()) * sum(len(r.ingress) for r in runs.values())
@@ -175,7 +181,8 @@ def main():
           f"{len(labels)} cases, {len(neg)} negative pairs scored > 0.", "",
           f"Detector: char {det.K}-grams, MinHash {det.NUM_PERM} perms, source window {det.SRC_WINDOW} chars, "
           f"origination filter {'OFF (ablation)' if args.no_origination else 'ON'}, "
-          f"convergence filter K={args.common_runs}, evidence floor {args.min_evidence}.", ""]
+          f"convergence filter K={args.common_runs}, evidence floor {args.min_evidence}, "
+          f"target-origination filter {'ON' if args.target_origination else 'OFF'}.", ""]
     for tname, tval in [("t*", tstar), (f"fixed t={args.fixed}", args.fixed)]:
         for tr in transforms:
             md += [f"## {tr}: recall at {tname} by span length (tokens) x artifact type", "",
