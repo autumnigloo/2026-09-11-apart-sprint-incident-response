@@ -74,10 +74,12 @@ At 100 tokens the watermark reaches 80 to 100%. The textbook 1% threshold gave 5
 
 ```
 README.md  RESULTS.md  OBSERVATIONS.md  leak_explainer.html  requirements.txt
-code/       harness.py detector.py topology.py inject.py score.py shared_usage.py verify_edges.py notebook.py experiment_c.py
+code/       harness.py detector.py topology.py inject.py score.py attribution.py shared_usage.py verify_edges.py notebook.py experiment_c.py
 scripts/    run_all.sh run_extra.sh rederive.sh
 tasks/      20 short tasks, 20 long tasks, 8 swarm tasks (2 impossible)
-data/       runs/ (every transcript reported)  cases/ (400 labelled cases + results)  rederived/  results_c/
+data/       runs/ (every transcript reported)  cases/ (400 labelled cases + results)
+            cases_sametask/ (285 cases planted on 8 agents that wrote the same files)
+            rederived/ (the audit's own outputs)  results_c/
 logs/       run_extra.log rederive.log experiment_c.log
 docs/img/   the figures on this page
 ```
@@ -92,12 +94,13 @@ docs/img/   the figures on this page
 | `code/detector.py` | the pipeline above; hits and the N × N matrix |
 | `code/topology.py` | classifies the matrix and draws it |
 | `code/inject.py`, `code/score.py` | Experiment A: plant the leaks; precision/recall per cell, threshold sweep, negative sets, ablations |
+| `code/attribution.py` | checks each recalled leak is credited to the run that wrote it, against the planted label |
 | `code/shared_usage.py`, `code/verify_edges.py` | ground truth for Experiment B and the edge-by-edge check against it |
 | `code/notebook.py` | appends a dated summary of any run to `OBSERVATIONS.md` |
 | `code/experiment_c.py` | keyed green-list watermark on a local model: detection by type and length, entropy by type, false alarms against N keys |
 | `scripts/run_all.sh` | everything in order; resumes after a crash |
 | `scripts/run_extra.sh` | K sweep, floor ablation, long-task baseline, second swarm |
-| `scripts/rederive.sh` | recomputes every reported number from `data/`, offline; the audit |
+| `scripts/rederive.sh` | recomputes every reported number from `data/` except Experiment C, offline; the audit |
 </details>
 
 ## Reproduce
@@ -116,7 +119,7 @@ bash scripts/run_extra.sh            # K sweep, floor ablation, long baseline, s
 pip install torch transformers accelerate && python code/experiment_c.py --n 10                # Experiment C, ~7 min on an M4
 ```
 
-Everything after the agent runs is offline and deterministic. `bash scripts/rederive.sh` recomputes every number in `RESULTS.md` from the transcripts in `data/`; the log of the last audit is [`logs/rederive.log`](logs/rederive.log).
+Everything after the agent runs is offline and deterministic. `bash scripts/rederive.sh` recomputes every number in `RESULTS.md` from the transcripts in `data/`, Experiment C aside (it needs torch); the log of the last audit is [`logs/rederive.log`](logs/rederive.log).
 
 ## What this does not claim
 

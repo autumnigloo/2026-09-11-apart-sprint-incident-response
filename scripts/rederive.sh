@@ -3,6 +3,8 @@
 # Offline, deterministic, no API calls (paraphrases come from the cache). ~10 minutes.
 #   bash rederive.sh 2>&1 | tee logs/rederive.log
 # Nothing under data/runs/ or data/cases/ is modified. Fresh results go to data/rederived/.
+# Covers every claim in RESULTS.md except Experiment C (§6c), which needs torch and a GPU:
+#   python code/experiment_c.py --n 10   (log in logs/experiment_c.log)
 set -uo pipefail
 cd "$(dirname "$0")/.."
 OUT=data/rederived; rm -rf "$OUT"; mkdir -p "$OUT"
@@ -35,6 +37,15 @@ python code/score.py $S --fixed 0.35 --common-runs 0 --out $OUT/no_convergence >
 python code/score.py $S --fixed 0.35 --min-evidence 0 --out $OUT/no_floor >/dev/null 2>&1
 for k in 3 5 10; do python code/score.py $S --fixed 0.35 --common-runs $k --out $OUT/k$k >/dev/null 2>&1; done
 
+log "2b. the same-task benchmark (§6b): re-plant from the long-task baseline and re-score"
+# 8 agents that each wrote the same module, README and config: the hardest sources to tell
+# apart. No paraphrase transform, so this needs no API call.
+mkdir -p "$OUT/cases_sametask"
+python code/inject.py data/runs/a0_long --out "$OUT/cases_sametask" --reps 5 --seed 0 \
+  --transforms verbatim,reformatted,truncated >/dev/null 2>"$OUT/inject_sametask.err"
+python code/score.py "$OUT/cases_sametask" --fixed 0.35 --out "$OUT/sametask" >/dev/null 2>&1
+echo "   re-planted: $(wc -l < "$OUT/cases_sametask/labels.jsonl") cases (scored set: $(wc -l < data/cases_sametask/labels.jsonl))"
+
 log "3. detector on every run directory"
 for d in corpus_all a0 a0_long swarm_unspecified swarm_prohibited swarm_directed swarm_unspecified_gpt41 swarm_prohibited_gpt41 swarm_unspecified_gpt41_impossible; do
   [[ -d data/runs/$d ]] || { echo "$d: missing"; continue; }
@@ -60,4 +71,11 @@ echo "-- no convergence:"; hdr $OUT/no_convergence/headline_containment.md; row 
 echo "-- no floor:"; row $OUT/no_floor/headline_containment.md 0.35; grep -A4 "verbatim: recall at fixed t=0.35" $OUT/no_floor/headline_containment.md | tail -1
 for k in 3 5 10; do echo "-- K=$k:"; row $OUT/k$k/headline_containment.md 0.35; grep -A4 "verbatim: recall at fixed t=0.35" $OUT/k$k/headline_containment.md | tail -1; done
 echo "-- originated-fraction bands (main):"; grep -A6 "originated fraction" $OUT/main/headline_containment.md | tail -4
+log "5. ATTRIBUTION: is every recalled leak credited to the run that wrote it? (§6b)"
+python code/attribution.py data/cases data/cases/results_t035/raw_hits.jsonl --threshold 0.35
+python code/attribution.py data/cases_sametask data/cases_sametask/results/raw_hits.jsonl --threshold 0.35
+echo "-- same-task benchmark, freshly re-planted and re-scored:"
+row $OUT/sametask/headline_containment.md 0.35
+python code/attribution.py "$OUT/cases_sametask" "$OUT/sametask/raw_hits.jsonl" --threshold 0.35
+
 log "done. compare against RESULTS.md; paste this log back if anything differs."

@@ -6,6 +6,9 @@ Pipeline:  transcript JSONL -> normalise -> char 5-gram shingles
            context before the span was emitted)
         -> convergence filter (drop shingles that >= COMMON_RUNS runs each
            originated on their own: shared skeletons are not evidence of a leak)
+        -> optional target-origination filter (drop from each INGRESS entry the
+           shingles the receiving run itself emitted earlier: a run reading its
+           own file back has not received anything)
         -> exact shingle containment against every INGRESS entry of every other run
            (optional MinHash prefilter over sliding windows, for scale)
         -> hits + N x N cross-run matrix
@@ -265,9 +268,10 @@ class Run:
 
 
 def build_run(name: str, path: pathlib.Path, hasher: MinHasher,
-              origination: bool = True) -> Run:
+              origination: bool = True, target_origination: bool = False) -> Run:
     entries = sorted(load_transcript(path), key=lambda e: (e.ts, e.idx))
     seen_ingress: set[int] = set()   # everything that entered context so far
+    seen_egress: set[int] = set()    # everything this run has emitted so far
     spans: list[Span] = []
     ingress_entries: list[Entry] = []
     ingress_shingles: dict[int, set[int]] = {}
@@ -276,9 +280,9 @@ def build_run(name: str, path: pathlib.Path, hasher: MinHasher,
     for e in entries:
         if e.kind == "INGRESS":
             sh = shingle_hashes(e.content)
-            seen_ingress |= sh
+            seen_ingress |= sh          # raw: the source-side filter must still see it
             ingress_entries.append(e)
-            ingress_shingles[e.idx] = sh
+            ingress_shingles[e.idx] = (sh - seen_egress) if target_origination else sh
             t = normalise(e.content)
             offsets = list(range(0, max(1, len(t) - WINDOW + 1), STRIDE))
             if len(t) > WINDOW and offsets[-1] != len(t) - WINDOW:
@@ -286,6 +290,8 @@ def build_run(name: str, path: pathlib.Path, hasher: MinHasher,
             for off in offsets:
                 w = t[off:off + WINDOW]
                 wsh = shingle_hashes(w)
+                if target_origination:
+                    wsh = wsh - seen_egress
                 if len(wsh) >= MIN_SHINGLES:
                     windows.append((e.idx, off, wsh, hasher.sketch(wsh)))
         elif e.kind == "EGRESS":
@@ -307,6 +313,8 @@ def build_run(name: str, path: pathlib.Path, hasher: MinHasher,
                     s.full_ok = full_ok
                     s.sketch = hasher.sketch(s.originated) if s.originated else None
                     spans.append(s)
+            if target_origination:
+                seen_egress |= shingle_hashes(e.content)
     return Run(name, entries, spans, ingress_entries, ingress_shingles, windows)
 
 
@@ -355,12 +363,14 @@ def apply_common(run: "Run", common: set[int], hasher: MinHasher) -> None:
 
 
 def load_runs(root: pathlib.Path, hasher: MinHasher, origination: bool = True,
-              common_runs: int = COMMON_RUNS, common_ref: set[int] | None = None) -> dict[str, "Run"]:
+              common_runs: int = COMMON_RUNS, common_ref: set[int] | None = None,
+              target_origination: bool = False) -> dict[str, "Run"]:
     """Build every run under root, then apply the convergence filter.
     common_ref: pass a precomputed common set (e.g. from a larger solo corpus)
     instead of estimating it from these runs alone."""
     paths = discover_runs(root)
-    runs = {n: build_run(n, p, hasher, origination) for n, p in paths.items()}
+    runs = {n: build_run(n, p, hasher, origination, target_origination)
+            for n, p in paths.items()}
     common = common_ref if common_ref is not None else common_shingles(runs, common_runs)
     for r in runs.values():
         apply_common(r, common, hasher)
@@ -476,6 +486,9 @@ def main():
                     help="gate exact verification on MinHash Jaccard >= %.2f (faster, loses small leaks)" % PREFILTER_JACCARD)
     ap.add_argument("--common-runs", type=int, default=COMMON_RUNS,
                     help="drop shingles originated by >= K runs (convergence filter); 0 disables")
+    ap.add_argument("--target-origination", action="store_true",
+                    help="also filter the TARGET side: drop from each ingress entry the "
+                         "shingles the receiving run emitted earlier (its own read-backs)")
     ap.add_argument("--min-evidence", type=int, default=MIN_EVIDENCE,
                     help="containment denominator floor in shingles; 0 disables (ablation)")
     ap.add_argument("--out", type=pathlib.Path, help="write hits + matrix as JSON")
@@ -487,7 +500,9 @@ def main():
         sys.exit(f"no transcripts under {args.root}")
     MIN_EVIDENCE = args.min_evidence
     hasher = MinHasher()
-    runs = load_runs(args.root, hasher, origination=not args.no_origination, common_runs=args.common_runs)
+    runs = load_runs(args.root, hasher, origination=not args.no_origination,
+                     common_runs=args.common_runs,
+                     target_origination=args.target_origination)
     for n, r in runs.items():
         print(f"[{n}] entries={len(r.entries)} ingress={len(r.ingress)} "
               f"originated_spans={len(r.spans)} windows={len(r.ingress_windows)}", file=sys.stderr)
@@ -511,6 +526,7 @@ def main():
                        "src_window": SRC_WINDOW, "src_stride": SRC_STRIDE,
                        "min_shingles": MIN_SHINGLES, "min_evidence": args.min_evidence,
                        "common_runs": args.common_runs, "score": args.score,
+                       "target_origination": args.target_origination,
                        "threshold": args.threshold, "origination": not args.no_origination},
             "hits": [asdict(h) for h in (hits if args.all_scores else above)],
             "matrix": mat,
