@@ -192,6 +192,8 @@ def main():
                            "n_tokens": len(ids), "entropy": ent, "low_entropy_share": low,
                            "z_key": z_score(ids, key) if watermarked else None,
                            "z_all": [z_score(ids, k) for k in keys],
+                           "z_all_50": [z_score(ids[:50], k) for k in keys],
+                           "z_all_100": [z_score(ids[:100], k) for k in keys],
                            "z_key_50": z_score(ids[:50], key) if watermarked else None,
                            "z_key_100": z_score(ids[:100], key) if watermarked else None,
                            "text": tok.decode(ids)[:300]}
@@ -209,6 +211,10 @@ def main():
     # near-independent draws), giving len(null) * len(keys) null scores.
     null_z = np.array([z for r in null for z in r["z_all"]])
     thr = float(np.quantile(null_z, 0.99)) if len(null_z) else 4.0
+    def _trunc_thr(field, n):
+        z = np.array([x for r in null if r["n_tokens"] >= n for x in r.get(field, [])])
+        return float(np.quantile(z, 0.99)) if z.size else thr
+    thr50, thr100 = _trunc_thr("z_all_50", 50), _trunc_thr("z_all_100", 100)
     thr_theory = 2.326  # one-sided z for 1%
 
     md = [f"# Experiment C: keyed watermark on agent-style artifacts ({args.model})", "",
@@ -225,13 +231,14 @@ def main():
             row.append("n/a" if not s else f"{np.mean([r['z_key'] >= thr for r in s]):.2f} (n={len(s)}, mean tokens {np.mean([r['n_tokens'] for r in s]):.0f})")
         md.append(f"| {kind} | " + " | ".join(row) + " |")
 
-    md += ["", "## Detection rate at 1% FPR on the first 50 and first 100 tokens", "",
+    md += ["", f"## Detection rate at 1% FPR on the first 50 and first 100 tokens "
+           f"(truncated-null thresholds z >= {thr50:.2f} / {thr100:.2f})", "",
            "| type | first 50 | first 100 |", "|---|---|---|"]
     for kind in types:
         s = [r for r in pos if r["type"] == kind and r["n_tokens"] >= 50]
         s100 = [r for r in pos if r["type"] == kind and r["n_tokens"] >= 100]
-        a = f"{np.mean([r['z_key_50'] >= thr for r in s]):.2f} (n={len(s)})" if s else "n/a"
-        b = f"{np.mean([r['z_key_100'] >= thr for r in s100]):.2f} (n={len(s100)})" if s100 else "n/a"
+        a = f"{np.mean([r['z_key_50'] >= thr50 for r in s]):.2f} (n={len(s)})" if s else "n/a"
+        b = f"{np.mean([r['z_key_100'] >= thr100 for r in s100]):.2f} (n={len(s100)})" if s100 else "n/a"
         md.append(f"| {kind} | {a} | {b} |")
 
     md += ["", "## Next-token entropy by type: the room a watermark has (unwatermarked samples)", "",

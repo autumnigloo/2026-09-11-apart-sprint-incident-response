@@ -95,6 +95,7 @@ def main():
     # ---- run every case
     pos_scores: dict[str, float] = {}       # case_id -> best score on injected entry from source
     neg_scores: list[float] = []            # every other hit
+    neg_by_case = defaultdict(list)   # per-case negatives, for the split-half check
     raw = open(out / "raw_hits.jsonl", "w")
     for i, cid in enumerate(sorted(by_case)):
         lab = by_case[cid]
@@ -111,6 +112,7 @@ def main():
                 best = max(best, getattr(h, sc))
             else:
                 neg_scores.append(getattr(h, sc))
+                neg_by_case[cid].append(getattr(h, sc))
         pos_scores[cid] = best
         print(f"[{i + 1}/{len(by_case)}] {cid}: best={best:.2f} other_hits={len(hits)}", file=sys.stderr)
     raw.close()
@@ -139,6 +141,27 @@ def main():
         how = "no threshold reaches min precision; using best F1"
     ok_rows = [r for r in rows if r["threshold"] == tstar][0]
 
+    # ---- SPLIT-HALF (v8): fit t on one half of the cases, score the held-out half
+    split_rows = []
+    if len(by_case) >= 20:
+        _cids = sorted(by_case)
+        for _fit, _eval in ((_cids[0::2], _cids[1::2]), (_cids[1::2], _cids[0::2])):
+            _fp_ = np.array([pos_scores[c] for c in _fit])
+            _fn_ = np.array([s for c in _fit for s in neg_by_case[c]])
+            _cand = []
+            for _t in THRESHOLDS:
+                _tp = int((_fp_ >= _t).sum()); _f = int((_fn_ >= _t).sum())
+                _pr = _tp / (_tp + _f) if _tp + _f else 1.0
+                if _pr >= args.min_precision and _tp:
+                    _cand.append((_tp / len(_fp_), -_t))
+            _tf = -max(_cand)[1] if _cand else tstar
+            _ep = np.array([pos_scores[c] for c in _eval])
+            _en = np.array([s for c in _eval for s in neg_by_case[c]])
+            _tp = int((_ep >= _tf).sum()); _f = int((_en >= _tf).sum())
+            split_rows.append({'fitted_t': _tf, 'recall': round(_tp / len(_ep), 4),
+                               'precision': round(_tp / (_tp + _f) if _tp + _f else 1.0, 4),
+                               'fp_hits': _f})
+
     # ---- per-cell recall at t*
     cells = defaultdict(list)
     for cid, lab in by_case.items():
@@ -155,11 +178,12 @@ def main():
     # ---- negative dirs (A0 convergence, unrelated)
     neg_rows = []
     for nd in args.negatives:
-        runs = det.load_runs(nd, hasher, not args.no_origination, args.common_runs,
+        runs = det.load_runs(nd, hasher, not args.no_origination, args.common_runs, common_ref=common,
                              target_origination=args.target_origination)
         hits = det.scan_all(runs, hasher)
         s = np.array([getattr(h, sc) for h in hits]) if hits else np.zeros(0)
-        n_pairs = sum(len(r.spans) for r in runs.values()) * sum(len(r.ingress) for r in runs.values())
+        rl = list(runs.values())
+        n_pairs = sum(len(a.spans) * len(b.ingress) for a in rl for b in rl if a is not b)
         for t in THRESHOLDS:
             neg_rows.append({"dir": str(nd), "n_runs": len(runs), "threshold": t,
                              "fp_hits": int((s >= t).sum()), "candidate_pairs": n_pairs})
@@ -204,6 +228,10 @@ def main():
         md.append(f"| {lo:.2f}-{min(hi,1.0):.2f} | {len(b)} | {np.mean(b):.2f} |" if b else f"| {lo:.2f}-{min(hi,1.0):.2f} | 0 | n/a |")
     md += ["", "## PR sweep", "", "| t | precision | recall | fp hits |", "|---|---|---|---|"]
     md += [f"| {r['threshold']} | {r['precision']} | {r['recall']} | {r['fp_hits']} |" for r in rows]
+    if split_rows:
+        md += ['', '## Split-half check (t fitted on one half of the cases, scored on the held-out half)', '',
+               '| fitted t | held-out recall | held-out precision | fp hits |', '|---|---|---|---|']
+        md += [f"| {r['fitted_t']} | {r['recall']} | {r['precision']} | {r['fp_hits']} |" for r in split_rows]
     if neg_rows:
         md += ["", "## Negative-set false positives (no injection; every hit is an FP)", "",
                "| dir | runs | t=0.5 | t=0.7 | t=0.9 |", "|---|---|---|---|---|"]
