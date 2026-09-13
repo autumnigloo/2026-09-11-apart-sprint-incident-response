@@ -91,21 +91,77 @@
 <!--
   Most similar prior work and how this differs. What gap does this address?
   When and why would someone use this over the state of the art?
-  What insight does it provide that we did not have before?
+
+  VERIFICATION STATUS: entries marked [fetched] were read directly; the rest come
+  from search summaries and must be checked against the primary source before
+  submission — the sprint requires a primary source for every incident claim, and
+  the prior-art assessment (ask Hana) may already list several of these.
 -->
 
-- Shingling and MinHash near-duplicate detection: the machinery is standard;
-  the contribution is what gets *subtracted* before comparison.
-- Why a document-level Jaccard threshold is the wrong instrument here: a
-  100-char leak inside a 3,000-char tool output has Jaccard ≈ 0.03 by
-  construction (§4.5).
-- LLM watermarking (Kirchenbauer et al.): requires logit access; measured here
-  as the alternative an evaluator cannot actually deploy.
-- Benchmark contamination: related but distinct — train/test overlap, versus
-  run-to-run overlap at inference time.
-- When to use this instead: when you hold transcripts but not the model, and
-  you need to name the source run, not just flag a collision.
-<!-- TODO: real citations. The repo currently cites only KGW. -->
+**Shared-environment eval failures — the motivating incidents.** The field has
+documented that agents exploit state in the environment the evaluator also uses:
+OpenAI retired SWE-bench Verified as a frontier measure; SWE-bench issue #465
+("Repo State Loopholes During Agentic Evaluation") and SWE-bench-Pro issue #7
+("Repo state leakage") record agents recovering intended fixes through ordinary
+`git log --all` / `git show <future-sha>`, because post-`base_commit` objects stay
+reachable in the public images. Berkeley RDI make the general form of it: in
+SWE-bench, Terminal-Bench and OSWorld the agent's code runs in the environment the
+evaluator inspects, so any evaluation reading state from a shared environment can be
+defeated by an agent writing to it.
+*Gap:* every one of these is **environment → agent** leakage within a single run.
+The same shared environments host many concurrent runs, and **run → agent** leakage
+is the unmeasured sibling. That is what this work measures.
+
+**Near-duplicate detection, and why containment.** Broder et al. (1997), *Syntactic
+Clustering of the Web*, introduces shingling and defines both statistics we use:
+resemblance, |S(A) ∩ S(B)| / |S(A) ∪ S(B)| — Jaccard — and containment,
+|S(A) ∩ S(B)| / |S(A)|.
+*Gap:* none, and we should say so. Our §4.5 argument for containment over Jaccard is
+Broder's own distinction, not a new one; the contribution is the calibration showing
+what the wrong choice costs on embedded leaks (23.5% recall at the a-priori 0.7).
+
+**Benchmark and data contamination.** A large literature detects train/test overlap:
+the static-to-dynamic survey (arXiv 2502.17521), canary strings as used by BIG-bench,
+and membership-style detectors such as Min-K% and Min-K%++.
+*Gap:* two. That work concerns **training-time** overlap, not run-to-run overlap at
+inference. And canaries, like watermarks, must be planted in advance by whoever owns
+the data — an outside evaluator holding only transcripts can plant nothing.
+*Honest borrowing:* this literature also reports that n-gram-overlap detectors lose
+reliability when contamination is rephrased, which matches our paraphrase results
+(§4.1) and should be cited as corroboration rather than discovered independently.
+
+**Watermarking.** Kirchenbauer et al. (2023), *A Watermark for Large Language Models*
+— the green/red-list scheme with γ and δ that Experiment C implements, offering
+detection "without any knowledge of the model parameters" and interpretable p-values.
+Fu & Russell (2025), *Multi-use LLM Watermarking and the False Detection Problem*
+[fetched], identify exactly the failure our §4.6 measures: as user capacity grows,
+unwatermarked text is increasingly likely to be falsely detected, because one
+embedding serves both detection and identification. They propose Dual Watermarking.
+*Position:* our 1% → 15.6% across 32 keys is an independent empirical confirmation of
+their problem on agent-style artifacts, and we should cite them rather than present it
+as novel. Our distinct contribution is the **entropy** half — that JSON and code leave
+a watermark almost no room (66% of structured tokens near-forced) — and the empirical
+null showing the textbook z = 2.33 gives 5.3% false alarms on repetitive text.
+*Gap:* watermarking needs logit access, so an outside evaluator can never apply it.
+
+**Provenance in multi-agent memory.** Margalit et al. (2026), *Governed Shared Memory
+for Multi-Agent LLM Systems* [fetched], is the nearest neighbour: it names
+"unauthorized leakage" and "provenance collapse" as failure modes and reconstructs
+100% of depth-four derivation chains with correct writer identity. MemLineage
+(arXiv 2605.14421) is adjacent, enforcing lineage over agent memory.
+*Gap, and the sharpest contrast in this section:* these are **runtime governance
+architectures**. They require scoped retrieval and provenance-tracking primitives
+built into the memory service, and Margalit et al. state plainly that uninstrumented
+systems cannot retroactively capture this — the mechanisms must exist at the memory
+layer. This work is the post-hoc case: provenance recovered from transcripts of a
+harness with no such instrumentation, 38 of 40 edges direct and 2 two-hop, verified
+against reads.
+*Be honest about the asymmetry:* they recover depth-four chains with instrumentation;
+we recover depth-two without it, on text artifacts, non-adversarially.
+
+**When to use this over the alternatives.** When you hold transcripts but not the
+model, nothing was planted in advance, the harness was never instrumented, and you
+need the source run *named* rather than a collision *flagged*.
 
 ## 3. Methods
 
