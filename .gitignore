@@ -16,3 +16,4 @@ data/rederived/ablate_target/**/raw_hits.jsonl
 data/rederived/ablate_target/sw_*.json
 data/rederived/ablate_target/*.log
 data/rederived/ablate_target/*.err
+leak/

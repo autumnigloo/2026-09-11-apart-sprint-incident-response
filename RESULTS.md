@@ -16,7 +16,7 @@ and a local model: `python code/experiment_c.py --n 10`, log in `logs/experiment
 | First-author attribution needs the origination filter | Without it: 4 spurious edges, 1 lost edge, 1 inflated edge on the same run | `data/runs/swarm_directed_explicit/hits_no_origination.json` |
 | The a-priori Jaccard threshold was wrong, not Jaccard itself | Jaccard ≥ 0.7, the configuration first proposed, recalls 23.5%; calibrated to 0.15 it recalls 95.75% at precision 1.0, slightly above containment at 0.35 | `data/cases/results_jaccard/` |
 | Source attribution is exact | All 371 recalled planted leaks attributed to the true source out of 39 unrelated candidates; all 269 recalled leaks attributed correctly out of 7 same-task candidates (0 misattributions in either) | `data/cases/results_t035/raw_hits.jsonl`, `data/cases_sametask/`, §6b |
-| Watermarking, measured on matched artifacts (Experiment C) | On a local 0.5B model with full logit access, n = 10 per cell: 20 to 40% detection at 50 tokens for code, JSON and shell; 70 to 100% from 100 tokens; false alarms rise from 1% to 15.6% when one text is scanned against 32 run-keys; JSON tokens are near-forced 66% of the time | `data/results_c/summary.md` |
+| Watermarking, measured on matched artifacts (Experiment C) | On a local 0.5B model with full logit access, n = 10 per cell: 57 to 84% detection at 50 tokens at a length-matched 1% threshold (20 to 40% against a single pooled threshold); 70 to 100% from 100 tokens; false alarms rise from 1% to 15.6% when one text is scanned against 32 run-keys; JSON tokens are near-forced 66% of the time | `data/results_c/summary.md` |
 | Where it fails, and the two dials | 21 of 29 misses are 25-token leaks; 6 are paraphrases. The convergence rule K and the evidence floor are each a measured precision/recall trade: K=5 recovers all short prose at 4 false-alarm pairs; the floor removes 13 false-alarm pairs at a cost of 8 leaks. K must still be 2: on the live swarms K=5 produces 9 and 12 backward edges | Table 1, §7, §9 |
 | A planted benchmark cannot measure the filters | Both filters look redundant on 400 planted cases and 285 same-task cases, and both are load-bearing on the live swarms: without convergence, 10 and 17 backward edges | §9, Tables 7 to 9 |
 
@@ -341,7 +341,7 @@ score is taken, at the single-key 1% threshold.
 | FPR | 0.010 | 0.021 | 0.041 | 0.073 | 0.109 | 0.156 |
 
 Reading against Experiment A. With full model access and no transformation of the text,
-the watermark detects 20 to 40% of 50-token code, JSON and shell artifacts and 70 to
+the watermark detects 57 to 84% of 50-token code, JSON and shell artifacts at a length-matched threshold (20 to 40% at a single pooled one) and 70 to
 100% from 100 tokens, and its false-alarm rate grows with the number of parallel runs
 scanned. Hashing, with no model access but both transcripts in hand, found 100% of verbatim
 leaks of 100 tokens or more of every type at zero observed false alarms. Its per-pair

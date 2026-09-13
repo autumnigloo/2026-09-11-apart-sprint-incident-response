@@ -9,7 +9,7 @@
 
 When many AI agents run in parallel with a shared cache, proxy or folder, text one agent wrote can end up in front of another. Evaluation harnesses promise per-task isolation and say nothing about that. This repository detects such leaks from the transcripts alone, credits each piece of text to its first author, and draws the map of who leaked to whom.
 
-<p align="center"><img src="docs/img/scoreboard.svg" alt="371 of 400 planted leaks found; 0 false alarms; 40 of 40 swarm edges explained; a watermark catches 1 in 5 short code samples" width="100%"></p>
+<p align="center"><img src="docs/img/scoreboard.svg" alt="371 of 400 planted leaks found; 0 false alarms; 40 of 40 swarm edges explained; a watermark catches about 3 in 5 short code or JSON samples at a length-matched threshold" width="100%"></p>
 
 ## The detector
 
