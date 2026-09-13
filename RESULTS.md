@@ -12,6 +12,7 @@ them were re-derived from the raw transcripts with the final code (`scripts/rede
 | Real transmissions produce the right map | Two staggered swarm runs: 40 directed edges, 38 matching a transcript read, 2 two-hop, 0 spurious, 0 backward, checked by script | `data/runs/swarm_directed_explicit*/hits.json`, `code/verify_edges.py` |
 | First-author attribution needs the origination filter | Without it: 4 spurious edges, 1 lost edge, 1 inflated edge on the same run | `data/runs/swarm_directed_explicit/hits_no_origination.json` |
 | The a-priori Jaccard threshold was wrong, not Jaccard itself | Jaccard ≥ 0.7, the configuration first proposed, recalls 23.5%; calibrated to 0.15 it recalls 95.75% at precision 1.0, slightly above containment at 0.35 | `data/cases/results_jaccard/` |
+| Source attribution is exact | For all 371 recalled planted leaks, the highest-scoring source run was the true source, out of 39 candidates (0 misattributions) | `data/cases/results_t035/raw_hits.jsonl`, §6c |
 | Watermarking, measured on matched artifacts (Experiment C) | On a local 0.5B model with full logit access: 20 to 40% detection at 50 tokens for code, JSON and shell; 70 to 100% from 100 tokens; false alarms rise from 1% to 15.6% when one text is scanned against 32 run-keys; JSON tokens are near-forced 66% of the time | `data/results_c/summary.md` |
 | Where it fails, and the two dials | 21 of 29 misses are 25-token leaks; 6 are paraphrases. The convergence rule K and the evidence floor are each a measured precision/recall trade: K=5 recovers all short prose at 4 false-alarm pairs; the floor removes 13 false-alarm pairs at a cost of 8 leaks | Table 1, §7 |
 
@@ -241,6 +242,20 @@ receiving entry's size, so its best value shifts with the distribution of tool-o
 lengths and would have to be re-fitted on each harness. Both scores are reported; the
 detector decides on containment for that reason. The earlier draft's "13% at 0.7" was
 the first, short-task corpus; 23.5% is the merged corpus and supersedes it.
+
+## 6c Claim: source attribution is exact
+
+The cross-organisational use of the detector (a lab answering "did text from your run
+reach ours" from originated hash sets, without exchanging transcripts) depends on the
+detector naming the right source, not only reporting a hit. Experiment A measures this
+directly: every planted leak has a known source run among 39 candidates. For each of the
+371 recalled cases, the source run with the highest containment score on the injected
+entry was compared with the true source. All 371 were attributed correctly; none was
+attributed to another run (`raw_hits.jsonl`, threshold 0.35). Chance is 1 in 39. On the
+live swarms the same holds at the edge level (38 direct edges all pointing at the agent
+whose file was read, and the two two-hop edges credited to the original author rather
+than the intermediary). Attribution is therefore as reliable as detection on this
+benchmark, with the same caveats: verbatim and lightly transformed text, a single model.
 
 ## 6b Claim: watermarking measured on matched artifacts (Experiment C)
 
