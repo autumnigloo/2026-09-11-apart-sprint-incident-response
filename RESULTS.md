@@ -16,7 +16,8 @@ and a local model: `python code/experiment_c.py --n 10`, log in `logs/experiment
 | The a-priori Jaccard threshold was wrong, not Jaccard itself | Jaccard ≥ 0.7, the configuration first proposed, recalls 23.5%; calibrated to 0.15 it recalls 95.75% at precision 1.0, slightly above containment at 0.35 | `data/cases/results_jaccard/` |
 | Source attribution is exact | All 371 recalled planted leaks attributed to the true source out of 39 unrelated candidates; all 269 recalled leaks attributed correctly out of 7 same-task candidates (0 misattributions in either) | `data/cases/results_t035/raw_hits.jsonl`, `data/cases_sametask/`, §6b |
 | Watermarking, measured on matched artifacts (Experiment C) | On a local 0.5B model with full logit access: 20 to 40% detection at 50 tokens for code, JSON and shell; 70 to 100% from 100 tokens; false alarms rise from 1% to 15.6% when one text is scanned against 32 run-keys; JSON tokens are near-forced 66% of the time | `data/results_c/summary.md` |
-| Where it fails, and the two dials | 21 of 29 misses are 25-token leaks; 6 are paraphrases. The convergence rule K and the evidence floor are each a measured precision/recall trade: K=5 recovers all short prose at 4 false-alarm pairs; the floor removes 13 false-alarm pairs at a cost of 8 leaks | Table 1, §7 |
+| Where it fails, and the two dials | 21 of 29 misses are 25-token leaks; 6 are paraphrases. The convergence rule K and the evidence floor are each a measured precision/recall trade: K=5 recovers all short prose at 4 false-alarm pairs; the floor removes 13 false-alarm pairs at a cost of 8 leaks. K must still be 2: on the live swarms K=5 produces 9 and 12 backward edges | Table 1, §7, §9 |
+| A planted benchmark cannot measure the filters | Both filters look redundant on 400 planted cases and 285 same-task cases, and both are load-bearing on the live swarms: without convergence, 10 and 17 backward edges | §9, Tables 7 to 9 |
 
 ## 1 What was measured
 
@@ -360,11 +361,21 @@ sweep (`results_k3`, `results_k5`, `results_k10`) makes K a measured dial:
 | off | 0.970 | 10 | 0.975 | | 12,081 |
 
 K = 5 recovers every short prose leak for four false-alarm pairs in about 400 hits;
-K = 10 gains nothing further and costs fifty. K = 2 is reported as the operating point
-because it is the only zero-false-alarm setting; a harness that prefers recall should
-run K = 5. The earlier draft's suggestion that K should scale with corpus size is wrong:
-larger K loses precision quickly. Weighting shingles by document frequency instead of
-removing them remains the untested alternative.
+K = 10 gains nothing further and costs fifty. K = 2 is the operating point because it is
+the only zero-false-alarm setting. The earlier draft's suggestion that K should scale
+with corpus size is wrong: larger K loses precision quickly. Weighting shingles by
+document frequency instead of removing them remains the untested alternative.
+
+An earlier draft of this section advised that "a harness that prefers recall should run
+K = 5". That advice was wrong, and the benchmark is the reason it looked right. On the
+live swarms, where agents start 45 seconds apart and a backward edge is therefore
+physically impossible, K = 5 produces 9 and 12 backward edges on the two runs and K = 3
+produces 2 and 4; only K = 2 produces none. The benchmark cannot see this: every planted
+case is a pair of solo runs with one injected entry, so no amount of convergent
+boilerplate can invent an edge between third parties. Section 5 notes that the benchmark
+cannot measure what the origination filter is for; the same holds for the convergence
+filter, and for the same reason. Both filters earn their place in live runs, and the
+operating point must be chosen there. See §9.
 
 Paraphrase. At t = 0.7 paraphrased prose of 100 tokens or less is mostly missed. At 0.35
 paraphrased leaks of 200 tokens or more are always found and shorter ones mostly,
@@ -393,6 +404,79 @@ is for unintended leaks.
   artifacts rather than harness transcripts, with one scheme (KGW) at one setting. It
   needs logit access, which is why it could not be run on the agents, and why an outside
   evaluator could never watermark a lab's model.
+
+## 9 The target-side filter, and what the benchmark cannot see
+
+The origination filter ran on the source side only: a target's ingress entry was compared
+raw, including text the receiving run wrote itself and was reading back. The mirror rule
+subtracts from each ingress entry the shingles that run emitted earlier (`--target-origination`
+on `detector.py` and `score.py`). It is monotone by construction: containment divides by the
+*source* window, so filtering the target set can only shrink an intersection, never create or
+inflate a hit. A genuine transmission still fires on the entry where it first arrives, because
+the receiver had not yet emitted that text. Re-derive with
+`bash scripts/ablate_target_origination.sh`.
+
+Table 7. The 400-case benchmark at t = 0.35. Attribution is the count of recalled cases whose
+best-scoring hit names the true source, out of 39 candidates.
+
+| K | target filter | precision | recall | false-alarm pairs | attribution |
+|---|---|---|---|---|---|
+| 2 | off (shipped) | 1.000 | 0.9275 | 0 | 371 / 371 |
+| 2 | on | 1.000 | 0.9275 | 0 | 371 / 371 |
+| 5 | off | 0.990 | 0.9675 | 4 | 387 / 387 |
+| 5 | on | 1.000 | 0.9675 | 0 | 387 / 387 |
+| off | off | 0.975 | 0.9700 | 10 | 388 / 388 |
+| off | on | 1.000 | 0.9700 | 0 | 388 / 388 |
+
+Table 8. The same-task benchmark (285 cases, 7 candidates) and the negative-set scans, which
+contain no leak by construction. Scan columns are false positives at t = 0.5 / 0.7 / 0.9.
+
+| K | target filter | precision | recall | attribution | corpus_all | a0 | a0_long |
+|---|---|---|---|---|---|---|---|
+| 2 | off (shipped) | 1.000 | 0.9439 | 269 / 269 | 0/0/0 | 0/0/0 | 0/0/0 |
+| 2 | on | 1.000 | 0.9439 | 269 / 269 | 0/0/0 | 0/0/0 | 0/0/0 |
+| 5 | off | 0.361 | 0.9719 | 277 / 277 | 4/1/0 | 0/0/0 | 15/3/1 |
+| 5 | on | 1.000 | 0.9684 | 276 / 276 | 0/0/0 | 0/0/0 | 0/0/0 |
+| off | off | 0.930 | 0.9789 | 279 / 279 | 164/21/0 | 11/8/0 | 112/79/37 |
+| off | on | 1.000 | 0.9789 | 279 / 279 | 0/0/0 | 0/0/0 | 0/0/0 |
+
+On these two benchmarks the target filter dominates: it takes every false alarm to zero in
+every setting of K, costs at most one recalled case, and never misattributes. Read alone,
+Tables 7 and 8 say the convergence filter is redundant — drop it, keep the target filter, and
+recall rises from 0.9275 to 0.9700 at precision 1.000 with attribution intact.
+
+That conclusion is wrong, and the live swarms are where it fails. Agents start 45 seconds
+apart, so an edge from a later-started agent to an earlier one cannot be a transmission; the
+count of backward edges is a ground-truth error rate that needs no labelling.
+
+Table 9. Backward edges (impossible by construction), total edges in brackets. Two runs.
+
+| K | target filter | swarm 1 | swarm 2 |
+|---|---|---|---|
+| 2 | off (shipped) | 0 (18) | 0 (22) |
+| 2 | on | 0 (18) | 0 (22) |
+| 3 | off | 2 (23) | 4 (28) |
+| 3 | on | 1 (22) | 4 (28) |
+| 5 | off | 9 (33) | 12 (36) |
+| 5 | on | 6 (30) | 11 (35) |
+| off | off | 10 (35) | 17 (41) |
+| off | on | 9 (34) | 13 (37) |
+
+Only K = 2 recovers a sound map, with or without the target filter, and the target filter
+barely dents the damage at higher K. The benchmark cannot see any of this: every planted case
+is a pair of solo runs with one injected entry, so convergent boilerplate has no opportunity
+to invent an edge between third parties. Section 5 makes the same point about the origination
+filter — "the filter's value is attribution in live runs, which the benchmark cannot test" —
+and it holds for convergence too. A precision/recall benchmark built from planted leaks
+measures the score, not the filters.
+
+Where that leaves the target filter: at K = 2 it changes nothing measurable. The benchmark
+numbers, the same-task numbers, the attribution counts, the negative scans and both swarm maps
+are identical with it on and off. It is defence in depth, not a correction — insurance against
+read-back false alarms that convergence at K = 2 already absorbs. It is kept off by default for
+that reason. Its one clear use is a deployment too small for convergence to have any statistical
+power: K = 2 needs a corpus of runs to estimate convergent text from, and with two or three runs
+there is almost none. That case is untested here.
 
 ## Appendix: reproduce
 

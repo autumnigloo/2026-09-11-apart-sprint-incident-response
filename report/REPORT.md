@@ -44,6 +44,9 @@ With **Apart Research**. Research conducted at the
 - Takeaway: attribution, not just detection — the detector names the source
   run correctly [371/371] among 39 candidates and [269/269] among 7 agents
   that wrote the same files.
+- Methodological result worth its own line: the planted benchmark cannot
+  measure either filter. Both look redundant on 685 labelled cases and both
+  are load-bearing on the live swarms (§4.7).
 
 ## 1. Introduction
 
@@ -168,22 +171,29 @@ With **Apart Research**. Research conducted at the
 - Hashing needs no model access and its false-alarm rate does not grow with
   the number of parallel runs.
 
-### 4.7 A fourth filter: the target side (new)
+### 4.7 A planted benchmark cannot measure the filters
 
-<!-- Added after the main study; results still landing. -->
+<!-- Added after the main study. Full tables in RESULTS.md section 9. -->
 
-- Observation: origination ran on the source side only. A target's ingress
-  entry was compared raw, including text the receiving run wrote itself.
-- Mirror rule: subtract from each ingress entry the shingles that run emitted
-  earlier. Monotone — it can only shrink an intersection, never create a hit.
-- Correctness: both swarms reproduce identically with it on ([18] and [22]
-  edges, both two-hop edges intact) — real transmissions are untouched.
-- Result: at K=5 it removes every false positive — [4→0] on the solo corpus
-  and [15→0] on the same-task negative scan — lifting the operating point to
-  precision [1.000], recall [0.9675] against [0.9275] shipped.
-- Open question (pending): does it make the convergence filter redundant?
-  The discriminating test is attribution among near-identical sources with
-  convergence off, not precision/recall.
+- Setup: a 2×2 (and beyond) over {convergence K = 2, 3, 5, off} × {target-side
+  origination filter on, off}, scored on both benchmarks, the three negative
+  sets, and both live swarms.
+- On the benchmarks the target filter dominates: false alarms to [0] in every
+  K, attribution never wrong, recall up to [0.9700] with convergence off
+  against [0.9275] shipped. Read alone, this says convergence is redundant.
+- It is not. On the live swarms, where a backward edge is impossible by
+  construction (agents start 45s apart), convergence-off gives [10] and [17]
+  backward edges, K=5 gives [9] and [12], K=3 gives [2] and [4]. Only K=2
+  gives [0].
+- The benchmark is blind to this because every planted case is a pair of solo
+  runs with one injected entry — convergent boilerplate has no third party to
+  invent an edge between. §5 already says the benchmark cannot measure the
+  origination filter; the same holds for convergence.
+- Generalisable claim for the report: **a precision/recall benchmark built
+  from planted leaks measures the score, not the filters.** Filter value has
+  to be measured on live runs against a structural ground truth.
+- The target filter itself: monotone, free, and at K=2 changes nothing
+  measurable. Kept off by default as defence in depth.
 
 ## 5. Discussion and Limitations
 
@@ -215,7 +225,8 @@ With **Apart Research**. Research conducted at the
 
 ### Future Work
 
-- The target-side filter and whether convergence can be relaxed or dropped.
+- Whether the target-side filter carries the load in deployments too small
+  for convergence to have statistical power (2-3 runs), which is untested.
 - Document-frequency weighting instead of hard shingle removal.
 - Adversarial arm: an agent instructed to launder what it copies.
 - Cross-organisational protocol: exchange originated hash sets, not text.
@@ -225,6 +236,8 @@ With **Apart Research**. Research conducted at the
 - Cross-run leaks are detectable and attributable from transcripts alone.
 - The filters are not a heuristic pile: each is a measured dial, and their
   order is load-bearing.
+- And the benchmark that validates the score cannot validate the filters —
+  a caution for anyone evaluating a contamination detector on planted data.
 - One sentence on what an eval harness should do with this.
 
 ## Code and Data
