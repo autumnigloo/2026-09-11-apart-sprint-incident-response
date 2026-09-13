@@ -1,5 +1,0 @@
-tokeniser: tiktoken/cl100k_base
-pool[prose]: 59 spans, token lengths min=[5] max=[672] >=500: 16
-pool[code]: 59 spans, token lengths min=[20] max=[2119] >=500: 26
-pool[structured]: 27 spans, token lengths min=[12] max=[1453] >=500: 10
-pool[terse]: 58 spans, token lengths min=[12] max=[1707] >=500: 7
