@@ -2,7 +2,7 @@
 
 Threshold t* = 0.15 (lowest threshold with precision >= 0.95). At t*: precision 1.0, recall 0.9825, 0 false-positive hits across 285 cases, 1536 negative pairs scored > 0.
 
-Detector: char 5-grams, MinHash 128 perms, source window 100 chars, origination filter ON, convergence filter K=2, evidence floor 40.
+Detector: char 5-grams, MinHash 128 perms, source window 100 chars, origination filter ON, convergence filter K=2, evidence floor 40, target-origination filter OFF.
 
 ## verbatim: recall at t* by span length (tokens) x artifact type
 
@@ -91,3 +91,10 @@ Detector: char 5-grams, MinHash 128 perms, source window 100 chars, origination 
 | 0.9 | 1.0 | 0.393 | 0 |
 | 0.95 | 1.0 | 0.3474 | 0 |
 | 1.0 | 1.0 | 0.3263 | 0 |
+
+## Split-half check (t fitted on one half of the cases, scored on the held-out half)
+
+| fitted t | held-out recall | held-out precision | fp hits |
+|---|---|---|---|
+| 0.15 | 0.9718 | 1.0 | 0 |
+| 0.15 | 0.993 | 1.0 | 0 |

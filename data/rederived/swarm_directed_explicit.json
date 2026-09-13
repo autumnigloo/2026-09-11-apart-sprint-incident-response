@@ -10,6 +10,7 @@
   "min_evidence": 40,
   "common_runs": 2,
   "score": "containment",
+  "target_origination": false,
   "threshold": 0.35,
   "origination": true
  },
