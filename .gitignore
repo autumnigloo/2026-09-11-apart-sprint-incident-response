@@ -7,3 +7,4 @@ data/runs/*/shared/
 data/runs/smoke/
 data/rederived/cases/
 .DS_Store
+data/rederived/cases_sametask/

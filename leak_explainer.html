@@ -345,12 +345,14 @@ s.addEventListener('input',upd);upd();})();
 <tr><td><code>harness.py</code></td><td>Runs the agents in containers and writes the tagged records (stage 1). Task files, instruction arms, same-task mode, staggered starts, and a guard against one malformed tool call in twenty.</td></tr>
 <tr><td><code>detector.py</code></td><td>Stages 2 to 6 in one file.</td></tr>
 <tr><td><code>topology.py</code></td><td>Reads the grid for its shape and draws it.</td></tr>
-<tr><td><code>benchmark/inject.py</code>, <code>benchmark/score.py</code></td><td>Plant the 400 leaks; grade them; sweep the dial; run the two ablations.</td></tr>
+<tr><td><code>code/inject.py</code>, <code>code/score.py</code></td><td>Plant the 400 leaks; grade them; sweep the dial; run the two ablations.</td></tr>
+<tr><td><code>code/attribution.py</code></td><td>Checks each recalled leak is credited to the run that wrote it, against the planted label.</td></tr>
 <tr><td><code>shared_usage.py</code>, <code>verify_edges.py</code></td><td>The ground truth for the swarm (every command that touched the shared folder) and the edge-by-edge check against it.</td></tr>
 <tr><td><code>run_extra.sh</code></td><td>The rule sweep, the floor ablation, the long-task baseline, the second swarm.</td></tr>
 <tr><td><code>experiment_c.py</code></td><td>The watermark measurement: keyed green-list watermark on a local 0.5B model, detection by type and length, entropy by type, false alarms against N keys.</td></tr>
 <tr><td><code>notebook.py</code>, <code>OBSERVATIONS.md</code></td><td>A lab notebook that writes itself after each run.</td></tr>
 <tr><td><code>run_all.sh</code></td><td>Reproduces everything in order, and resumes after a crash.</td></tr>
+<tr><td><code>rederive.sh</code></td><td>Recomputes every number from the transcripts, offline; the audit.</td></tr>
 <tr><td><code>RESULTS.md</code></td><td>The claims, each with its number and the file it comes from.</td></tr>
 </table>
 <p class="note">Things that broke on the way and were fixed: the file-path parser only knew one of the two ways the model writes files; a textbook MinHash was silently wrong; the first corpus had nothing over 200 tokens; the first version of stage 5 had no floor and scored generic text at 1.0; the first "coordinate via /shared" instruction was too weak for any agent to act on. All visible in the notebook.</p>

@@ -1,7 +1,9 @@
 # Results: claims and evidence
 
 Every number below is traceable to a file in this repository, named next to it. All of
-them were re-derived from the raw transcripts with the final code (`scripts/rederive.sh`).
+them were re-derived from the raw transcripts with the final code (`scripts/rederive.sh`,
+log in `logs/rederive.log`). The one exception is Experiment C (§6c), which needs torch
+and a local model: `python code/experiment_c.py --n 10`, log in `logs/experiment_c.log`.
 
 ## Summary
 
@@ -12,7 +14,7 @@ them were re-derived from the raw transcripts with the final code (`scripts/rede
 | Real transmissions produce the right map | Two staggered swarm runs: 40 directed edges, 38 matching a transcript read, 2 two-hop, 0 spurious, 0 backward, checked by script | `data/runs/swarm_directed_explicit*/hits.json`, `code/verify_edges.py` |
 | First-author attribution needs the origination filter | Without it: 4 spurious edges, 1 lost edge, 1 inflated edge on the same run | `data/runs/swarm_directed_explicit/hits_no_origination.json` |
 | The a-priori Jaccard threshold was wrong, not Jaccard itself | Jaccard ≥ 0.7, the configuration first proposed, recalls 23.5%; calibrated to 0.15 it recalls 95.75% at precision 1.0, slightly above containment at 0.35 | `data/cases/results_jaccard/` |
-| Source attribution is exact | All 371 recalled planted leaks attributed to the true source out of 39 unrelated candidates; all 269 recalled leaks attributed correctly out of 7 same-task candidates (0 misattributions in either) | `data/cases/results_t035/raw_hits.jsonl`, `data/cases_sametask/`, §6c |
+| Source attribution is exact | All 371 recalled planted leaks attributed to the true source out of 39 unrelated candidates; all 269 recalled leaks attributed correctly out of 7 same-task candidates (0 misattributions in either) | `data/cases/results_t035/raw_hits.jsonl`, `data/cases_sametask/`, §6b |
 | Watermarking, measured on matched artifacts (Experiment C) | On a local 0.5B model with full logit access: 20 to 40% detection at 50 tokens for code, JSON and shell; 70 to 100% from 100 tokens; false alarms rise from 1% to 15.6% when one text is scanned against 32 run-keys; JSON tokens are near-forced 66% of the time | `data/results_c/summary.md` |
 | Where it fails, and the two dials | 21 of 29 misses are 25-token leaks; 6 are paraphrases. The convergence rule K and the evidence floor are each a measured precision/recall trade: K=5 recovers all short prose at 4 false-alarm pairs; the floor removes 13 false-alarm pairs at a cost of 8 leaks | Table 1, §7 |
 
@@ -243,7 +245,7 @@ lengths and would have to be re-fitted on each harness. Both scores are reported
 detector decides on containment for that reason. The earlier draft's "13% at 0.7" was
 the first, short-task corpus; 23.5% is the merged corpus and supersedes it.
 
-## 6c Claim: source attribution is exact
+## 6b Claim: source attribution is exact
 
 The cross-organisational use of the detector (a lab answering "did text from your run
 reach ours" from originated hash sets, without exchanging transcripts) depends on the
@@ -251,7 +253,8 @@ detector naming the right source, not only reporting a hit. Experiment A measure
 directly: every planted leak has a known source run among 39 candidates. For each of the
 371 recalled cases, the source run with the highest containment score on the injected
 entry was compared with the true source. All 371 were attributed correctly; none was
-attributed to another run (`raw_hits.jsonl`, threshold 0.35). Chance is 1 in 39. On the
+attributed to another run (`code/attribution.py`, over `raw_hits.jsonl` and the planted
+labels at threshold 0.35). Chance is 1 in 39. On the
 live swarms the same holds at the edge level (38 direct edges all pointing at the agent
 whose file was read, and the two two-hop edges credited to the original author rather
 than the intermediary). The unrelated-task corpus makes sources easy to tell apart, so the harder test is
@@ -261,12 +264,13 @@ README and config (`data/cases_sametask`; 285 cases, verbatim, reformatted and
 truncated; no paraphrase, which needs the API). The convergence filter removed 8,126
 shingles that two or more of the eight runs shared. At t = 0.35: recall 94.4% (269 of
 285), 0 false-alarm pairs, and all 269 recalled leaks attributed to the correct one of 7
-candidates. Attribution holds when the candidate sources are alike, which is the
+candidates. The audit re-plants and re-scores this benchmark from `data/runs/a0_long` and
+re-checks both attribution numbers on every run. Attribution holds when the candidate sources are alike, which is the
 situation a lab would face across hundreds of runs of one benchmark. Caveats as before:
 verbatim and lightly transformed text, one model, and the convergence filter estimated
 on the same eight runs.
 
-## 6b Claim: watermarking measured on matched artifacts (Experiment C)
+## 6c Claim: watermarking measured on matched artifacts (Experiment C)
 
 Watermarking cannot be applied to the agents themselves (API access only), so it was
 measured separately on a local open-weight model, Qwen2.5-0.5B-Instruct, with the
@@ -322,7 +326,7 @@ comparison is on matched artifact types, not identical text, and on a 0.5B model
 than the agents' model; both caveats favour the watermark (a stronger model has higher
 entropy prose but not higher entropy JSON).
 
-
+## 7 Where it fails, and the two dials
 
 The 29 misses at t = 0.35 decompose exactly:
 
