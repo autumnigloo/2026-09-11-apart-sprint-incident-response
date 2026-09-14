@@ -451,8 +451,73 @@ the threat model is non-adversarial throughout.
 
 ## References
 
-<!-- TODO. At minimum: Kirchenbauer et al. (green-list watermarking); Broder
-     (shingling/MinHash); a benchmark-contamination reference. -->
+<!--
+  Template: consistent format, with Author(s), Year, Title, Venue/Publisher, and a
+  URL or DOI. Bibliographic details below were checked against PMLR, arXiv, DBLP and
+  the ACM/IEEE records — except where marked "verify". The "cite at" notes are for
+  drafting; delete them before submitting.
+-->
+
+1. Broder, A. Z. (1997). On the Resemblance and Containment of Documents.
+   *Compression and Complexity of SEQUENCES 1997*, Positano, Italy, 11–13 June 1997,
+   pp. 21–29. IEEE. DOI: [10.1109/SEQUEN.1997.666900](https://doi.org/10.1109/SEQUEN.1997.666900)
+   <!-- cite at §4.5. Defines resemblance |S(A)∩S(B)|/|S(A)∪S(B)| and containment
+        |S(A)∩S(B)|/|S(A)| as distinct statistics. Our containment-over-Jaccard
+        argument is this distinction; we contribute the calibration, not the idea. -->
+
+2. Broder, A. Z., Glassman, S. C., Manasse, M. S., & Zweig, G. (1997). Syntactic
+   Clustering of the Web. *Computer Networks and ISDN Systems*, 29(8–13), 1157–1166.
+   (Proc. WWW6.)
+   <https://www.microsoft.com/en-us/research/wp-content/uploads/1997/01/src-tn-1997-015.pdf>
+   <!-- cite at §3.2 for shingling and the canonicalisation step. -->
+
+3. Broder, A. Z., Charikar, M., Frieze, A. M., & Mitzenmacher, M. (2000). Min-Wise
+   Independent Permutations. *Journal of Computer and System Sciences*, 60(3), 630–659.
+   Extended abstract: *STOC '98*, pp. 327–336.
+   DOI: [10.1145/276698.276781](https://doi.org/10.1145/276698.276781)
+   <!-- cite at §3.2 for the 128-permutation MinHash sketch, and where detector.py
+        explains why a linear (ax+b) family degenerates on 32-bit shingle hashes. -->
+
+4. Broder, A. Z. (2000). Identifying and Filtering Near-Duplicate Documents.
+   *Combinatorial Pattern Matching (CPM 2000)*, LNCS 1848, pp. 1–10. Springer.
+   <!-- optional, engineering follow-up. Page range: verify before use. Drop if tight. -->
+
+5. Kirchenbauer, J., Geiping, J., Wen, Y., Katz, J., Miers, I., & Goldstein, T. (2023).
+   A Watermark for Large Language Models. *Proceedings of the 40th International
+   Conference on Machine Learning (ICML)*, PMLR 202, pp. 17061–17084.
+   arXiv:[2301.10226](https://arxiv.org/abs/2301.10226) ·
+   <https://proceedings.mlr.press/v202/kirchenbauer23a.html>
+   <!-- cite at §3.5 and §4.6. The exact scheme Experiment C implements: green list
+        partitioned per previous token, γ = 0.25, δ = 2.0, z-score detection. -->
+
+6. Kirchenbauer, J., Geiping, J., Wen, Y., Shu, M., Saifullah, K., Kong, K.,
+   Fernando, K., Saha, A., Goldblum, M., & Goldstein, T. (2024). On the Reliability
+   of Watermarks for Large Language Models. *ICLR 2024*.
+   arXiv:[2306.04634](https://arxiv.org/abs/2306.04634)
+   <!-- cite at §4.1 as well as §4.6, and this is the one to not miss. It finds that
+        "paraphrases are statistically likely to leak n-grams or even longer fragments
+        of the original text, resulting in high-confidence detections when enough
+        tokens are observed" — the same mechanism we report from the other direction
+        in §4.1, where paraphrased leaks of 200+ tokens are always recalled because
+        identifiers, keys, paths and numbers survive a rewrite. Independent
+        corroboration by a different method; cite rather than claim it fresh. -->
+
+7. Fu, Z., & Russell, C. (2025). Multi-use LLM Watermarking and the False Detection
+   Problem. arXiv:[2506.15975](https://arxiv.org/abs/2506.15975)
+   <!-- cite at §4.6: our 1% → 15.6% across 32 keys confirms their problem. -->
+
+8. Margalit, Y., et al. (2026). Governed Shared Memory for Multi-Agent LLM Systems.
+   arXiv:[2606.24535](https://arxiv.org/abs/2606.24535)
+   <!-- cite at §2 and §5: nearest neighbour, and the claim we are a counterexample
+        to. Full author list: verify. -->
+
+<!--
+  Still to add, from the §2 buckets: the data-contamination survey (arXiv 2502.17521),
+  a BIG-bench canary reference, Min-K%/Min-K%++, MemLineage (arXiv 2605.14421), and
+  the incident primary sources (OpenAI on SWE-bench Verified; SWE-bench issue #465;
+  SWE-bench-Pro issue #7; Berkeley RDI). Check Hana's prior-art assessment first —
+  it may already carry these in a fixed format.
+-->
 
 ## Appendix
 
