@@ -350,16 +350,60 @@ need the source run *named* rather than a collision *flagged*.
 
 <!--
   REQUIRED by the sprint, paired with Limitations. Owner per the agreed split: you.
-  Two angles named in the 13 Sep status report:
+  Measured, not speculative: code/hash_recovery.py reproduces the numbers below.
 -->
 
-- The detector as a **finder of other runs' output**: the same machinery that audits
-  isolation also locates what a concurrent agent produced.
-- A hash feed as an **exfiltration surface**: §6b proposes labs exchange originated
-  hash sets instead of transcripts. That feed is itself a channel — an adversary who
-  can query it learns which of their candidate strings a lab's runs produced.
-  Mitigations to discuss: batching, thresholds on query volume, salting per pair.
-- The asymmetry that limits misuse: it needs transcripts the auditor already holds.
+The research is defensive and the method needs transcripts the auditor already holds.
+The risks are in *deploying* it, and the sharpest one is in our own §6b proposal.
+
+**The hash exchange is not a redaction.** §6b suggests labs answer "did text from your
+run reach ours" by exchanging originated shingle hashes rather than transcripts. But the
+shingles are character 5-grams overlapping by four characters, so the set is a de Bruijn
+graph and the text is a walk through it — and they are hashed with unsalted 32-bit
+FNV-1a, which is not a one-way function at this scale. A 90-line greedy assembler
+(`code/hash_recovery.py`), given only the 2,651 hashes one run would have sent, returns
+626 characters of readable content in 7 seconds: class and method names, docstring
+topics, string literals, and a data table recovered close to intact. Exact
+reconstruction is limited — the longest verbatim stretch is 24 characters, because a
+*set* loses repetition counts and the assembly splices at repeated 4-grams — but
+**content disclosure is close to total even when verbatim recovery is not.** On the
+unfiltered shingles of the same file the longest verbatim stretch is 54 characters,
+longer than the 40 the detector itself calls the smallest meaningful leak.
+
+There is an irony to state plainly: the two filters keep precisely the text that
+distinguishes one author from another, which is the same text that identifies the
+content. Filtering makes the payload *more* sensitive per byte, not less.
+
+**An endpoint is worse than a one-shot exchange.** A queryable "did you produce this?"
+service is a membership oracle. Because 5-grams overlap, an adversary extends a known
+fragment one character at a time at roughly 96 queries per character — linear in the
+length of the text they are trying to extract, not exponential. It also answers, for
+any candidate string, whether a lab's runs ever produced it.
+
+**Mitigations to specify before anyone builds this.** Private set intersection is the
+correct primitive: it reveals the intersection and nothing else. Short of that: pairwise
+HMAC-keyed shingles so sets are neither reusable across partners nor attackable with
+precomputed tables; a one-shot, non-adaptive exchange with both sides committing before
+either sees a result; return a score above a threshold, never which shingles matched;
+rate-limit and log every query. Longer shingles raise the assembly bar but do not close
+the oracle.
+
+**Retaining the transcripts is itself the risk.** The method needs full INGRESS/EGRESS
+logs — everything every agent read and wrote. An isolation audit therefore centralises
+exactly the data that isolation was protecting, creating a breach target and a retention
+obligation where neither existed. Hash at source, scope to the sandbox, short TTL.
+
+**Attribution is an accusation, and we have measured how wrong it can be.** The tool
+names a source run. Under a plausible misconfiguration it does so confidently and
+wrongly: §9 shows K = 5 producing 9 and 12 physically impossible backward edges, and
+convergence off producing 10 and 17. Anyone shipping this should ship the backward-edge
+check as a self-test and treat a backward edge as a configuration alarm, never publish
+an edge without the read-level verification `verify_edges.py` performs.
+
+**Lesser angles.** The same machinery lets an agent inside a shared medium locate other
+runs' output rather than audit it. And publishing the filter design tells an adversarial
+agent what to perturb — though §7 already concedes that a rename defeats the method, and
+the threat model is non-adversarial throughout.
 
 ### Future Work
 
